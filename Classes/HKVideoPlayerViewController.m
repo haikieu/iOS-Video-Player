@@ -179,7 +179,7 @@
     
     if(_autoPlay)
     {
-        [_coreView handlePlay];
+        [self handlePlay];
     }
 }
 

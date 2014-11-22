@@ -10,7 +10,7 @@
 
 @implementation HKVideoPlayerException
 
-+(void)notImplementedYetExceptionAtFunction:(char *)function
++(void)notImplementedYetExceptionAtFunction:(const char *)function
 {
     [NSException exceptionWithName:@"NotImplementedYetExcepttion" reason:[NSString stringWithFormat:@"Please implement method %s",function] userInfo:nil];
 }
