@@ -116,7 +116,7 @@
 {
     [_avPlayer setRate:speed];
     
-    [_playerViewController playerDidForward:speed];
+    [_playerViewController playerDidFastforward:speed];
 }
 -(void)handleStop
 {
