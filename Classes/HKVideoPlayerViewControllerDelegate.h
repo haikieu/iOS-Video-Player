@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+@class HKVideoPlayerViewController;
 
 @protocol HKVideoPlayerViewControllerDelegate <NSObject>
+
+@required
+-(void) videoPlayer:(HKVideoPlayerViewController*)videoPlayer didCloseView:(UIView*)view;
 
 @end
