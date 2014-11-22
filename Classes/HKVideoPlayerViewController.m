@@ -15,6 +15,10 @@
 
 @implementation HKVideoPlayerViewController
 
+@synthesize themeView=_themeView;
+@synthesize coreView=_coreView;
+@synthesize delegate=_delegate;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -24,11 +28,37 @@
     return self;
 }
 
+-(instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super init];
+    if (self) {
+        _baseFrame = frame;
+        
+    }
+    return self;
+}
+
+-(instancetype)initWithFrame:(CGRect)frame theme:(HKVideoPlayerThemeView *)themeView
+{
+    self = [self initWithFrame:frame];
+    if(self)
+    {
+        self.themeView = themeView;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.frame = _baseFrame;
     self.view.backgroundColor = [UIColor blackColor];
+    
+    _coreView = [[HKVideoPlayerCoreView alloc] initWithPlayerVC:self];
+    [self.view addSubview:_coreView];
+    
+    [_themeView renderThemeOnPlayerVC:self];
     [self.view addSubview:_themeView];
     [self.view bringSubviewToFront:_themeView];
 }
@@ -49,6 +79,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)loadUrl:(NSURL *)url autoPlay:(BOOL)autoPlay
+{
+    _autoPlay = autoPlay;
+    [_coreView beginViewSessionWithUrl:url];
+}
 
 #pragma mark - HKVideoPlayerCoreDelegate
 
@@ -112,22 +148,15 @@
     [_coreView handleExitFullscreen];
 }
 
--(void)handleResizeWithFrame:(CGRect *)frame
+-(void)handleResizeWithFrame:(CGRect)frame
 {
-    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [_themeView playerWillResizeWithFrame:frame];
+    });
+    [_coreView handleResizeWithFrame:frame];
 }
 
 #pragma mark - HKVideoPlayerCore
-
--(void)beginViewSessionWithUrl:(NSURL *)url
-{
-    
-}
-
--(void)clearViewSession
-{
-    
-}
 
 -(void)playerDidPlay
 {
@@ -147,6 +176,11 @@
 -(void)playerDidLoad
 {
     [_themeView performSelectorOnMainThread:@selector(playerDidReady) withObject:nil waitUntilDone:NO];
+    
+    if(_autoPlay)
+    {
+        [_coreView handlePlay];
+    }
 }
 
 -(void)playerDidFailure
@@ -189,56 +223,11 @@
     [_themeView performSelectorOnMainThread:@selector(playerDidRewind:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
 }
 
-#pragma mark - deprecated methods
-
--(void)playerWillCloseView
+-(void)playerDidResizeWithFrame:(CGRect)frame
 {
-    
-}
-
--(void)playerWillLoad
-{
-    
-}
-
--(void)playerWillRewind:(float)speed
-{
-    
-}
-
--(void)playerWillPlay
-{
-    
-}
-
--(void)playerWillUpdatePosition:(float)position
-{
-    
-}
-
--(void)playerWillStop
-{
-    
-}
-
--(void)playerWillPause
-{
-    
-}
-
--(void)playerWillFastforward:(float)speed
-{
-    
-}
-
--(void)playerWillExitFullscreen
-{
-    
-}
-
--(void)playerWillEnterFullscreen
-{
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_themeView playerDidResizeWithFrame:frame];
+    });
 }
 
 @end

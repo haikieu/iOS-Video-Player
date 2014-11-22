@@ -13,6 +13,9 @@
 
 @implementation HKVideoPlayerCoreView
 
+@synthesize avAsset=_avAsset;
+@synthesize avPlayer=_avPlayer;
+@synthesize playerViewController=_playerViewController;
 
 - (instancetype)init
 {
@@ -23,12 +26,22 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
         [self initCore];
+    }
+    return self;
+}
+
+-(instancetype)initWithPlayerVC:(HKVideoPlayerViewController *)playerVC
+{
+    self = [self initWithFrame:playerVC.view.bounds];
+    if (self) {
+        // Initialization code
+        _playerViewController = playerVC;
     }
     return self;
 }
@@ -76,19 +89,18 @@
     self.avAsset = [AVAsset assetWithURL:url];
     [_avAsset loadValuesAsynchronouslyForKeys:@[@"tracks",@"lyrics",@"creationDate",@"commonMetadata",@"availableMetadataFormats"] completionHandler:^{
         
-        _avPlayer = [[AVPlayer alloc] initWithURL:url];
+        _avPlayer = [[AVPlayer alloc] initWithPlayerItem:[AVPlayerItem playerItemWithAsset:_avAsset automaticallyLoadedAssetKeys:@[@"tracks",@"lyrics",@"creationDate",@"commonMetadata",@"availableMetadataFormats"]]];
         [self setPlayer:_avPlayer];
+        
+        [_playerViewController playerDidLoad];
         
     }];
     
-    [_playerViewController beginViewSessionWithUrl:url];
 }
 
 -(void)clearViewSession
 {
     [_avAsset cancelLoading];
-    
-    [_playerViewController clearViewSession];
 }
 
 -(void)handlePlay

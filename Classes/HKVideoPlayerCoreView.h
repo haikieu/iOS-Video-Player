@@ -8,19 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
-#import "HKVideoPlayerCore.h"
+#import "HKVideoPlayerFuntionality.h"
 
 @class HKVideoPlayerViewController;
 
-@interface HKVideoPlayerCoreView : UIView <HKVideoPlayerCore>
+@protocol HKVideoPlayerCoreView <HKVideoPlayerFuntionality>
+
+@property(nonatomic,strong)AVCaptureSession *avCaptureSession;
+
+@property(nonatomic,weak,readonly) HKVideoPlayerViewController *playerViewController;
 
 @property(nonatomic,strong)AVPlayer *avPlayer;
 @property(nonatomic,strong)AVAsset *avAsset;
-@property(nonatomic,strong)AVCaptureSession *avCaptureSession;
 
 - (void)setPlayer:(AVPlayer*)player;
 - (void)setVideoFillMode:(NSString *)fillMode;
+- (void)beginViewSessionWithUrl:(NSURL *)url;
+- (void)clearViewSession;
 
-@property(nonatomic,weak) HKVideoPlayerViewController *playerViewController;
+@end
+
+@interface HKVideoPlayerCoreView : UIView <HKVideoPlayerCoreView>
+
+-(instancetype)initWithPlayerVC:(HKVideoPlayerViewController*)playerVC;
 
 @end

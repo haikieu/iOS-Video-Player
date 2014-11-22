@@ -8,10 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HKVideoPlayerCore <NSObject>
-
--(void)beginViewSessionWithUrl:(NSURL*) url;
--(void)clearViewSession;
+@protocol HKVideoPlayerFuntionality <NSObject>
 
 -(void)handleCloseView;
 
@@ -24,6 +21,6 @@
 
 -(void)handleEnterFullscreen;
 -(void)handleExitFullscreen;
--(void)handleResizeWithFrame:(CGRect*)frame;
+-(void)handleResizeWithFrame:(CGRect)frame;
 
 @end

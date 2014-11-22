@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HKViewController : UIViewController
+#import "HKVideoPlayerViewControllerDelegate.h"
+
+@interface HKViewController : UIViewController<HKVideoPlayerViewControllerDelegate>
 
 @end

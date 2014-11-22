@@ -7,6 +7,8 @@
 //
 
 #import "HKVideoPlayerDefaultTheme.h"
+#import "HKVideoPlayerViewController.h"
+#import "HKVideoPlayerCoreView.h"
 
 @implementation HKVideoPlayerDefaultTheme
 
@@ -27,5 +29,20 @@
     // Drawing code
 }
 */
+
+-(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
+{
+    [super renderThemeOnPlayerVC:playerVC];
+}
+
+-(void)playerDidPlay
+{
+  
+}
+
+-(void)setEventHandler
+{
+    
+}
 
 @end

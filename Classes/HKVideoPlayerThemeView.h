@@ -7,10 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HKVideoPlayerCore.h"
-#import "HKVideoPlayerCoreDelegate.h"
-@interface HKVideoPlayerThemeView : UIView <HKVideoPlayerCore,HKVideoPlayerCoreDelegate>
+#import "HKVideoPlayerEvent.h"
 
-+(HKVideoPlayerThemeView*) themeWithFrame:(CGRect)frame;
+@class HKVideoPlayerViewController;
+@protocol HKVideoPlayerThemeView <HKVideoPlayerPreEvent,HKVideoPlayerPostEvent>
+
+@property(nonatomic,weak,readonly)HKVideoPlayerViewController *playerVC;
+
+-(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
+-(void)setEventHandler;
+
+-(void)showThemeView;
+-(void)hideThemeView;
+
+-(void)showLoadingAnimation;
+-(void)hideLoadingAnimation;
+
+@end
+
+@interface HKVideoPlayerThemeView : UIView <HKVideoPlayerThemeView>
+
++(HKVideoPlayerThemeView*) theme;
 
 @end
