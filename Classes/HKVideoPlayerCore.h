@@ -10,11 +10,20 @@
 
 @protocol HKVideoPlayerCore <NSObject>
 
--(void)play;
--(void)stop;
--(void)pause;
--(void)rewind:(float)speed;
--(void)fastforward:(float)speed;
--(void)resumePosition:(float)position;
+-(void)beginViewSessionWithUrl:(NSURL*) url;
+-(void)clearViewSession;
+
+-(void)handleCloseView;
+
+-(void)handlePlay;
+-(void)handleStop;
+-(void)handlePause;
+-(void)handleRewind:(float)speed;
+-(void)handleFastforward:(float)speed;
+-(void)handleResumePosition:(float)position;
+
+-(void)handleEnterFullscreen;
+-(void)handleExitFullscreen;
+-(void)handleResizeWithFrame:(CGRect*)frame;
 
 @end
