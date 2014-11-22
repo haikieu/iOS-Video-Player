@@ -18,6 +18,9 @@
 @property(nonatomic,strong)AVAsset *avAsset;
 @property(nonatomic,strong)AVCaptureSession *avCaptureSession;
 
+- (void)setPlayer:(AVPlayer*)player;
+- (void)setVideoFillMode:(NSString *)fillMode;
+
 @property(nonatomic,weak) HKVideoPlayerViewController *playerViewController;
 
 @end
