@@ -20,4 +20,7 @@
 
 @property(nonatomic,weak) id<HKVideoPlayerViewControllerDelegate> delegate;
 
+@property(nonatomic,assign) BOOL autoPlay;
+@property(nonatomic,assign) BOOL repeat;
+
 @end
