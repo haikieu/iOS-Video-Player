@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HKVideoPlayerCore.h"
 #import "HKVideoPlayerCoreDelegate.h"
-
+#import "HKVideoPlayerViewControllerDelegate.h"
 @class HKVideoPlayerThemeView;
 @class HKVideoPlayerCoreView;
 
@@ -17,5 +17,7 @@
 
 @property(nonatomic,strong)HKVideoPlayerThemeView *themeView;
 @property(nonatomic,strong)HKVideoPlayerCoreView *coreView;
+
+@property(nonatomic,weak) id<HKVideoPlayerViewControllerDelegate> delegate;
 
 @end

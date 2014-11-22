@@ -7,7 +7,8 @@
 //
 
 #import "HKVideoPlayerViewController.h"
-
+#import "HKVideoPlayerThemeView.h"
+#import "HKVideoPlayerCoreView.h"
 @interface HKVideoPlayerViewController ()
 
 @end
@@ -27,6 +28,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:_themeView];
+    [self.view bringSubviewToFront:_themeView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,5 +49,84 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - HKVideoPlayerCoreDelegate
+
+-(void)handlePlay
+{
+    [_coreView handlePlay];
+}
+
+-(void)handleStop
+{
+    [_coreView handleStop];
+}
+-(void)handlePause
+{
+    [_coreView handlePause];
+}
+-(void)handleRewind:(float)speed
+{
+    [_coreView handleRewind:speed];
+}
+-(void)handleFastforward:(float)speed
+{
+    [_coreView handleFastforward:speed];
+}
+
+-(void)handleCloseView
+{
+    [_coreView handleCloseView];
+}
+
+-(void)handleResumePosition:(float)position
+{
+    [_coreView handleResumePosition:position];
+}
+
+#pragma mark - HKVideoPlayerCore
+
+-(void)playerDidPlay
+{
+    [_themeView playerDidPlay];
+}
+
+-(void)playerDidStop
+{
+    [_themeView playerDidStop];
+}
+
+-(void)playerDidPause
+{
+    [_themeView playerDidPause];
+}
+
+-(void)playerDidFailure
+{
+    [_themeView playerDidFailure];
+}
+
+-(void)playerDidReady
+{
+    [_themeView playerDidReady];
+}
+
+-(void)playerDidExitFullscreen
+{
+    [_themeView playerDidExitFullscreen];
+}
+
+-(void)playerDidEnterFullscreen
+{
+    [_themeView playerDidEnterFullscreen];
+}
+
+-(void)playerDidCloseView
+{
+    [_themeView playerDidCloseView];
+    
+    [_delegate videoPlayer:self didCloseView:self.view];
+}
+
 
 @end
