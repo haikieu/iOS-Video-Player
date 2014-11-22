@@ -11,4 +11,6 @@
 #import "HKVideoPlayerCoreDelegate.h"
 @interface HKVideoPlayerThemeView : UIView <HKVideoPlayerCore,HKVideoPlayerCoreDelegate>
 
++(HKVideoPlayerThemeView*) themeWithFrame:(CGRect)frame;
+
 @end
