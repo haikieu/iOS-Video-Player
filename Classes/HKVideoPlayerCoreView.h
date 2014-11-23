@@ -14,10 +14,7 @@
 
 @protocol HKVideoPlayerCoreView <HKVideoPlayerFuntionality>
 
-@property(nonatomic,strong)AVCaptureSession *avCaptureSession;
-
 @property(nonatomic,weak,readonly) HKVideoPlayerViewController *playerViewController;
-
 @property(nonatomic,strong)AVPlayer *avPlayer;
 @property(nonatomic,strong)AVAsset *avAsset;
 
@@ -29,6 +26,9 @@
 @end
 
 @interface HKVideoPlayerCoreView : UIView <HKVideoPlayerCoreView>
+
+@property(nonatomic,strong)AVCaptureSession *avCaptureSession;
+@property(nonatomic,assign,readonly)AVKeyValueStatus avStatus;
 
 -(instancetype)initWithPlayerVC:(HKVideoPlayerViewController*)playerVC;
 

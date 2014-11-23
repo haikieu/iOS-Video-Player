@@ -83,19 +83,135 @@
 	playerLayer.videoGravity = fillMode;
 }
 
+NSTimer *avStatusTimer;
+
+-(void)monitoringAVStatus
+{
+    NSError *error = nil;
+    AVKeyValueStatus avStatus = [_avAsset statusOfValueForKey:@"tracks" error:&error];
+    switch (avStatus) {
+        case AVKeyValueStatusUnknown:
+            
+            //TODO
+            
+            break;
+        case AVKeyValueStatusLoading:
+            
+            //TODO
+            _avStatus = avStatus;
+            
+            break;
+            
+        case AVKeyValueStatusFailed:
+        case AVKeyValueStatusCancelled:
+        case AVKeyValueStatusLoaded:
+            
+            //TODO - do nothing
+            
+            break;
+    }
+}
 
 -(void)beginViewSessionWithUrl:(NSURL *)url
 {
     self.avAsset = [AVAsset assetWithURL:url];
+    
+    avStatusTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(monitoringAVStatus) userInfo:nil repeats:YES];
+    [avStatusTimer fire];
+    
     [_avAsset loadValuesAsynchronouslyForKeys:@[@"tracks",@"lyrics",@"creationDate",@"commonMetadata",@"availableMetadataFormats"] completionHandler:^{
         
-        _avPlayer = [[AVPlayer alloc] initWithPlayerItem:[AVPlayerItem playerItemWithAsset:_avAsset automaticallyLoadedAssetKeys:@[@"tracks",@"lyrics",@"creationDate",@"commonMetadata",@"availableMetadataFormats"]]];
-        [self setPlayer:_avPlayer];
+        [avStatusTimer invalidate];
         
-        [_playerViewController playerDidLoad];
+        NSError *error = nil;
+        _avStatus = [_avAsset statusOfValueForKey:@"tracks" error:&error];
+        
+        if(error)
+        {
+            [_playerViewController playerDidFailure];
+            return;
+        }
+
+        switch (_avStatus) {
+                
+            case AVKeyValueStatusUnknown:
+                
+                //TODO - do nothing
+                
+                break;
+            case AVKeyValueStatusLoading:
+                
+                //TODO - do nothing
+                
+                break;
+                
+            case AVKeyValueStatusFailed:
+                
+                [_playerViewController playerDidFailure];
+                
+                break;
+            case AVKeyValueStatusCancelled:
+                
+                //TODO
+                
+                break;
+            
+            case AVKeyValueStatusLoaded:
+                
+                _avPlayer = [[AVPlayer alloc] initWithPlayerItem:[AVPlayerItem playerItemWithAsset:_avAsset]];
+                [self setupObservingPlayer];
+                [self setPlayer:_avPlayer];
+                
+                [_playerViewController playerDidLoad];
+                
+                break;
+        }
         
     }];
     
+}
+
+static NSString * kPlayerStatus = @"status";
+static NSString * kPlayerError = @"error";
+static NSString * kPlayerRate = @"rate";
+static NSString * kPlayerCurrentTime = @"currentTime";
+static NSString * kPlayerVolume = @"volume";
+static NSString * kPlayerMuted = @"muted";
+
+-(void)setupObservingPlayer
+{
+    AVPlayer *avPlayer = _avPlayer;
+    
+    [avPlayer addObserver:self forKeyPath:kPlayerStatus options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    [avPlayer addObserver:self forKeyPath:kPlayerError options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    [avPlayer addObserver:self forKeyPath:kPlayerRate options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    [avPlayer addObserver:self forKeyPath:kPlayerCurrentTime options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    [avPlayer addObserver:self forKeyPath:kPlayerVolume options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    [avPlayer addObserver:self forKeyPath:kPlayerMuted options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    id oldObj = [change valueForKeyPath:NSKeyValueChangeOldKey];
+    id newObj = [change valueForKeyPath:NSKeyValueChangeNewKey];
+    
+   if(object==_avPlayer)
+   {
+        if([keyPath isEqualToString:kPlayerRate])
+        {
+            NSNumber * newValue = newObj;
+            NSNumber * oldValue = oldObj;
+        }
+        else if([keyPath isEqualToString:kPlayerMuted])
+        {
+           
+        }
+        else if([keyPath isEqualToString:kPlayerVolume])
+        {
+           
+        }
+   }
 }
 
 -(void)clearViewSession
