@@ -17,7 +17,7 @@
 -(void)handlePause;
 -(void)handleRewind:(float)speed;
 -(void)handleFastforward:(float)speed;
--(void)handleResumePosition:(float)position;
+-(void)handleResumeTime:(float)second;
 
 -(void)handleEnterFullscreen;
 -(void)handleExitFullscreen;
