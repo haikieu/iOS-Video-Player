@@ -9,6 +9,8 @@
 #import "HKVideoPlayerViewController.h"
 #import "HKVideoPlayerThemeView.h"
 #import "HKVideoPlayerCoreView.h"
+#import "HKVideoPlayerException.h"
+
 @interface HKVideoPlayerViewController ()
 
 @end
@@ -61,12 +63,30 @@
     [_themeView renderThemeOnPlayerVC:self];
     [self.view addSubview:_themeView];
     [self.view bringSubviewToFront:_themeView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    if(![self isFirstResponder])
+        [self becomeFirstResponder];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET(nil);
 }
 
 /*
@@ -127,11 +147,11 @@
     [_coreView handleCloseView];
 }
 
--(void)handleResumePosition:(float)position
+-(void)handleResumeTime:(float)second
 {
-    [_themeView performSelectorOnMainThread:@selector(playerWillUpdatePosition:) withObject:[NSNumber numberWithFloat:position] waitUntilDone:YES];
+    [_themeView performSelectorOnMainThread:@selector(playerWillUpdateTime:) withObject:[NSNumber numberWithFloat:second] waitUntilDone:YES];
     
-    [_coreView handleResumePosition:position];
+    [_coreView handleResumeTime:second];
 }
 
 -(void)handleEnterFullscreen
@@ -159,17 +179,17 @@
 #pragma mark - HKVideoPlayerCore
 
 -(void)playerDidPlay
-{
+{   _isPlay = YES;
     [_themeView performSelectorOnMainThread:@selector(playerDidPlay) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidStop
-{
+{   _isPlay = NO;
     [_themeView performSelectorOnMainThread:@selector(playerDidStop) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidPause
-{
+{   _isPlay = NO;
     [_themeView performSelectorOnMainThread:@selector(playerDidPause) withObject:nil waitUntilDone:NO];
 }
 
@@ -195,11 +215,13 @@
 
 -(void)playerDidExitFullscreen
 {
+    _fullScreen = NO;
     [_themeView performSelectorOnMainThread:@selector(playerDidExitFullscreen) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidEnterFullscreen
 {
+    _fullScreen = YES;
     [_themeView performSelectorOnMainThread:@selector(playerDidEnterFullscreen) withObject:nil waitUntilDone:NO];
 }
 
@@ -209,9 +231,9 @@
     [_delegate videoPlayer:self didCloseView:self.view];
 }
 
--(void)playerDidUpdatePosition:(float)position
+-(void)playerDidUpdateTime:(float)second
 {
-    [_themeView performSelectorOnMainThread:@selector(playerDidUpdatePosition:) withObject:[NSNumber numberWithFloat:position] waitUntilDone:YES];
+    [_themeView performSelectorOnMainThread:@selector(playerDidUpdateTime:) withObject:[NSNumber numberWithFloat:second] waitUntilDone:YES];
 }
 
 -(void)playerDidFastforward:(float)speed
@@ -228,6 +250,137 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_themeView playerDidResizeWithFrame:frame];
     });
+}
+
+#pragma mark - Handle draggable
+
+-(void)enableDragging
+{
+    if(DEVICE_IS_IPHONE())
+        return;
+    [super enableDragging];
+}
+
+-(void)setDraggable:(BOOL)draggable
+{
+    if(DEVICE_IS_IPHONE())
+        return;
+    [super setDraggable:draggable];
+}
+
+#pragma mark - Handle touches
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+
+    
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+ 
+}
+
+-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    self.view.layer.anchorPoint = CGPointMake(0.5,0.5);
+}
+
+#pragma mark - Handle motions
+
+-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    
+}
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    
+}
+-(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    
+}
+
+#pragma mark - Handle remote control
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent {
+    
+    if (receivedEvent.type == UIEventTypeRemoteControl) {
+        
+        switch (receivedEvent.subtype) {
+                
+            case UIEventSubtypeRemoteControlPlay:
+                [self handlePlay];
+                break;
+            case UIEventSubtypeRemoteControlPause:
+                [self handlePause];
+                break;
+            case UIEventSubtypeRemoteControlStop:
+                [self handleStop];
+                break;
+            case UIEventSubtypeRemoteControlTogglePlayPause:
+                if(_isPlay)
+                   [self handlePause];
+                else
+                    [self handlePlay];
+                break;
+                
+            case UIEventSubtypeRemoteControlPreviousTrack:
+                
+                break;
+                
+            case UIEventSubtypeRemoteControlNextTrack:
+                
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+
+#pragma mark - Handle Device Orientation
+
+-(void)UIDeviceOrientationDidChangeNotification:(NSNotification*)notification
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    switch (orientation) {
+        case UIDeviceOrientationFaceUp:
+        case UIDeviceOrientationFaceDown:
+        case UIDeviceOrientationUnknown:
+            
+            //TODO
+            
+            break;
+        case UIDeviceOrientationPortrait:
+            
+            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+            
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+
+            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+            
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+
+            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+            
+            break;
+        case UIDeviceOrientationLandscapeRight:
+
+            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+            
+            break;
+    }
+
 }
 
 @end

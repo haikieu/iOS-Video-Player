@@ -94,7 +94,7 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
--(void)playerWillUpdatePosition:(float)position
+-(void)playerWillUpdateTime:(float)position
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
@@ -174,7 +174,7 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
--(void)playerDidUpdatePosition:(float)position
+-(void)playerDidUpdateTime:(float)position
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
@@ -187,5 +187,50 @@
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
+
+#pragma mark - Handle touches
+//
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerVC touchesBegan:touches withEvent:event];
+//}
+//
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerVC touchesEnded:touches withEvent:event];
+//}
+//
+//-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerVC touchesMoved:touches withEvent:event];
+//}
+//
+//-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerVC touchesCancelled:touches withEvent:event];
+//}
+//
+//#pragma mark - Handle motions
+//
+//-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.playerVC motionBegan:motion withEvent:event];
+//}
+//-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.playerVC motionEnded:motion withEvent:event];
+//}
+//-(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.playerVC motionCancelled:motion withEvent:event];
+//}
+//
+//#pragma mark - Handle remote control
+//
+//-(void)remoteControlReceivedWithEvent:(UIEvent *)event
+//{
+//    [self.playerVC remoteControlReceivedWithEvent:event];
+//}
+
 
 @end

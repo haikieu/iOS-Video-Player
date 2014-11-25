@@ -177,17 +177,85 @@ static NSString * kPlayerRate = @"rate";
 static NSString * kPlayerCurrentTime = @"currentTime";
 static NSString * kPlayerVolume = @"volume";
 static NSString * kPlayerMuted = @"muted";
+static NSString * kPlayerCurrentTIme = @"currentTime";
 
 -(void)setupObservingPlayer
 {
     AVPlayer *avPlayer = _avPlayer;
-    
     [avPlayer addObserver:self forKeyPath:kPlayerStatus options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
     [avPlayer addObserver:self forKeyPath:kPlayerError options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
     [avPlayer addObserver:self forKeyPath:kPlayerRate options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
     [avPlayer addObserver:self forKeyPath:kPlayerCurrentTime options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
     [avPlayer addObserver:self forKeyPath:kPlayerVolume options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
     [avPlayer addObserver:self forKeyPath:kPlayerMuted options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    [avPlayer addObserver:self forKeyPath:kPlayerCurrentTIme options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:@selector(setupObservingPlayer)];
+    
+}
+
+static NSString * kItemStatus = @"status";
+static NSString * kItemError = @"error";
+static NSString * kItemDuration = @"duration";
+static NSString * kItemTracks = @"tracks";
+static NSString * kItemAsset = @"asset";
+
+
+-(void)setupObservingPlayerItem
+{
+    AVPlayerItem *avItem = _avPlayer.currentItem;
+    
+    
+}
+
+-(void)setupObservingPlayerAsset
+{
+    AVAsset *avAsset = _avPlayer.currentItem.asset;
+
+}
+
+-(void)setupNotificationOfPlayerItem
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemTimeJumpedNotification:) name:AVPlayerItemTimeJumpedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemDidPlayToEndTimeNotification:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemFailedToPlayToEndTimeNotification:) name:AVPlayerItemFailedToPlayToEndTimeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemPlaybackStalledNotification:) name:AVPlayerItemPlaybackStalledNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemNewAccessLogEntryNotification:) name:AVPlayerItemNewAccessLogEntryNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemNewErrorLogEntryNotification:) name:AVPlayerItemNewErrorLogEntryNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AVPlayerItemFailedToPlayToEndTimeErrorKey:) name:AVPlayerItemFailedToPlayToEndTimeErrorKey object:nil];
+}
+//    AVPlayerItemTimeJumpedNotification
+-(void)AVPlayerItemTimeJumpedNotification:(NSNotification*) notification
+{
+    
+}
+//    AVPlayerItemDidPlayToEndTimeNotification
+-(void)AVPlayerItemDidPlayToEndTimeNotification:(NSNotification*) notification
+{
+    
+}
+//    AVPlayerItemFailedToPlayToEndTimeNotification
+-(void)AVPlayerItemFailedToPlayToEndTimeNotification:(NSNotification*) notification
+{
+    
+}
+//    // media did not arrive in time to continue playback
+-(void)AVPlayerItemPlaybackStalledNotification:(NSNotification*) notification
+{
+    
+}
+//    // a new access log entry has been added
+-(void)AVPlayerItemNewAccessLogEntryNotification:(NSNotification*) notification
+{
+    
+}
+//    // a new error log entry has been added
+-(void)AVPlayerItemNewErrorLogEntryNotification:(NSNotification*) notification
+{
+    
+}
+//    // notification userInfo key    type
+//    // NSError
+-(void)AVPlayerItemFailedToPlayToEndTimeErrorKey:(NSNotification*) notification
+{
     
 }
 
@@ -211,12 +279,18 @@ static NSString * kPlayerMuted = @"muted";
         {
            
         }
+        else if([keyPath isEqualToString:kPlayerCurrentTIme])
+        {
+            
+        }
    }
 }
 
 -(void)clearViewSession
 {
     [_avAsset cancelLoading];
+    //TODO - remove other obersevers of player, playerItem, playerAsset
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)handlePlay
@@ -253,5 +327,58 @@ static NSString * kPlayerMuted = @"muted";
     
     [_playerViewController playerDidStop];
 }
+
+-(void)handleResumeTime:(float)second
+{
+    CMTime time = CMTimeMakeWithSeconds(second, NSEC_PER_SEC);
+    [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
+        [_playerViewController playerDidUpdateTime:second];
+    }];
+}
+
+#pragma mark - Handle touches
+//
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController touchesBegan:touches withEvent:event];
+//}
+//
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController touchesEnded:touches withEvent:event];
+//}
+//
+//-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController touchesMoved:touches withEvent:event];
+//}
+//
+//-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController touchesCancelled:touches withEvent:event];
+//}
+//
+//#pragma mark - Handle motions
+//
+//-(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController motionBegan:motion withEvent:event];
+//}
+//-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController motionEnded:motion withEvent:event];
+//}
+//-(void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event
+//{
+//    [self.playerViewController motionCancelled:motion withEvent:event];
+//}
+//
+//#pragma mark - Handle remote control
+//
+//-(void)remoteControlReceivedWithEvent:(UIEvent *)event
+//{
+//    [self.playerViewController remoteControlReceivedWithEvent:event];
+//}
+//
 
 @end
