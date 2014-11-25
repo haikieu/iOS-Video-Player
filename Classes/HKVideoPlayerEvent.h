@@ -18,7 +18,7 @@
 -(void) playerWillExitFullscreen;
 -(void) playerWillRewind:(float)speed;
 -(void) playerWillFastforward:(float)speed;
--(void) playerWillUpdatePosition:(float)position;
+-(void) playerWillUpdateTime:(float)second;
 -(void) playerWillCloseView;
 -(void) playerWillResizeWithFrame:(CGRect)frame;
 
@@ -37,7 +37,7 @@
 -(void) playerDidExitFullscreen;
 -(void) playerDidRewind:(float)speed;
 -(void) playerDidFastforward:(float)speed;
--(void) playerDidUpdatePosition:(float)position;
+-(void) playerDidUpdateTime:(float)second;
 -(void) playerDidCloseView;
 -(void) playerDidResizeWithFrame:(CGRect)frame;
 
