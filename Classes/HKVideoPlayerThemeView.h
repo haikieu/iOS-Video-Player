@@ -17,8 +17,9 @@
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
 -(void)setEventHandler;
 
--(void)showThemeView;
--(void)hideThemeView;
+
+-(void)showThemeView:(BOOL)animated;
+-(void)hideThemeView:(BOOL)animated;
 
 -(void)showLoadingAnimation;
 -(void)hideLoadingAnimation;

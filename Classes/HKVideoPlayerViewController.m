@@ -13,6 +13,10 @@
 
 @interface HKVideoPlayerViewController ()
 
+@property(nonatomic,strong)NSTimer *timer;
+@property(nonatomic) NSTimeInterval autoHideInterval;
+@property(nonatomic,assign)BOOL autoHide;
+
 @end
 
 @implementation HKVideoPlayerViewController
@@ -71,10 +75,11 @@
 {
     [super viewDidAppear:animated];
     
-    
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     if(![self isFirstResponder])
         [self becomeFirstResponder];
+    
+    [_timer fire];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -102,9 +107,13 @@
 
 -(void)loadUrl:(NSURL *)url autoPlay:(BOOL)autoPlay
 {
+    [_themeView performSelectorOnMainThread:@selector(playerWillLoad) withObject:nil waitUntilDone:YES];
     _autoPlay = autoPlay;
     [_coreView beginViewSessionWithUrl:url];
 }
+
+
+
 
 #pragma mark - HKVideoPlayerCoreDelegate
 
@@ -176,7 +185,14 @@
     [_coreView handleResizeWithFrame:frame];
 }
 
-#pragma mark - HKVideoPlayerCore
+#pragma mark - HKVideoPlayerEvent - Config
+
+-(UIEdgeInsets)playerGetConfigInsets
+{
+    return [_themeView playerGetConfigInsets];
+}
+
+#pragma mark - HKVideoPlayerEvent - Post
 
 -(void)playerDidPlay
 {   _isPlay = YES;
@@ -195,8 +211,7 @@
 
 -(void)playerDidLoad
 {
-    [_themeView performSelectorOnMainThread:@selector(playerDidReady) withObject:nil waitUntilDone:NO];
-    
+    [_themeView performSelectorOnMainThread:@selector(playerDidLoad) withObject:nil waitUntilDone:NO];
     if(_autoPlay)
     {
         [self handlePlay];
@@ -267,14 +282,62 @@
         return;
     [super setDraggable:draggable];
 }
+BOOL firstTime=YES;
+-(void)autoHideThemeView:(BOOL)enable afterTime:(float)second
+{
+    _autoHide = enable;
+    _autoHideInterval = second;
+    
+    if(_autoHide)
+    {
+        [_timer invalidate];
+        firstTime=YES;
+        _timer = [NSTimer scheduledTimerWithTimeInterval:second target:self selector:@selector(autoHideTheme) userInfo:nil repeats:YES];
+    }
+    else
+    {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
+
+-(void)autoHideTheme
+{
+    if(firstTime)
+    {
+        firstTime = NO;
+        return;
+    }
+    
+    if(self.themeView.hidden)
+        return;
+    
+    [_themeView hideThemeView:YES];
+    [_timer invalidate];
+}
+
+#pragma mark - override draggable
+
+-(void)handlePan:(UIPanGestureRecognizer *)sender
+{
+    [super handlePan:sender];
+}
 
 #pragma mark - Handle touches
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-
+    UITouch *touch = [[touches objectEnumerator] nextObject];
+    BOOL shouldDraggable = [_themeView playerShouldDraggableAtPosition:[touch locationInView:_themeView]];
+    [self setDraggable:shouldDraggable];
     
+    if(_themeView.hidden)
+    {
+        [_themeView showThemeView:YES];
+        [self autoHideThemeView:_autoHide afterTime:_autoHideInterval];
+    }
 }
+
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {

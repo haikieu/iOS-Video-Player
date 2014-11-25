@@ -50,5 +50,6 @@
 
 -(instancetype)initWithFrame:(CGRect)frame theme:(HKVideoPlayerThemeView*) themeView;
 
+-(void)autoHideThemeView:(BOOL)enable afterTime:(float) second;
 
 @end

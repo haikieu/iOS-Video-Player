@@ -11,7 +11,14 @@
 #import "HKVideoPlayerException.h"
 #import "HKVideoPlayerViewController.h"
 
+@interface HKVideoPlayerThemeView ()
+
+
+
+@end
+
 @implementation HKVideoPlayerThemeView
+
 
 @synthesize playerVC=_playerVC;
 
@@ -49,14 +56,31 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
--(void)showThemeView
+
+-(void)showThemeView:(BOOL)animated
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    float durationValue = animated ? 1 : 0;
+    self.alpha = 0;
+    self.playerVC.view.userInteractionEnabled=NO;
+    [UIView animateWithDuration:durationValue delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self setHidden:NO];
+        self.playerVC.view.userInteractionEnabled=YES;
+    }];
 }
 
--(void)hideThemeView
+-(void)hideThemeView:(BOOL)animated
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    float durationValue = animated ? 1 : 0;
+    self.alpha = 1;
+    self.playerVC.view.userInteractionEnabled=NO;
+    [UIView animateWithDuration:durationValue delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self setHidden:YES];
+        self.playerVC.view.userInteractionEnabled=YES;
+    }];
 }
 
 -(void)showLoadingAnimation
@@ -67,6 +91,20 @@
 -(void)hideLoadingAnimation
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
+
+#pragma mark - HKVideoPlayerEvent Config
+
+-(UIEdgeInsets)playerGetConfigInsets
+{
+    return UIEdgeInsetsMake(0, 0, 0, 0);
+}
+
+#pragma mark - HKVideoPlayerEvent Pre
+
+-(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
+{
+    return CGRectContainsPoint(self.frame, postion);
 }
 
 -(void)playerWillResizeWithFrame:(CGRect)frame
@@ -81,7 +119,7 @@
 
 -(void)playerWillLoad
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    [self showLoadingAnimation];
 }
 
 -(void)playerWillRewind:(float)speed
@@ -124,6 +162,8 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
+#pragma mark - HKVideoPlayerEvent Post
+
 -(void)playerDidResizeWithFrame:(CGRect)frame
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
@@ -146,7 +186,8 @@
 
 -(void)playerDidLoad
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    [self hideLoadingAnimation];
+    [self showThemeView:YES];
 }
 
 -(void)playerDidFailure

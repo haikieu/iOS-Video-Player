@@ -30,12 +30,22 @@
 }
 */
 
-
+UIView *topBar;
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
 {
     [super renderThemeOnPlayerVC:playerVC];
+    topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
+    topBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    [self addSubview:topBar];
+    
+    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
+    bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    [self addSubview:bottomBar];
 }
-
+-(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
+{
+    return CGRectContainsPoint(topBar.frame, postion);
+}
 -(void)playerDidPlay
 {
   

@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, HKAutoReverseMode) {
  * @param draggable The boolean that enables or disables the draggable state
  */
 - (void)setDraggable:(BOOL)draggable;
+- (void)handlePan:(UIPanGestureRecognizer*)sender;
 
 -(void)enableOutOfBoundary:(BOOL)enable;
 -(void)enableAutoReversePostion:(BOOL) enable reserveMode:(HKAutoReverseMode) reverseMode;
