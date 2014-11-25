@@ -200,20 +200,20 @@
 			isa = PBXGroup;
 			children = (
 				42A5172E1A218DB600830416 /* HKVideoPlayer.bundle */,
-				42EBF2F71A206137006AF19C /* HKVideoPlayerViewControllerDelegate.h */,
-				42EBF3001A2064E3006AF19C /* HKVideoPlayerFuntionality.h */,
+				42EBF2F81A206189006AF19C /* HKVideoPlayerNotifications.h */,
 				42EBF3011A2064F8006AF19C /* HKVideoPlayerEvent.h */,
+				42EBF3001A2064E3006AF19C /* HKVideoPlayerFuntionality.h */,
+				42EBF2F71A206137006AF19C /* HKVideoPlayerViewControllerDelegate.h */,
 				42EBF2EB1A20602B006AF19C /* HKVideoPlayerViewController.h */,
 				42EBF2EC1A20602B006AF19C /* HKVideoPlayerViewController.m */,
-				426416B81A24753600E1EC18 /* UIViewController+Draggable.h */,
-				426416B91A24753600E1EC18 /* UIViewController+Draggable.m */,
 				42EBF2F21A2060D3006AF19C /* HKVideoPlayerCoreView.h */,
 				42EBF2F31A2060D3006AF19C /* HKVideoPlayerCoreView.m */,
 				42EBF2EF1A206085006AF19C /* HKVideoPlayerThemeView.h */,
 				42EBF2F01A206085006AF19C /* HKVideoPlayerThemeView.m */,
-				42EBF2F81A206189006AF19C /* HKVideoPlayerNotifications.h */,
 				4212A9CC1A20FAA100B970EE /* HKVideoPlayerException.h */,
 				4212A9CD1A20FAA100B970EE /* HKVideoPlayerException.m */,
+				426416B81A24753600E1EC18 /* UIViewController+Draggable.h */,
+				426416B91A24753600E1EC18 /* UIViewController+Draggable.m */,
 				42EBF2EE1A206040006AF19C /* Themes */,
 			);
 			name = Classes;

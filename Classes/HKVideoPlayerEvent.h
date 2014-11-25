@@ -17,6 +17,7 @@
 @protocol HKVideoPlayerPreEvent <HKVideoPlayerConfigEvent>
 
 -(BOOL) playerShouldDraggableAtPosition:(CGPoint)postion;
+-(BOOL) playerShouldResizeWithFrame:(CGRect)frame;
 
 -(void) playerWillLoad;
 -(void) playerWillPlay;

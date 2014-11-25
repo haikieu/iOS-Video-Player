@@ -102,6 +102,11 @@
 
 #pragma mark - HKVideoPlayerEvent Pre
 
+-(BOOL)playerShouldResizeWithFrame:(CGRect)frame
+{
+    return YES;
+}
+
 -(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
 {
     return CGRectContainsPoint(self.frame, postion);
