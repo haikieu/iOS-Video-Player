@@ -9,7 +9,24 @@
 #import "UIViewController+Draggable.h"
 #import <objc/runtime.h>
 
+
+
 @implementation UIViewController (Draggable)
+
+BOOL _enableOutOfBoundary;
+BOOL _enableAutoReverse;
+HKAutoReverseMode _reverseMode;
+
+-(void)enableOutOfBoundary:(BOOL)enable
+{
+    _enableOutOfBoundary = enable;
+}
+
+-(void)enableAutoReversePostion:(BOOL)enable reserveMode:(HKAutoReverseMode)reverseMode
+{
+    _enableAutoReverse = enable;
+    _reverseMode = reverseMode;
+}
 
 - (void)setPanGesture:(UIPanGestureRecognizer*)panGesture
 {
@@ -24,11 +41,22 @@
 - (void)handlePan:(UIPanGestureRecognizer*)sender
 {
 	[self adjustAnchorPointForGestureRecognizer:sender];
-	
+	CGFloat topMargin = [UIApplication sharedApplication].isStatusBarHidden?0:20.;
 	CGPoint translation = [sender translationInView:[self.view superview]];
-	[self.view setCenter:CGPointMake([self.view center].x + translation.x, [self.view center].y + translation.y)];
-	
+    
+    CGPoint currentLocation = self.view.center;
+    CGPoint newLocation = CGPointMake([self.view center].x + translation.x, [self.view center].y + translation.y);
+    
+    CGPoint newRightDownBounadaryLocation = CGPointMake(CGRectGetMaxX(self.view.frame)+translation.x, CGRectGetMaxY(self.view.frame)+translation.y);
+    CGPoint newTopLeftBounadaryLocation = CGPointMake(CGRectGetMinX(self.view.frame)+translation.x, CGRectGetMinY(self.view.frame)+translation.y-topMargin);
+    
+    if(CGRectContainsPoint(self.view.superview.frame, newRightDownBounadaryLocation)&&CGRectContainsPoint(self.view.superview.frame, newTopLeftBounadaryLocation))
+    {
+        [self.view setCenter:newLocation];
+    }
+    
 	[sender setTranslation:(CGPoint){0, 0} inView:[self.view superview]];
+    
 }
 
 - (void)adjustAnchorPointForGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer

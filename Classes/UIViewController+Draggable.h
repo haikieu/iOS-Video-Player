@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, HKAutoReverseMode) {
+    HKAutoReverseToOriginalPosition,
+    HKAutoReverseToBoundaryPosition
+};
+
 @interface UIViewController (Draggable)
 
 /**-----------------------------------------------------------------------------
@@ -30,6 +35,7 @@
  *
  * Enables the dragging state of the view
  */
+
 - (void)enableDragging;
 
 /** Disable or enable the view dragging
@@ -37,5 +43,8 @@
  * @param draggable The boolean that enables or disables the draggable state
  */
 - (void)setDraggable:(BOOL)draggable;
+
+-(void)enableOutOfBoundary:(BOOL)enable;
+-(void)enableAutoReversePostion:(BOOL) enable reserveMode:(HKAutoReverseMode) reverseMode;
 
 @end
