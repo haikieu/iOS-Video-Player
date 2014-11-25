@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4212A9CE1A20FAA100B970EE /* HKVideoPlayerException.m in Sources */ = {isa = PBXBuildFile; fileRef = 4212A9CD1A20FAA100B970EE /* HKVideoPlayerException.m */; };
+		4212A9D01A210CF000B970EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4212A9CF1A210CF000B970EE /* CoreVideo.framework */; };
+		4212A9D21A210D3400B970EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4212A9D11A210D3400B970EE /* MediaPlayer.framework */; };
+		426416BA1A24753600E1EC18 /* UIViewController+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = 426416B91A24753600E1EC18 /* UIViewController+Draggable.m */; };
+		42A5172F1A218DB600830416 /* HKVideoPlayer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 42A5172E1A218DB600830416 /* HKVideoPlayer.bundle */; };
 		42EBF2B31A205E93006AF19C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B21A205E93006AF19C /* Foundation.framework */; };
 		42EBF2B51A205E93006AF19C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B41A205E93006AF19C /* CoreGraphics.framework */; };
 		42EBF2B71A205E93006AF19C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B61A205E93006AF19C /* UIKit.framework */; };
@@ -44,6 +48,11 @@
 /* Begin PBXFileReference section */
 		4212A9CC1A20FAA100B970EE /* HKVideoPlayerException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerException.h; path = ../../Classes/HKVideoPlayerException.h; sourceTree = "<group>"; };
 		4212A9CD1A20FAA100B970EE /* HKVideoPlayerException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerException.m; path = ../../Classes/HKVideoPlayerException.m; sourceTree = "<group>"; };
+		4212A9CF1A210CF000B970EE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		4212A9D11A210D3400B970EE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		426416B81A24753600E1EC18 /* UIViewController+Draggable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Draggable.h"; path = "../../Classes/UIViewController+Draggable.h"; sourceTree = "<group>"; };
+		426416B91A24753600E1EC18 /* UIViewController+Draggable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Draggable.m"; path = "../../Classes/UIViewController+Draggable.m"; sourceTree = "<group>"; };
+		42A5172E1A218DB600830416 /* HKVideoPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = HKVideoPlayer.bundle; path = ../../Classes/HKVideoPlayer.bundle; sourceTree = "<group>"; };
 		42EBF2AF1A205E93006AF19C /* iOS Video Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Video Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42EBF2B21A205E93006AF19C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		42EBF2B41A205E93006AF19C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -85,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4212A9D21A210D3400B970EE /* MediaPlayer.framework in Frameworks */,
+				4212A9D01A210CF000B970EE /* CoreVideo.framework in Frameworks */,
 				42EBF2FF1A2063B3006AF19C /* QuartzCore.framework in Frameworks */,
 				42EBF2FD1A20630C006AF19C /* AVFoundation.framework in Frameworks */,
 				42EBF2B51A205E93006AF19C /* CoreGraphics.framework in Frameworks */,
@@ -128,6 +139,8 @@
 		42EBF2B11A205E93006AF19C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4212A9D11A210D3400B970EE /* MediaPlayer.framework */,
+				4212A9CF1A210CF000B970EE /* CoreVideo.framework */,
 				42EBF2FE1A2063B3006AF19C /* QuartzCore.framework */,
 				42EBF2FC1A20630C006AF19C /* AVFoundation.framework */,
 				42EBF2B21A205E93006AF19C /* Foundation.framework */,
@@ -186,11 +199,14 @@
 		42EBF2EA1A205FDC006AF19C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				42A5172E1A218DB600830416 /* HKVideoPlayer.bundle */,
 				42EBF2F71A206137006AF19C /* HKVideoPlayerViewControllerDelegate.h */,
 				42EBF3001A2064E3006AF19C /* HKVideoPlayerFuntionality.h */,
 				42EBF3011A2064F8006AF19C /* HKVideoPlayerEvent.h */,
 				42EBF2EB1A20602B006AF19C /* HKVideoPlayerViewController.h */,
 				42EBF2EC1A20602B006AF19C /* HKVideoPlayerViewController.m */,
+				426416B81A24753600E1EC18 /* UIViewController+Draggable.h */,
+				426416B91A24753600E1EC18 /* UIViewController+Draggable.m */,
 				42EBF2F21A2060D3006AF19C /* HKVideoPlayerCoreView.h */,
 				42EBF2F31A2060D3006AF19C /* HKVideoPlayerCoreView.m */,
 				42EBF2EF1A206085006AF19C /* HKVideoPlayerThemeView.h */,
@@ -292,6 +308,7 @@
 				42EBF2C91A205E93006AF19C /* Main_iPad.storyboard in Resources */,
 				42EBF2CE1A205E93006AF19C /* Images.xcassets in Resources */,
 				42EBF2C61A205E93006AF19C /* Main_iPhone.storyboard in Resources */,
+				42A5172F1A218DB600830416 /* HKVideoPlayer.bundle in Resources */,
 				42EBF2BD1A205E93006AF19C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -319,6 +336,7 @@
 				42EBF2ED1A20602B006AF19C /* HKVideoPlayerViewController.m in Sources */,
 				42EBF2C31A205E93006AF19C /* HKAppDelegate.m in Sources */,
 				42EBF2F41A2060D3006AF19C /* HKVideoPlayerCoreView.m in Sources */,
+				426416BA1A24753600E1EC18 /* UIViewController+Draggable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
