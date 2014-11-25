@@ -12,7 +12,17 @@
 
 +(void)notImplementedYetExceptionAtFunction:(const char *)function
 {
-    [NSException exceptionWithName:@"NotImplementedYetExcepttion" reason:[NSString stringWithFormat:@"Please implement method %s",function] userInfo:nil];
+    [self notImplementedYetExceptionAtFunction:function withMessage:nil];
+}
+
++(void)notImplementedYetExceptionAtFunction:(const char *)function withMessage:(NSString *)message
+{
+    NSException *ex = [NSException exceptionWithName:@"NotImplementedYetExcepttion" reason:[NSString stringWithFormat:@"Please implement method %s",function] userInfo:@{@"message":message?message:@"",@"stacktrace":[NSThread callStackSymbols]}];
+
+
+//    NSLog(@"%@",[NSString stringWithFormat:@"NotImplementedYetExcepttion >>> %@",[NSString stringWithFormat:@"Please implement method %s",function]]);
+    NSLog(@"%@",ex);
+    
 }
 
 @end
