@@ -8,7 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HKVideoPlayerPreEvent <NSObject>
+@protocol HKVideoPlayerConfigEvent <NSObject>
+
+-(UIEdgeInsets)playerGetConfigInsets;
+
+@end
+
+@protocol HKVideoPlayerPreEvent <HKVideoPlayerConfigEvent>
+
+-(BOOL) playerShouldDraggableAtPosition:(CGPoint)postion;
 
 -(void) playerWillLoad;
 -(void) playerWillPlay;
@@ -20,12 +28,13 @@
 -(void) playerWillFastforward:(float)speed;
 -(void) playerWillUpdateTime:(float)second;
 -(void) playerWillCloseView;
+
 -(void) playerWillResizeWithFrame:(CGRect)frame;
 
 @end
 
+@protocol HKVideoPlayerPostEvent <HKVideoPlayerConfigEvent>
 
-@protocol HKVideoPlayerPostEvent <NSObject>
 
 -(void) playerDidLoad;
 -(void) playerDidFailure;
