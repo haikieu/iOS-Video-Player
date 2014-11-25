@@ -44,7 +44,7 @@ UIView *topBar;
 }
 -(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
 {
-    return CGRectContainsPoint(topBar.frame, postion);
+    return !topBar.hidden && CGRectContainsPoint(topBar.frame, postion);
 }
 -(void)playerDidPlay
 {
