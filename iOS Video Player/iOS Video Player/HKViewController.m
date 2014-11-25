@@ -30,6 +30,7 @@
     
     _playerVC = [[HKVideoPlayerViewController alloc] initWithFrame:CGRectMake(20, 20, 600, 400) theme:[HKVideoPlayerDefaultTheme theme]];
     [_playerVC enableDragging];
+    [_playerVC autoHideThemeView:YES afterTime:3];
     
     if(DEVICE_IS_IPHONE())
     {
