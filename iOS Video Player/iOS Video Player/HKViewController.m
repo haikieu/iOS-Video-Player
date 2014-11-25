@@ -22,14 +22,37 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
     _playerVC = [[HKVideoPlayerViewController alloc] initWithFrame:CGRectMake(20, 20, 600, 400) theme:[HKVideoPlayerDefaultTheme theme]];
-    [self.view addSubview:_playerVC.view];
+    [_playerVC enableDragging];
+    
+    if(DEVICE_IS_IPHONE())
+    {
+        [self presentViewController:_playerVC animated:YES completion:^{
+            
+        }];
+        
+    }
+    else
+    {
+        [self.view addSubview:_playerVC.view];
+    }
+    
+    [_playerVC loadUrl:[NSURL URLWithString:URL_ADVANCED_STREAMING] autoPlay:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [_playerVC loadUrl:[NSURL URLWithString:URL_BASIC_STREAMING] autoPlay:YES];
+    
+    
+    
+    
 }
 
 
