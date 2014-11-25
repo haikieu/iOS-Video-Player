@@ -30,6 +30,7 @@
 }
 */
 
+
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
 {
     [super renderThemeOnPlayerVC:playerVC];
