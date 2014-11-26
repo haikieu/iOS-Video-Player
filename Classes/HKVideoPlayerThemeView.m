@@ -24,14 +24,30 @@
     return @"HKVideoPlayer.bundle";
 }
 
-+(UIImage *)getAssetImageWithName:(NSString *)name
++(UIImage *)getAssetImageWithName:(NSString *)fileName
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:[name stringByDeletingPathExtension] ofType:[name pathExtension]];
+    return [self getAssetImageWithName:fileName bundle:[self specifyDefaultBundle]];
+}
+
++(UIImage *)getAssetImageWithName:(NSString *)fileName bundle:(NSString *)bundleName
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:[bundleName stringByDeletingPathExtension] ofType:[bundleName pathExtension]];
     
-    NSString *imagePath = [NSString stringWithFormat:@"%@/%@.png",bundlePath,name];
+    NSString *imagePath = [NSString stringWithFormat:@"%@/Assets/%@.png",bundlePath,fileName];
     UIImage * image = [UIImage imageWithContentsOfFile:imagePath];
     
     return image;
+}
+
++(NSString *)timeStringFromSeconds:(float)secondsValue;
+{
+    NSInteger currentSeconds = ceilf(secondsValue);
+    NSInteger seconds = currentSeconds % 60;
+    NSInteger minutes = currentSeconds / 60;
+    NSInteger hours = minutes / 60;
+    
+    NSString * currentTime = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    return currentTime;
 }
 
 @end
@@ -131,6 +147,11 @@
     return CGRectContainsPoint(self.frame, postion);
 }
 
+-(BOOL)playerShouldClipsToBounds
+{
+    return self.clipsToBounds;
+}
+
 -(void)playerWillResizeWithFrame:(CGRect)frame
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
@@ -204,6 +225,16 @@
 }
 
 -(void)playerDidPause
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
+
+-(void)playerDidRenderView
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
+
+-(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }

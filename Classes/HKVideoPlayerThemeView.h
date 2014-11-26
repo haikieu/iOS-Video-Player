@@ -36,6 +36,10 @@
 @interface HKVideoPlayerThemeView(Assets)
 
 +(NSString*)specifyDefaultBundle;
-+(UIImage*)getAssetImageWithName:(NSString*)name;
++(UIImage*)getAssetImageWithName:(NSString*)fileName;
++(UIImage*)getAssetImageWithName:(NSString*)fileName bundle:(NSString*)bundleName;
+
++(NSString *)timeStringFromSeconds:(float)secondsValue;
+
 
 @end

@@ -17,7 +17,7 @@
 @property UIView *bottomBar;
 @property UISlider *progressBar;
 @property UIButton *btnPlay;
-
+@property UIButton *btnClose;
 
 @end
 
@@ -46,13 +46,29 @@ UIView *bottomBar;
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
 {
     [super renderThemeOnPlayerVC:playerVC];
-    topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
-    topBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
-    [self addSubview:topBar];
+    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
+    _topBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    [self addSubview:_topBar];
     
-    bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
-    bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
-    [self addSubview:bottomBar];
+    _btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnClose.frame = CGRectMake(self.bounds.size.width - 40, 0, 40, 40);
+    [_btnClose setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_cross"] forState:UIControlStateNormal];
+    [_btnClose addTarget:self.playerVC action:@selector(handleCloseView) forControlEvents:UIControlEventTouchUpInside];
+    [_topBar addSubview:_btnClose];
+    
+    _bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
+    _bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
+    [self addSubview:_bottomBar];
+    
+    _btnPlay = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnPlay.frame = CGRectMake(0, 0, 40, 40);
+    [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
+    [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomBar addSubview:_btnPlay];
+    _progressBar = [[UISlider alloc] initWithFrame:CGRectMake(40, 0, self.bounds.size.width-40, 40)];
+    
+    [_bottomBar addSubview:_progressBar];
+    
     
     
 }
@@ -60,17 +76,17 @@ UIView *bottomBar;
 -(void)showThemeView:(BOOL)animated
 {
         self.hidden = NO;
-        topBar.transform = CGAffineTransformTranslate(topBar.transform, 0, -topBar.bounds.size.height);
-        topBar.alpha=0;
-        bottomBar.transform = CGAffineTransformTranslate(bottomBar.transform, 0, bottomBar.bounds.size.height);
-        bottomBar.alpha=0;
+        _topBar.transform = CGAffineTransformTranslate(_topBar.transform, 0, -_topBar.bounds.size.height);
+        _topBar.alpha=0;
+        _bottomBar.transform = CGAffineTransformTranslate(_bottomBar.transform, 0, _bottomBar.bounds.size.height);
+        _bottomBar.alpha=0;
         
         [UIView animateWithDuration:animated?1:0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
             
-            topBar.alpha=1;
-            topBar.transform = CGAffineTransformIdentity;
-            bottomBar.alpha=1;
-            bottomBar.transform = CGAffineTransformIdentity;
+            _topBar.alpha=1;
+            _topBar.transform = CGAffineTransformIdentity;
+            _bottomBar.alpha=1;
+            _bottomBar.transform = CGAffineTransformIdentity;
             
         } completion:^(BOOL finished) {
             
@@ -80,33 +96,56 @@ UIView *bottomBar;
 -(void)hideThemeView:(BOOL)animated
 {
     
-    topBar.alpha=1;
+    _topBar.alpha=1;
     
-    bottomBar.alpha=1;
-    topBar.transform = CGAffineTransformIdentity;
-    bottomBar.transform = CGAffineTransformIdentity;
+    _bottomBar.alpha=1;
+    _topBar.transform = CGAffineTransformIdentity;
+    _bottomBar.transform = CGAffineTransformIdentity;
     [UIView animateWithDuration:animated?1:0 animations:^{
-        topBar.alpha=0;
-        topBar.transform = CGAffineTransformTranslate(topBar.transform, 0, -topBar.bounds.size.height);
-        bottomBar.alpha=0;
-        bottomBar.transform = CGAffineTransformTranslate(bottomBar.transform, 0, bottomBar.bounds.size.height);
+        _topBar.alpha=0;
+        _topBar.transform = CGAffineTransformTranslate(_topBar.transform, 0, -_topBar.bounds.size.height);
+        _bottomBar.alpha=0;
+        _bottomBar.transform = CGAffineTransformTranslate(_bottomBar.transform, 0, _bottomBar.bounds.size.height);
     } completion:^(BOOL finished) {
         self.hidden = YES;
     }];
 }
 
+-(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime
+{
+    [_progressBar setValue:(currentTime/durationTime) animated:YES];
+}
+
 -(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
 {
-    return !topBar.hidden && CGRectContainsPoint(topBar.frame, postion);
+    return !_topBar.hidden && CGRectContainsPoint(_topBar.frame, postion);
 }
+
 -(void)playerDidPlay
 {
-  
+    [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_pause"] forState:UIControlStateNormal];
+    [_btnPlay addTarget:self.playerVC action:@selector(handlePause) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)playerDidPause
+{
+    [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
+    [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)playerDidCloseView
+{
+    [self hideThemeView:YES];
 }
 
 -(UIEdgeInsets)playerGetConfigInsets
 {
     return UIEdgeInsetsMake(50, 0, 50, 0);
+}
+
+-(BOOL)playerShouldClipsToBounds
+{
+    return YES;
 }
 
 -(void)setEventHandler
