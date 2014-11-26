@@ -31,6 +31,7 @@
 */
 
 UIView *topBar;
+UIView *bottomBar;
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
 {
     [super renderThemeOnPlayerVC:playerVC];
@@ -38,10 +39,49 @@ UIView *topBar;
     topBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:topBar];
     
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
+    bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
     bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:bottomBar];
 }
+
+-(void)showThemeView:(BOOL)animated
+{
+        self.hidden = NO;
+        topBar.transform = CGAffineTransformTranslate(topBar.transform, 0, -topBar.bounds.size.height);
+        topBar.alpha=0;
+        bottomBar.transform = CGAffineTransformTranslate(bottomBar.transform, 0, bottomBar.bounds.size.height);
+        bottomBar.alpha=0;
+        
+        [UIView animateWithDuration:animated?1:0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+            
+            topBar.alpha=1;
+            topBar.transform = CGAffineTransformIdentity;
+            bottomBar.alpha=1;
+            bottomBar.transform = CGAffineTransformIdentity;
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+}
+
+-(void)hideThemeView:(BOOL)animated
+{
+    
+    topBar.alpha=1;
+    
+    bottomBar.alpha=1;
+    topBar.transform = CGAffineTransformIdentity;
+    bottomBar.transform = CGAffineTransformIdentity;
+    [UIView animateWithDuration:animated?1:0 animations:^{
+        topBar.alpha=0;
+        topBar.transform = CGAffineTransformTranslate(topBar.transform, 0, -topBar.bounds.size.height);
+        bottomBar.alpha=0;
+        bottomBar.transform = CGAffineTransformTranslate(bottomBar.transform, 0, bottomBar.bounds.size.height);
+    } completion:^(BOOL finished) {
+        self.hidden = YES;
+    }];
+}
+
 -(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
 {
     return !topBar.hidden && CGRectContainsPoint(topBar.frame, postion);
@@ -49,6 +89,11 @@ UIView *topBar;
 -(void)playerDidPlay
 {
   
+}
+
+-(UIEdgeInsets)playerGetConfigInsets
+{
+    return UIEdgeInsetsMake(50, 0, 50, 0);
 }
 
 -(void)setEventHandler
