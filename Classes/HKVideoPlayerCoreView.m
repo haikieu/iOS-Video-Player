@@ -90,7 +90,7 @@
 
 #pragma mark - Scrubb
 
--(NSString *)getDurationTime
+-(NSString *)getDurationTimeString
 {
     NSInteger durationSeconds = ceilf(CMTimeGetSeconds(self.player.currentItem.duration));
     NSInteger seconds = durationSeconds % 60;
@@ -101,23 +101,23 @@
     return durationTime;
 }
 
--(NSString *)getRemainTime
+-(NSString *)getRemainTimeString
 {
     NSInteger currentSeconds = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
 
     NSInteger duration = ceilf(CMTimeGetSeconds(self.avPlayer.currentItem.duration));
-    NSInteger currentDurationSeconds = duration-currentSeconds;
-    NSInteger durationSeconds = currentDurationSeconds % 60;
-    NSInteger durationMinutes = currentDurationSeconds / 60;
+    NSInteger remainSeconds = duration-currentSeconds;
+    NSInteger durationSeconds = remainSeconds % 60;
+    NSInteger durationMinutes = remainSeconds / 60;
     NSInteger durationHours = durationMinutes / 60;
     
     NSString *remainTime = [NSString stringWithFormat:@"-%02ld:%02ld:%02ld", (long)durationHours, (long)durationMinutes, (long)durationSeconds];
     return remainTime;
 }
 
--(NSString *)getCurrentTime
+-(NSString *)getCurrentTimeString
 {
-    NSInteger currentSeconds = ceilf(CMTimeGetSeconds(self.player.currentTime));
+    NSInteger currentSeconds = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
     NSInteger seconds = currentSeconds % 60;
     NSInteger minutes = currentSeconds / 60;
     NSInteger hours = minutes / 60;
@@ -168,10 +168,11 @@
 
 - (void)syncScrobber {
 
-    //TODO
-    [self getCurrentTime];
-    [self getDurationTime];
-    [self getRemainTime];
+    NSInteger current = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
+    NSInteger duration = ceilf(CMTimeGetSeconds(self.avPlayer.currentItem.duration));
+    NSInteger remain = duration-current;
+    
+    [_playerViewController playerDidUpdateCurrentTime:current remainTime:remain durationTime:duration];
     
     NSLog(@"%@", self.player.currentItem.seekableTimeRanges);
 }
@@ -295,6 +296,7 @@ NSTimer *avStatusTimer;
                 [self setPlayer:_avPlayer];
                 
                 [_playerViewController playerDidLoad];
+                [self syncScrobber];
                 
                 break;
         }
@@ -334,14 +336,11 @@ static NSString * kItemAsset = @"asset";
 -(void)setupObservingPlayerItem
 {
     AVPlayerItem *avItem = _avPlayer.currentItem;
-    
-    
 }
 
 -(void)setupObservingPlayerAsset
 {
     AVAsset *avAsset = _avPlayer.currentItem.asset;
-
 }
 
 -(void)setupNotificationOfPlayerItem
@@ -420,15 +419,15 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handlePlay
 {
+    [self addPlayerTimeObserver];
     [_avPlayer play];
-    
     [_playerViewController playerDidPlay];
 }
 
 -(void)handlePause
 {
+    [self removePlayerTimeObserver];
     [_avPlayer pause];
-    
     [_playerViewController playerDidPause];
 }
 
@@ -447,9 +446,10 @@ static NSString * kItemAsset = @"asset";
 }
 -(void)handleStop
 {
+    
     [_avPlayer pause];
     [_avPlayer seekToTime:kCMTimeZero];
-    
+    [self removePlayerTimeObserver];
     [_playerViewController playerDidStop];
 }
 
@@ -459,6 +459,12 @@ static NSString * kItemAsset = @"asset";
     [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
         [_playerViewController playerDidUpdateTime:second];
     }];
+}
+
+-(void)handleCloseView
+{
+    [_avPlayer pause];
+    [_playerViewController playerDidCloseView];
 }
 
 #pragma mark - Handle touches

@@ -69,6 +69,9 @@
     [self.view bringSubviewToFront:_themeView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    
+    self.view.clipsToBounds = [_themeView playerShouldClipsToBounds];
+    [self playerDidRenderView];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -194,6 +197,12 @@
 
 #pragma mark - HKVideoPlayerEvent - Post
 
+-(void)playerDidRenderView
+{
+    _themeView.hidden = YES;
+    [_themeView performSelectorOnMainThread:@selector(playerDidRenderView) withObject:nil waitUntilDone:NO];
+}
+
 -(void)playerDidPlay
 {   _isPlay = YES;
     [_themeView performSelectorOnMainThread:@selector(playerDidPlay) withObject:nil waitUntilDone:NO];
@@ -249,6 +258,13 @@
 -(void)playerDidUpdateTime:(float)second
 {
     [_themeView performSelectorOnMainThread:@selector(playerDidUpdateTime:) withObject:[NSNumber numberWithFloat:second] waitUntilDone:YES];
+}
+
+-(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_themeView playerDidUpdateCurrentTime:currentTime remainTime:remainTime durationTime:durationTime];
+    });
 }
 
 -(void)playerDidFastforward:(float)speed
@@ -358,7 +374,11 @@ BOOL firstTime=YES;
 
 -(void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
-    
+    if(_themeView.hidden)
+    {
+        [_themeView showThemeView:YES];
+        [self autoHideThemeView:_autoHide afterTime:_autoHideInterval];
+    }
 }
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
