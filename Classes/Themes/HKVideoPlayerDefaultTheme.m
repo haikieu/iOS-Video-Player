@@ -10,6 +10,17 @@
 #import "HKVideoPlayerViewController.h"
 #import "HKVideoPlayerCoreView.h"
 
+@interface HKVideoPlayerDefaultTheme ()
+
+@property UILabel *title;
+@property UIView *topBar;
+@property UIView *bottomBar;
+@property UISlider *progressBar;
+@property UIButton *btnPlay;
+
+
+@end
+
 @implementation HKVideoPlayerDefaultTheme
 
 - (id)initWithFrame:(CGRect)frame
@@ -42,6 +53,8 @@ UIView *bottomBar;
     bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
     bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:bottomBar];
+    
+    
 }
 
 -(void)showThemeView:(BOOL)animated

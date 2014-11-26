@@ -31,3 +31,11 @@
 +(HKVideoPlayerThemeView*) theme;
 
 @end
+
+
+@interface HKVideoPlayerThemeView(Assets)
+
++(NSString*)specifyDefaultBundle;
++(UIImage*)getAssetImageWithName:(NSString*)name;
+
+@end

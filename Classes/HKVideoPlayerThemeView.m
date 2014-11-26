@@ -17,6 +17,25 @@
 
 @end
 
+@implementation HKVideoPlayerThemeView(Assets)
+
++(NSString *)specifyDefaultBundle
+{
+    return @"HKVideoPlayer.bundle";
+}
+
++(UIImage *)getAssetImageWithName:(NSString *)name
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:[name stringByDeletingPathExtension] ofType:[name pathExtension]];
+    
+    NSString *imagePath = [NSString stringWithFormat:@"%@/%@.png",bundlePath,name];
+    UIImage * image = [UIImage imageWithContentsOfFile:imagePath];
+    
+    return image;
+}
+
+@end
+
 @implementation HKVideoPlayerThemeView
 
 
