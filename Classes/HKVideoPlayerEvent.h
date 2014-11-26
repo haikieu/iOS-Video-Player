@@ -18,6 +18,7 @@
 
 -(BOOL) playerShouldDraggableAtPosition:(CGPoint)postion;
 -(BOOL) playerShouldResizeWithFrame:(CGRect)frame;
+-(BOOL) playerShouldClipsToBounds;
 
 -(void) playerWillLoad;
 -(void) playerWillPlay;
@@ -36,7 +37,7 @@
 
 @protocol HKVideoPlayerPostEvent <HKVideoPlayerConfigEvent>
 
-
+-(void) playerDidRenderView;
 -(void) playerDidLoad;
 -(void) playerDidFailure;
 -(void) playerDidReady;
@@ -48,6 +49,7 @@
 -(void) playerDidRewind:(float)speed;
 -(void) playerDidFastforward:(float)speed;
 -(void) playerDidUpdateTime:(float)second;
+-(void) playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime;
 -(void) playerDidCloseView;
 -(void) playerDidResizeWithFrame:(CGRect)frame;
 
