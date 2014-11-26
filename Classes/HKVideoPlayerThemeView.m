@@ -60,12 +60,12 @@
 -(void)showThemeView:(BOOL)animated
 {
     float durationValue = animated ? 1 : 0;
+    [self setHidden:NO];
     self.alpha = 0;
     self.playerVC.view.userInteractionEnabled=NO;
     [UIView animateWithDuration:durationValue delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.alpha = 1;
     } completion:^(BOOL finished) {
-        [self setHidden:NO];
         self.playerVC.view.userInteractionEnabled=YES;
     }];
 }
