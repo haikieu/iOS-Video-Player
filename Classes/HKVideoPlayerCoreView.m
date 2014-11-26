@@ -11,6 +11,15 @@
 
 #define DEFAULT_COLOR_BACKGROUND [UIColor blackColor]
 
+@interface HKVideoPlayerCoreView ()
+
+@property(nonatomic) id playerTimeObserver;
+// Scrubbing
+@property (nonatomic, assign, getter = isScrubbing) BOOL scrubbing;
+@property (nonatomic, assign) float restoreAfterScrubbingRate;
+
+@end
+
 @implementation HKVideoPlayerCoreView
 
 @synthesize avAsset=_avAsset;
@@ -77,6 +86,94 @@
 -(void)initCore
 {
     self.backgroundColor = DEFAULT_COLOR_BACKGROUND;
+}
+
+#pragma mark - Scrubb
+
+-(NSString *)getDurationTime
+{
+    NSInteger durationSeconds = ceilf(CMTimeGetSeconds(self.player.currentItem.duration));
+    NSInteger seconds = durationSeconds % 60;
+    NSInteger minutes = durationSeconds / 60;
+    NSInteger hours = minutes / 60;
+    
+    NSString * durationTime = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    return durationTime;
+}
+
+-(NSString *)getRemainTime
+{
+    NSInteger currentSeconds = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
+
+    NSInteger duration = ceilf(CMTimeGetSeconds(self.avPlayer.currentItem.duration));
+    NSInteger currentDurationSeconds = duration-currentSeconds;
+    NSInteger durationSeconds = currentDurationSeconds % 60;
+    NSInteger durationMinutes = currentDurationSeconds / 60;
+    NSInteger durationHours = durationMinutes / 60;
+    
+    NSString *remainTime = [NSString stringWithFormat:@"-%02ld:%02ld:%02ld", (long)durationHours, (long)durationMinutes, (long)durationSeconds];
+    return remainTime;
+}
+
+-(NSString *)getCurrentTime
+{
+    NSInteger currentSeconds = ceilf(CMTimeGetSeconds(self.player.currentTime));
+    NSInteger seconds = currentSeconds % 60;
+    NSInteger minutes = currentSeconds / 60;
+    NSInteger hours = minutes / 60;
+    
+    NSString * currentTime = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    return currentTime;
+}
+
+- (void)addPlayerTimeObserver {
+    if (!_playerTimeObserver) {
+        __unsafe_unretained HKVideoPlayerCoreView *weakSelf = self;
+        id observer = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.5, NSEC_PER_SEC)
+                                                                queue:dispatch_get_main_queue()
+                                                           usingBlock:^(CMTime time) {
+                                                               
+                                                               HKVideoPlayerCoreView *strongSelf = weakSelf;
+                                                               if (CMTIME_IS_VALID(strongSelf.avPlayer.currentTime) && CMTIME_IS_VALID(strongSelf.avPlayer.currentItem.duration))
+                                                                   [strongSelf syncScrobber];
+                                                           }];
+        
+        [self setPlayerTimeObserver:observer];
+    }
+}
+
+- (void)removePlayerTimeObserver {
+    if (_playerTimeObserver) {
+        [self.player removeTimeObserver:self.playerTimeObserver];
+        [self setPlayerTimeObserver:nil];
+    }
+}
+
+- (void)beginScrubbing:(id)sender {
+    [self removePlayerTimeObserver];
+    [self setScrubbing:YES];
+    [self setRestoreAfterScrubbingRate:self.player.rate];
+    [self.player setRate:0.];
+}
+
+- (void)scrub:(float)scrubTime {
+    [self.avPlayer seekToTime:CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC)];
+}
+
+- (void)endScrubbing {
+    [self.player setRate:self.restoreAfterScrubbingRate];
+    [self setScrubbing:NO];
+    [self addPlayerTimeObserver];
+}
+
+- (void)syncScrobber {
+
+    //TODO
+    [self getCurrentTime];
+    [self getDurationTime];
+    [self getRemainTime];
+    
+    NSLog(@"%@", self.player.currentItem.seekableTimeRanges);
 }
 
 /*
