@@ -12,7 +12,7 @@
  Implemented by HKVideoPlayerThemeView abstract class
  Flow: CoreView ->[invoke]-> ViewController ->[invoke]-> ThemeView
 */
-@protocol HKVideoPlayerThemeViewOverrideDelegate <NSObject>
+@protocol HKVideoPlayerThemeViewRequirementDelegate <NSObject>
 
 -(BOOL) themeViewAllowDraggableAtPosition:(CGPoint)postion;
 -(BOOL) themeViewAllowResizeWithFrame:(CGRect)frame;

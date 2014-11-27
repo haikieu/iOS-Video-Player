@@ -10,13 +10,12 @@
 #import "HKVideoPlayerEvent.h"
 
 @class HKVideoPlayerViewController;
-@protocol HKVideoPlayerThemeView <HKVideoPlayerThemeViewOverrideDelegate,HKVideoPlayerPreEventDelegate,HKVideoPlayerPostEventDelegate>
+@protocol HKVideoPlayerThemeView <HKVideoPlayerThemeViewRequirementDelegate,HKVideoPlayerPreEventDelegate,HKVideoPlayerPostEventDelegate>
 
 @property(nonatomic,weak,readonly)HKVideoPlayerViewController *playerVC;
 
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
 -(void)setEventHandler;
-
 
 -(void)showThemeView:(BOOL)animated;
 -(void)hideThemeView:(BOOL)animated;
