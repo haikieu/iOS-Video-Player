@@ -50,6 +50,26 @@
     return currentTime;
 }
 
++(UIImage *)imageFromText:(NSString *)text
+{
+    UIFont *font = [UIFont systemFontOfSize:20.0];
+    CGSize size = [text sizeWithAttributes:
+                   @{NSFontAttributeName:
+                         [UIFont systemFontOfSize:20.0f]}];
+    if (UIGraphicsBeginImageContextWithOptions != NULL)
+        UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
+    else
+        UIGraphicsBeginImageContext(size);
+    
+    [text drawAtPoint:CGPointMake(0.0, 0.0) withFont:font];
+    //    [text drawAtPoint:CGPointMake(0.0, 0.0) forWidth:CGPointMake(0, 0) withFont:font fontSize:nil lineBreakMode:NSLineBreakByWordWrapping baselineAdjustment:NSTextAlignmentCenter];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 @end
 
 @implementation HKVideoPlayerThemeView

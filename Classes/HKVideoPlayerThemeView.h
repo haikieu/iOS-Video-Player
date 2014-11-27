@@ -41,5 +41,6 @@
 
 +(NSString *)timeStringFromSeconds:(float)secondsValue;
 
++(UIImage *)imageFromText:(NSString *)text;
 
 @end
