@@ -70,7 +70,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
     
-    self.view.clipsToBounds = [_themeView playerShouldClipsToBounds];
+    self.view.clipsToBounds = [_themeView themeViewNeedClipsToBounds];
     [self playerDidRenderView];
 }
 
@@ -344,7 +344,7 @@ BOOL firstTime=YES;
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[touches objectEnumerator] nextObject];
-    BOOL shouldDraggable = [_themeView playerShouldDraggableAtPosition:[touch locationInView:_themeView]];
+    BOOL shouldDraggable = [_themeView themeViewAllowDraggableAtPosition:[touch locationInView:_themeView]];
     [self setDraggable:shouldDraggable];
     
     if(_themeView.hidden)

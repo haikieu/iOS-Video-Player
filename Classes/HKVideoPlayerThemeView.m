@@ -157,17 +157,17 @@
 
 #pragma mark - HKVideoPlayerEvent Pre
 
--(BOOL)playerShouldResizeWithFrame:(CGRect)frame
+-(BOOL)themeViewAllowResizeWithFrame:(CGRect)frame
 {
     return YES;
 }
 
--(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
+-(BOOL)themeViewAllowDraggableAtPosition:(CGPoint)postion
 {
     return CGRectContainsPoint(self.frame, postion);
 }
 
--(BOOL)playerShouldClipsToBounds
+-(BOOL)themeViewNeedClipsToBounds
 {
     return self.clipsToBounds;
 }

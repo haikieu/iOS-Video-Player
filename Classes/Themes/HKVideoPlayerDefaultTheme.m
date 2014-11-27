@@ -142,9 +142,9 @@ float _durationTime = 0;
     [_progressBar setValue:(currentTime/durationTime) animated:YES];
 }
 
--(BOOL)playerShouldDraggableAtPosition:(CGPoint)postion
+-(BOOL)themeViewAllowDraggableAtPosition:(CGPoint)postion
 {
-    BOOL draggable = [super playerShouldDraggableAtPosition:postion];
+    BOOL draggable = [super themeViewAllowDraggableAtPosition:postion];
     
     draggable = draggable && !_topBar.hidden && CGRectContainsPoint(_topBar.frame, postion);
     
@@ -175,7 +175,7 @@ float _durationTime = 0;
     return UIEdgeInsetsMake(50, 0, 50, 0);
 }
 
--(BOOL)playerShouldClipsToBounds
+-(BOOL)themeViewNeedClipsToBounds
 {
     return YES;
 }

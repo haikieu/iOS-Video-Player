@@ -14,9 +14,14 @@
 */
 @protocol HKVideoPlayerThemeViewOverrideDelegate <NSObject>
 
--(BOOL) playerShouldDraggableAtPosition:(CGPoint)postion;
--(BOOL) playerShouldResizeWithFrame:(CGRect)frame;
--(BOOL) playerShouldClipsToBounds;
+-(BOOL) themeViewAllowDraggableAtPosition:(CGPoint)postion;
+-(BOOL) themeViewAllowResizeWithFrame:(CGRect)frame;
+
+-(BOOL) themeViewNeedClipsToBounds;
+
+-(BOOL) themeViewShouldSupportIpadnIphone;
+-(BOOL) themeViewShouldSupportIpad;
+-(BOOL) themeViewShouldSupportIphone;
 
 @end
 
