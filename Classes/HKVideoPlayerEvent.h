@@ -8,17 +8,33 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HKVideoPlayerConfigEvent <NSObject>
+/**
+ Implemented by HKVideoPlayerThemeView abstract class
+ Flow: CoreView ->[invoke]-> ViewController ->[invoke]-> ThemeView
+*/
+@protocol HKVideoPlayerThemeViewOverrideDelegate <NSObject>
+
+-(BOOL) playerShouldDraggableAtPosition:(CGPoint)postion;
+-(BOOL) playerShouldResizeWithFrame:(CGRect)frame;
+-(BOOL) playerShouldClipsToBounds;
+
+@end
+
+/**
+ Implemented by HKVideoPlayerThemeView abstract class as well as HKVideoPlayerViewController
+ Flow: CoreView ->[invoke]-> ViewController ->[invoke]-> ThemeView
+ */
+@protocol HKVideoPlayerCoreEventDelegate <NSObject>
 
 -(UIEdgeInsets)playerGetConfigInsets;
 
 @end
 
-@protocol HKVideoPlayerPreEvent <HKVideoPlayerConfigEvent>
-
--(BOOL) playerShouldDraggableAtPosition:(CGPoint)postion;
--(BOOL) playerShouldResizeWithFrame:(CGRect)frame;
--(BOOL) playerShouldClipsToBounds;
+/**
+ Implemented by HKVideoPlayerThemeView abstract class
+ Flow: ViewController ->[invoke]-> ThemeView
+*/
+@protocol HKVideoPlayerPreEventDelegate <HKVideoPlayerCoreEventDelegate>
 
 -(void) playerWillLoad;
 -(void) playerWillPlay;
@@ -35,7 +51,11 @@
 
 @end
 
-@protocol HKVideoPlayerPostEvent <HKVideoPlayerConfigEvent>
+/**
+  Implemented by HKVideoPlayerThemeView abstract class as well as HKVideoPlayerViewController
+  Flow: CoreView ->[invoke]-> ViewController ->[invoke]-> ThemeView
+*/
+@protocol HKVideoPlayerPostEventDelegate <HKVideoPlayerCoreEventDelegate>
 
 -(void) playerDidRenderView;
 -(void) playerDidLoad;

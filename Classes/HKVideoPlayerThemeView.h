@@ -10,7 +10,7 @@
 #import "HKVideoPlayerEvent.h"
 
 @class HKVideoPlayerViewController;
-@protocol HKVideoPlayerThemeView <HKVideoPlayerPreEvent,HKVideoPlayerPostEvent>
+@protocol HKVideoPlayerThemeView <HKVideoPlayerPreEventDelegate,HKVideoPlayerPostEventDelegate>
 
 @property(nonatomic,weak,readonly)HKVideoPlayerViewController *playerVC;
 

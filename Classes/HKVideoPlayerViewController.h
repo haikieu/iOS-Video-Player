@@ -27,7 +27,7 @@
 @class HKVideoPlayerThemeView;
 @class HKVideoPlayerCoreView;
 
-@protocol HKVideoPlayerViewController <HKVideoPlayerFuntionality,HKVideoPlayerPostEvent>
+@protocol HKVideoPlayerViewController <HKVideoPlayerFuntionality,HKVideoPlayerPostEventDelegate>
 
 @property(nonatomic,strong)HKVideoPlayerThemeView *themeView;
 @property(nonatomic,strong)HKVideoPlayerCoreView *coreView;
