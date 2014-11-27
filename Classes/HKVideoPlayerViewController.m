@@ -64,14 +64,14 @@
     _coreView = [[HKVideoPlayerCoreView alloc] initWithPlayerVC:self];
     [self.view addSubview:_coreView];
     
-    [_themeView renderThemeOnPlayerVC:self];
+    self.view.clipsToBounds = [_themeView themeViewNeedClipsToBounds];
     [self.view addSubview:_themeView];
     [self.view bringSubviewToFront:_themeView];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [_themeView renderLoadingOnPlayerVC:self];
+    [_themeView showLoadingAnimation];
     
-    self.view.clipsToBounds = [_themeView themeViewNeedClipsToBounds];
-    [self playerDidRenderView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -83,6 +83,9 @@
         [self becomeFirstResponder];
     
     [_timer fire];
+    
+    [_themeView renderThemeOnPlayerVC:self];
+    [self playerDidRenderView];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -115,8 +118,11 @@
     [_coreView beginViewSessionWithUrl:url];
 }
 
-
-
+-(void)setPlayerTitle:(NSString *)string subTitle:(NSString *)subTitle
+{
+    _themeView.playerTitle = string;
+    _themeView.playerSubTitle = subTitle;
+}
 
 #pragma mark - HKVideoPlayerCoreDelegate
 
@@ -197,9 +203,13 @@
 
 #pragma mark - HKVideoPlayerEvent - Post
 
+-(void)playerDidRenderLoadingAnimation
+{
+    [_themeView performSelectorOnMainThread:@selector(playerDidRenderLoadingAnimation) withObject:nil waitUntilDone:NO];
+}
+
 -(void)playerDidRenderView
 {
-    _themeView.hidden = YES;
     [_themeView performSelectorOnMainThread:@selector(playerDidRenderView) withObject:nil waitUntilDone:NO];
 }
 

@@ -10,24 +10,27 @@
 #import "HKVideoPlayerEvent.h"
 
 @class HKVideoPlayerViewController;
+@class HKVideoPlayerThemeView;
 @protocol HKVideoPlayerThemeView <HKVideoPlayerThemeViewRequirementDelegate,HKVideoPlayerPreEventDelegate,HKVideoPlayerPostEventDelegate>
 
 @property(nonatomic,weak,readonly)HKVideoPlayerViewController *playerVC;
 
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
--(void)setEventHandler;
-
+-(void)renderLoadingOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
+-(void)setEventHandler __deprecated_msg("This is deprecated now");
 -(void)showThemeView:(BOOL)animated;
 -(void)hideThemeView:(BOOL)animated;
-
 -(void)showLoadingAnimation;
 -(void)hideLoadingAnimation;
+
++(HKVideoPlayerThemeView*) theme;
 
 @end
 
 @interface HKVideoPlayerThemeView : UIView <HKVideoPlayerThemeView>
 
-+(HKVideoPlayerThemeView*) theme;
+@property(nonatomic,strong)NSString * playerTitle;
+@property(nonatomic,strong)NSString * playerSubTitle;
 
 @end
 

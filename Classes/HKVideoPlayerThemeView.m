@@ -13,7 +13,7 @@
 
 @interface HKVideoPlayerThemeView ()
 
-
+@property(nonatomic)UIActivityIndicatorView * indicator;
 
 @end
 
@@ -106,6 +106,17 @@
     self.frame = playerVC.view.bounds;
 }
 
+-(void)renderLoadingOnPlayerVC:(HKVideoPlayerViewController *)playerVC
+{
+    _playerVC = playerVC;
+    self.frame = playerVC.view.bounds;
+    
+    _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _indicator.frame = CGRectMake(self.bounds.size.width/2, self.bounds.size.height/2, _indicator.frame.size.width, _indicator.bounds.size.height);
+    [self addSubview:_indicator];
+    _indicator.hidden = YES;
+}
+
 -(void)setEventHandler
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
@@ -140,22 +151,43 @@
 
 -(void)showLoadingAnimation
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    if(!_indicator.hidden)
+        return;
+    
+    _indicator.hidden=NO;
+    _indicator.alpha=0;
+    [_indicator startAnimating];
+    [UIView animateWithDuration:1 animations:^{
+        _indicator.alpha=1;
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 -(void)hideLoadingAnimation
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    if(_indicator.hidden)
+        return;
+    
+    _indicator.hidden=NO;
+    _indicator.alpha=1;
+    [UIView animateWithDuration:1 animations:^{
+        _indicator.alpha=0;
+    } completion:^(BOOL finished) {
+        _indicator.hidden=YES;
+        [_indicator stopAnimating];
+    }];
 }
 
-#pragma mark - HKVideoPlayerEvent Config
+#pragma mark - HKVideoPlayerCoreEventDelegate
 
 -(UIEdgeInsets)playerGetConfigInsets
 {
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
-#pragma mark - HKVideoPlayerEvent Pre
+
+#pragma mark - HKVideoPlayerThemeViewRequirementDelegate
 
 -(BOOL)themeViewAllowResizeWithFrame:(CGRect)frame
 {
@@ -171,6 +203,28 @@
 {
     return self.clipsToBounds;
 }
+
+-(BOOL)themeViewShouldSupportIpadnIphone
+{
+    return [self themeViewShouldSupportIpad]&&[self themeViewShouldSupportIphone];
+}
+
+-(BOOL)themeViewShouldSupportIpad
+{
+    return YES;
+}
+
+-(BOOL)themeViewShouldSupportIphone
+{
+    return YES;
+}
+
++(CGSize)themeViewPreferedSize
+{
+    return CGSizeZero;
+}
+
+#pragma mark - HKVideoPlayerPreEventDelegate
 
 -(void)playerWillResizeWithFrame:(CGRect)frame
 {
@@ -227,7 +281,7 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
-#pragma mark - HKVideoPlayerEvent Post
+#pragma mark - HKVideoPlayerPostEventDelegate
 
 -(void)playerDidResizeWithFrame:(CGRect)frame
 {
@@ -249,9 +303,15 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
+-(void)playerDidRenderLoadingAnimation
+{
+    self.hidden = NO;
+    [self showLoadingAnimation];
+}
+
 -(void)playerDidRenderView
 {
-    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    self.hidden = YES;
 }
 
 -(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime

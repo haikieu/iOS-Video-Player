@@ -23,6 +23,8 @@
 -(BOOL) themeViewShouldSupportIpad;
 -(BOOL) themeViewShouldSupportIphone;
 
++(CGSize) themeViewPreferedSize;
+
 @end
 
 /**
@@ -62,6 +64,7 @@
 */
 @protocol HKVideoPlayerPostEventDelegate <HKVideoPlayerCoreEventDelegate>
 
+-(void) playerDidRenderLoadingAnimation;
 -(void) playerDidRenderView;
 -(void) playerDidLoad;
 -(void) playerDidFailure;
