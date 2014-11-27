@@ -33,6 +33,9 @@
 		42EBF2FB1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EBF2FA1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m */; };
 		42EBF2FD1A20630C006AF19C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2FC1A20630C006AF19C /* AVFoundation.framework */; };
 		42EBF2FF1A2063B3006AF19C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2FE1A2063B3006AF19C /* QuartzCore.framework */; };
+		84588AA21A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */; };
+		84588AA51A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AA41A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m */; };
+		84588AA81A2702F400E73C20 /* HKVideoPlayerWinterTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AA71A2702F400E73C20 /* HKVideoPlayerWinterTheme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,12 @@
 		42EBF2FE1A2063B3006AF19C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		42EBF3001A2064E3006AF19C /* HKVideoPlayerFuntionality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerFuntionality.h; path = ../../Classes/HKVideoPlayerFuntionality.h; sourceTree = "<group>"; };
 		42EBF3011A2064F8006AF19C /* HKVideoPlayerEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerEvent.h; path = ../../Classes/HKVideoPlayerEvent.h; sourceTree = "<group>"; };
+		84588AA01A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerClassicalTheme.h; path = ../../Classes/Themes/HKVideoPlayerClassicalTheme.h; sourceTree = "<group>"; };
+		84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerClassicalTheme.m; path = ../../Classes/Themes/HKVideoPlayerClassicalTheme.m; sourceTree = "<group>"; };
+		84588AA31A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerWoodenTheme.h; path = ../../Classes/Themes/HKVideoPlayerWoodenTheme.h; sourceTree = "<group>"; };
+		84588AA41A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerWoodenTheme.m; path = ../../Classes/Themes/HKVideoPlayerWoodenTheme.m; sourceTree = "<group>"; };
+		84588AA61A2702F400E73C20 /* HKVideoPlayerWinterTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerWinterTheme.h; path = ../../Classes/Themes/HKVideoPlayerWinterTheme.h; sourceTree = "<group>"; };
+		84588AA71A2702F400E73C20 /* HKVideoPlayerWinterTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerWinterTheme.m; path = ../../Classes/Themes/HKVideoPlayerWinterTheme.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +233,12 @@
 			children = (
 				42EBF2F91A2061B6006AF19C /* HKVideoPlayerDefaultTheme.h */,
 				42EBF2FA1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m */,
+				84588AA01A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.h */,
+				84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */,
+				84588AA31A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.h */,
+				84588AA41A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m */,
+				84588AA61A2702F400E73C20 /* HKVideoPlayerWinterTheme.h */,
+				84588AA71A2702F400E73C20 /* HKVideoPlayerWinterTheme.m */,
 			);
 			name = Themes;
 			sourceTree = "<group>";
@@ -328,7 +343,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84588AA81A2702F400E73C20 /* HKVideoPlayerWinterTheme.m in Sources */,
 				42EBF2CC1A205E93006AF19C /* HKViewController.m in Sources */,
+				84588AA51A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m in Sources */,
+				84588AA21A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m in Sources */,
 				4212A9CE1A20FAA100B970EE /* HKVideoPlayerException.m in Sources */,
 				42EBF2BF1A205E93006AF19C /* main.m in Sources */,
 				42EBF2F11A206085006AF19C /* HKVideoPlayerThemeView.m in Sources */,
