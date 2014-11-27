@@ -27,7 +27,7 @@
 
 @interface HKVideoPlayerCoreView : UIView <HKVideoPlayerCoreView>
 
-@property(nonatomic,strong)AVCaptureSession *avCaptureSession;
+
 @property(nonatomic,assign,readonly)AVKeyValueStatus avStatus;
 
 -(instancetype)initWithPlayerVC:(HKVideoPlayerViewController*)playerVC;
@@ -35,5 +35,20 @@
 -(NSString*)getDurationTimeString;
 -(NSString*)getCurrentTimeString;
 -(NSString*)getRemainTimeString;
+
+@end
+
+@interface HKVideoPlayerCoreView(CaptureFeature)
+
+-(void)captureVideo;
+-(void)captureVideoDoneWithFilePath:(NSURL*)filePath;
+-(void)captureAudio;
+-(void)captureAudioDoneWithFilePath:(NSURL*)filepath;
+
+@end
+
+@interface HKVideoPlayerCoreView(DetectiveFeature)
+
+-(void)autoDectectFaceWithIntervalTime:(NSTimeInterval)intervalTime activate:(BOOL)activated;
 
 @end

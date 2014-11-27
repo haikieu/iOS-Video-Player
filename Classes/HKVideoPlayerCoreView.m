@@ -8,6 +8,7 @@
 
 #import "HKVideoPlayerCoreView.h"
 #import "HKVideoPlayerViewController.h"
+#import "HKVideoPlayerException.h"
 
 #define DEFAULT_COLOR_BACKGROUND [UIColor blackColor]
 
@@ -457,7 +458,7 @@ static NSString * kItemAsset = @"asset";
 {
     CMTime time = CMTimeMakeWithSeconds(second, NSEC_PER_SEC);
     [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
-        [_playerViewController playerDidUpdateTime:second];
+        [self syncScrobber];
     }];
 }
 
@@ -511,5 +512,36 @@ static NSString * kItemAsset = @"asset";
 //    [self.playerViewController remoteControlReceivedWithEvent:event];
 //}
 //
+
+@end
+
+@implementation HKVideoPlayerCoreView (CaptureFeature)
+
+AVCaptureSession *_captureSession;
+AVCaptureDeviceInput *_captureDeviceInput;
+
+-(void)captureVideo
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    
+    NSError *error = nil;
+    _captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:[AVCaptureDevice defaultDeviceWithMediaType:@"AVMediaTypeMuxed"] error:&error];
+    _captureSession = [[AVCaptureSession alloc] init];
+    [_captureSession startRunning];
+}
+-(void)captureVideoDoneWithFilePath:(NSURL *)filePath
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+    [_captureSession stopRunning];
+}
+
+-(void)captureAudio
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
+-(void)captureAudioDoneWithFilePath:(NSURL *)filepath
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
 
 @end
