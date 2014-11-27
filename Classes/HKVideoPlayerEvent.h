@@ -48,7 +48,8 @@
 -(void) playerDidExitFullscreen;
 -(void) playerDidRewind:(float)speed;
 -(void) playerDidFastforward:(float)speed;
--(void) playerDidUpdateTime:(float)second;
+-(void) playerDidUpdateTime:(float)second DEPRECATED_MSG_ATTRIBUTE("Deprecated now");
+
 -(void) playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime;
 -(void) playerDidCloseView;
 -(void) playerDidResizeWithFrame:(CGRect)frame;
