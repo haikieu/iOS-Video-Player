@@ -87,6 +87,8 @@
 -(void)initCore
 {
     self.backgroundColor = DEFAULT_COLOR_BACKGROUND;
+    
+    
 }
 
 #pragma mark - Scrubb
