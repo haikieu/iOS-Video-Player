@@ -127,56 +127,7 @@
     return currentTime;
 }
 
-- (void)addPlayerTimeObserver {
-    if (!_playerTimeObserver) {
-        __unsafe_unretained HKVideoPlayerCoreView *weakSelf = self;
-        id observer = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.5, NSEC_PER_SEC)
-                                                                queue:dispatch_get_main_queue()
-                                                           usingBlock:^(CMTime time) {
-                                                               
-                                                               HKVideoPlayerCoreView *strongSelf = weakSelf;
-                                                               if (CMTIME_IS_VALID(strongSelf.avPlayer.currentTime) && CMTIME_IS_VALID(strongSelf.avPlayer.currentItem.duration))
-                                                                   [strongSelf syncScrobber];
-                                                           }];
-        
-        [self setPlayerTimeObserver:observer];
-    }
-}
 
-- (void)removePlayerTimeObserver {
-    if (_playerTimeObserver) {
-        [self.player removeTimeObserver:self.playerTimeObserver];
-        [self setPlayerTimeObserver:nil];
-    }
-}
-
-- (void)beginScrubbing:(id)sender {
-    [self removePlayerTimeObserver];
-    [self setScrubbing:YES];
-    [self setRestoreAfterScrubbingRate:self.player.rate];
-    [self.player setRate:0.];
-}
-
-- (void)scrub:(float)scrubTime {
-    [self.avPlayer seekToTime:CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC)];
-}
-
-- (void)endScrubbing {
-    [self.player setRate:self.restoreAfterScrubbingRate];
-    [self setScrubbing:NO];
-    [self addPlayerTimeObserver];
-}
-
-- (void)syncScrobber {
-
-    NSInteger current = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
-    NSInteger duration = ceilf(CMTimeGetSeconds(self.avPlayer.currentItem.duration));
-    NSInteger remain = duration-current;
-    
-    [_playerViewController playerDidUpdateCurrentTime:current remainTime:remain durationTime:duration];
-    
-    NSLog(@"%@", self.player.currentItem.seekableTimeRanges);
-}
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -454,18 +405,74 @@ static NSString * kItemAsset = @"asset";
     [_playerViewController playerDidStop];
 }
 
--(void)handleResumeTime:(float)second
-{
-    CMTime time = CMTimeMakeWithSeconds(second, NSEC_PER_SEC);
-    [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
-        [self syncScrobber];
-    }];
-}
-
 -(void)handleCloseView
 {
     [_avPlayer pause];
     [_playerViewController playerDidCloseView];
+}
+
+-(void)handleResumeTime:(float)second
+{
+    
+    
+    [self beginScrubbing];
+    [self scrub:second];
+    [self endScrubbing];
+}
+
+- (void)addPlayerTimeObserver {
+    if (!_playerTimeObserver) {
+        __unsafe_unretained HKVideoPlayerCoreView *weakSelf = self;
+        id observer = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.5, NSEC_PER_SEC)
+                                                                queue:dispatch_get_main_queue()
+                                                           usingBlock:^(CMTime time) {
+                                                               
+                                                               HKVideoPlayerCoreView *strongSelf = weakSelf;
+                                                               if (CMTIME_IS_VALID(strongSelf.avPlayer.currentTime) && CMTIME_IS_VALID(strongSelf.avPlayer.currentItem.duration))
+                                                                   [strongSelf syncScrobber];
+                                                           }];
+        
+        [self setPlayerTimeObserver:observer];
+    }
+}
+
+- (void)removePlayerTimeObserver {
+    if (_playerTimeObserver) {
+        [self.player removeTimeObserver:self.playerTimeObserver];
+        [self setPlayerTimeObserver:nil];
+    }
+}
+
+- (void)beginScrubbing {
+    [self removePlayerTimeObserver];
+    [self setScrubbing:YES];
+    [self setRestoreAfterScrubbingRate:self.player.rate];
+    [self.player setRate:0.];
+}
+
+- (void)scrub:(float)scrubTime {
+    
+    CMTime time = CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC);
+    [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
+        //TODO
+    }];
+}
+
+- (void)endScrubbing {
+    [self.player setRate:self.restoreAfterScrubbingRate];
+    [self setScrubbing:NO];
+    [self addPlayerTimeObserver];
+}
+
+- (void)syncScrobber {
+    
+    NSInteger current = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
+    NSInteger duration = ceilf(CMTimeGetSeconds(self.avPlayer.currentItem.duration));
+    NSInteger remain = duration-current;
+    
+    [_playerViewController playerDidUpdateCurrentTime:current remainTime:remain durationTime:duration];
+    
+    NSLog(@"%@", self.player.currentItem.seekableTimeRanges);
 }
 
 #pragma mark - Handle touches
