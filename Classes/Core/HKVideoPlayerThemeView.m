@@ -186,6 +186,27 @@
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
+#pragma mark - Support interface orientation
+
++(BOOL)themeViewShouldAutorotate
+{
+    return YES;
+}
+
++(NSUInteger)themeViewSupportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
++(BOOL)themeViewShouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // You do not need this method if you are not supporting earlier iOS Versions
+    if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+        return YES;
+    if(interfaceOrientation==UIInterfaceOrientationMaskPortrait)
+        return YES;
+    return NO;
+}
 
 #pragma mark - HKVideoPlayerThemeViewRequirementDelegate
 
@@ -204,17 +225,17 @@
     return self.clipsToBounds;
 }
 
--(BOOL)themeViewShouldSupportIpadnIphone
++(BOOL)themeViewShouldSupportIpadnIphone
 {
     return [self themeViewShouldSupportIpad]&&[self themeViewShouldSupportIphone];
 }
 
--(BOOL)themeViewShouldSupportIpad
++(BOOL)themeViewShouldSupportIpad
 {
     return YES;
 }
 
--(BOOL)themeViewShouldSupportIphone
++(BOOL)themeViewShouldSupportIphone
 {
     return YES;
 }
@@ -225,6 +246,11 @@
 }
 
 #pragma mark - HKVideoPlayerPreEventDelegate
+
+-(void)playerWillChangeOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
 
 -(void)playerWillResizeWithFrame:(CGRect)frame
 {

@@ -108,6 +108,22 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET(nil);
 }
 
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // You do not need this method if you are not supporting earlier iOS Versions
+    return [[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return [[_themeView class] themeViewSupportedInterfaceOrientations];
+}
+
+-(BOOL)shouldAutorotate
+{
+    return [[_themeView class] themeViewShouldAutorotate];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -535,38 +551,38 @@ BOOL firstTime=YES;
 
 -(void)UIDeviceOrientationDidChangeNotification:(NSNotification*)notification
 {
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    
-    switch (orientation) {
+    UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+    UIInterfaceOrientation interfaceOrientation =(UIInterfaceOrientation) deviceOrientation;
+    switch (deviceOrientation) {
         case UIDeviceOrientationFaceUp:
+            //TODO - do any extra stuffs
+            break;
         case UIDeviceOrientationFaceDown:
+            //TODO - do any extra stuffs
+            break;
         case UIDeviceOrientationUnknown:
-            
-            //TODO
-            
+            //TODO - do any extra stuffs
             break;
         case UIDeviceOrientationPortrait:
-            
-            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
-            
+            //TODO - do any extra stuffs
             break;
         case UIDeviceOrientationPortraitUpsideDown:
-
-            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
-            
+            //TODO - do any extra stuffs
             break;
         case UIDeviceOrientationLandscapeLeft:
-
-            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
-            
+            //TODO - do any extra stuffs
             break;
         case UIDeviceOrientationLandscapeRight:
-
-            HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
-            
+            //TODO - do any extra stuffs
             break;
     }
-
+    
+    if([[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_themeView playerWillChangeOrientation:interfaceOrientation];
+        });
+    }
 }
 
 @end

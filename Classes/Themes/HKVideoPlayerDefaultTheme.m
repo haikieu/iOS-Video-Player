@@ -51,7 +51,7 @@ UIView *bottomBar;
     
     float _topOffset = 20;
     float _topBarHeight = 40;
-    if(DEVICE_IS_IPAD()&&[self themeViewShouldSupportIpad])
+    if(DEVICE_IS_IPAD()&&[[self class] themeViewShouldSupportIpad])
     {
         _topOffset = 00;
         _topBarHeight = 50;
