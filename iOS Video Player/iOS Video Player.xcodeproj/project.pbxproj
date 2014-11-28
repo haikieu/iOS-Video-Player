@@ -37,6 +37,7 @@
 		84588ACF1A27336900E73C20 /* UIViewController+Draggable.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588ACA1A27336900E73C20 /* UIViewController+Draggable.m */; };
 		84588AD31A27337600E73C20 /* HKVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AD11A27337600E73C20 /* HKVideoPlayerViewController.m */; };
 		84588AD51A2735F800E73C20 /* HKVideoPlayer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84588AD41A2735F800E73C20 /* HKVideoPlayer.bundle */; };
+		846B229E1A28446D003F2CED /* HKLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 846B229D1A28446D003F2CED /* HKLog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,8 @@
 		84588AD11A27337600E73C20 /* HKVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerViewController.m; path = ../../Classes/HKVideoPlayerViewController.m; sourceTree = "<group>"; };
 		84588AD21A27337600E73C20 /* HKVideoPlayerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerViewControllerDelegate.h; path = ../../Classes/HKVideoPlayerViewControllerDelegate.h; sourceTree = "<group>"; };
 		84588AD41A2735F800E73C20 /* HKVideoPlayer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = HKVideoPlayer.bundle; path = ../../Classes/Themes/HKVideoPlayer.bundle; sourceTree = "<group>"; };
+		846B229C1A28446D003F2CED /* HKLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKLog.h; sourceTree = "<group>"; };
+		846B229D1A28446D003F2CED /* HKLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKLog.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +259,8 @@
 				84588AC71A27336900E73C20 /* HKVideoPlayerThemeViewDelegate.h */,
 				84588AC91A27336900E73C20 /* UIViewController+Draggable.h */,
 				84588ACA1A27336900E73C20 /* UIViewController+Draggable.m */,
+				846B229C1A28446D003F2CED /* HKLog.h */,
+				846B229D1A28446D003F2CED /* HKLog.m */,
 			);
 			name = Core;
 			path = ../../Classes/Core;
@@ -366,6 +371,7 @@
 				84588ACD1A27336900E73C20 /* HKVideoPlayerThemeView.m in Sources */,
 				84588AA51A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m in Sources */,
 				84588AD31A27337600E73C20 /* HKVideoPlayerViewController.m in Sources */,
+				846B229E1A28446D003F2CED /* HKLog.m in Sources */,
 				84588AA21A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m in Sources */,
 				42B69F7A1A27AE830093F2EB /* HKVideoPlayerGreenTheme.m in Sources */,
 				84588ACC1A27336900E73C20 /* HKVideoPlayerException.m in Sources */,
