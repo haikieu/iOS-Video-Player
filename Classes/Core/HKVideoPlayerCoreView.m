@@ -52,36 +52,42 @@
     if (self) {
         // Initialization code
         _playerViewController = playerVC;
-        
-        UIEdgeInsets insets = [playerVC playerGetConfigInsets];
-        if(!UIEdgeInsetsEqualToEdgeInsets(insets, UIEdgeInsetsZero))
-        {
-            CGSize newSize  =CGSizeMake(self.bounds.size.width-insets.left-insets.right, self.bounds.size.height-insets.top-insets.bottom);
-            self.bounds = CGRectMake(0, 0, newSize.width, newSize.height);
-//            self.center = playerVC.view.center;
-            CGFloat adjustVerticalInset = insets.top-insets.bottom;
-            if(adjustVerticalInset>0)
-            {
-                self.center = CGPointMake(self.center.x,self.center.y + fabs(adjustVerticalInset/2));
-            }
-            else if(adjustVerticalInset<0)
-            {
-                self.center = CGPointMake(self.center.x,self.center.y - fabs(adjustVerticalInset/2));
-            }
-            
-            CGFloat adjustHorizontalInset = insets.left-insets.right;
-            if(adjustHorizontalInset>0)
-            {
-                self.center = CGPointMake(self.center.x + fabs(adjustHorizontalInset/2),self.center.y);
-            }
-            else if(adjustHorizontalInset<0)
-            {
-                self.center = CGPointMake(self.center.x - fabs(adjustHorizontalInset/2),self.center.y);
-            }
-            
-        }
+        [self applyPlayerEdgeInsets:[playerVC playerGetConfigInsets]];
     }
     return self;
+}
+
+-(void)applyPlayerEdgeInsets:(UIEdgeInsets)insets
+{
+    if(!UIEdgeInsetsEqualToEdgeInsets(insets, UIEdgeInsetsZero))
+    {
+        CGSize newSize  =CGSizeMake(self.bounds.size.width-insets.left-insets.right, self.bounds.size.height-insets.top-insets.bottom);
+        self.bounds = CGRectMake(0, 0, newSize.width, newSize.height);
+        //            self.center = playerVC.view.center;
+        CGFloat adjustVerticalInset = insets.top-insets.bottom;
+        if(adjustVerticalInset>0)
+        {
+            self.center = CGPointMake(self.center.x,self.center.y + fabs(adjustVerticalInset/2));
+        }
+        else if(adjustVerticalInset<0)
+        {
+            self.center = CGPointMake(self.center.x,self.center.y - fabs(adjustVerticalInset/2));
+        }
+        
+        CGFloat adjustHorizontalInset = insets.left-insets.right;
+        if(adjustHorizontalInset>0)
+        {
+            self.center = CGPointMake(self.center.x + fabs(adjustHorizontalInset/2),self.center.y);
+        }
+        else if(adjustHorizontalInset<0)
+        {
+            self.center = CGPointMake(self.center.x - fabs(adjustHorizontalInset/2),self.center.y);
+        }
+    }else
+    {
+        self.center=_playerViewController.view.center;
+        self.bounds=_playerViewController.view.bounds;
+    }
 }
 
 -(void)initCore
@@ -160,8 +166,17 @@
  (AVLayerVideoGravityResizeAspect is default) */
 - (void)setVideoFillMode:(NSString *)fillMode
 {
-	AVPlayerLayer *playerLayer = (AVPlayerLayer*)[self layer];
-	playerLayer.videoGravity = fillMode;
+    [UIView animateWithDuration:0 animations:^{
+        //TODO
+    } completion:^(BOOL finished) {
+        AVPlayerLayer *playerLayer = (AVPlayerLayer*)[self layer];
+        playerLayer.videoGravity = fillMode;
+    }];
+}
+- (NSString * )getVideoFillMode
+{
+    AVPlayerLayer *playerLayer = (AVPlayerLayer*)[self layer];
+    return playerLayer.videoGravity;
 }
 
 NSTimer *avStatusTimer;

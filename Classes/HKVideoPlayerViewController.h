@@ -44,10 +44,14 @@
 @property(nonatomic,assign) BOOL repeat;
 @property(nonatomic,assign,readonly) BOOL autoPlay;
 @property(nonatomic,assign,readonly) BOOL fullScreen;
+
 @property(nonatomic,assign) CGRect baseFrame;
 
 -(instancetype)initWithFrame:(CGRect)frame theme:(HKVideoPlayerThemeView*) themeView;
 -(void)setPlayerTitle:(NSString*)string subTitle:(NSString*)subTitle;
 -(void)autoHideThemeView:(BOOL)enable afterTime:(float) second;
+
+
+-(void)enableZooming:(BOOL)enable;
 
 @end

@@ -16,6 +16,8 @@
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic) NSTimeInterval autoHideInterval;
 @property(nonatomic,assign)BOOL autoHide;
+@property(nonatomic)UITapGestureRecognizer * singleTapGestureRecognizer;
+@property(nonatomic)UITapGestureRecognizer * doubleTapGestureRecognizer;
 
 @end
 
@@ -70,6 +72,12 @@
     
     [_themeView renderLoadingOnPlayerVC:self];
     [_themeView showLoadingAnimation];
+    
+    _singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    _singleTapGestureRecognizer.numberOfTapsRequired=1;
+    [self.view addGestureRecognizer:_singleTapGestureRecognizer];
+    
+    [self enableZooming:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
@@ -370,7 +378,7 @@ BOOL firstTime=YES;
 
 #pragma mark - override draggable
 
--(void)handlePan:(UIPanGestureRecognizer *)sender
+-(void)handlePan:(UIPanGestureRecognizer*)sender
 {
     [super handlePan:sender];
 }
@@ -383,11 +391,11 @@ BOOL firstTime=YES;
     BOOL shouldDraggable = [_themeView themeViewAllowDraggableAtPosition:[touch locationInView:_themeView]];
     [self setDraggable:shouldDraggable];
     
-    if(_themeView.hidden)
-    {
-        [_themeView showThemeView:YES];
-        [self autoHideThemeView:_autoHide afterTime:_autoHideInterval];
-    }
+//    if(_themeView.hidden)
+//    {
+//        [_themeView showThemeView:YES];
+//        [self autoHideThemeView:_autoHide afterTime:_autoHideInterval];
+//    }
 }
 
 
@@ -403,8 +411,53 @@ BOOL firstTime=YES;
 
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.view.layer.anchorPoint = CGPointMake(0.5,0.5);
+//    self.view.layer.anchorPoint = CGPointMake(0.5,0.5);
 }
+
+#pragma mark - Gesture implementation
+
+-(void)enableZooming:(BOOL)enable
+{
+    _doubleTapGestureRecognizer.enabled = enable;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+        _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+        [self.view addGestureRecognizer:_doubleTapGestureRecognizer];
+    });
+    
+    if(enable)
+    {
+        [_singleTapGestureRecognizer requireGestureRecognizerToFail:_doubleTapGestureRecognizer];
+    }
+    else
+    {
+        [_singleTapGestureRecognizer requireGestureRecognizerToFail:nil];
+    }
+}
+
+-(void)handleSingleTap:(id)sender
+{
+    //    UITapGestureRecognizer * gesture = sender;
+    //    BOOL shouldDraggable = [_themeView themeViewAllowDraggableAtPosition:[gesture locationInView:_themeView]];
+    //    [self setDraggable:shouldDraggable];
+    //
+    if(_themeView.hidden)
+    {
+        [_themeView showThemeView:YES];
+        [self autoHideThemeView:_autoHide afterTime:_autoHideInterval];
+    }
+}
+
+-(void)handleDoubleTap:(id)sender
+{
+    if ([_coreView getVideoFillMode] == AVLayerVideoGravityResizeAspect)
+        [_coreView setVideoFillMode:AVLayerVideoGravityResizeAspectFill];
+    else
+        [_coreView setVideoFillMode:AVLayerVideoGravityResizeAspect];
+}
+
 
 #pragma mark - Handle motions
 

@@ -19,6 +19,7 @@
 @property(nonatomic,strong)AVAsset *avAsset;
 
 - (void)setPlayer:(AVPlayer*)player;
+- (NSString*)getVideoFillMode;
 - (void)setVideoFillMode:(NSString *)fillMode;
 - (void)beginViewSessionWithUrl:(NSURL *)url;
 - (void)clearViewSession;
