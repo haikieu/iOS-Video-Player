@@ -464,13 +464,15 @@ static NSString * kItemAsset = @"asset";
 }
 BOOL didSeek=YES;
 - (void)playbackScrub:(float)scrubTime {
+    if(!CMTIME_IS_VALID(CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC)))
+        return;
     if(!didSeek)
         return;
-    didSeek = NO;
-     NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
+//    didSeek = NO;
+     NSLog(@"HK >>> %s scrubTime:%f",__PRETTY_FUNCTION__,scrubTime);
     CMTime time = CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC);
     [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
-        didSeek=YES;
+//        didSeek=YES;
     }];
 }
 
