@@ -15,7 +15,7 @@ Features
   + Able to create new theme easily without modifing core player & view controller. [√]
   + Able to specify theme requirements to override overall view for final united view. [√]
   + Rich themes available (default theme, green theme, classical theme,etc..) [On-going]
-  +
+  
 3) Gesture supporting
   + Double tap to zoom player layer [√]
   + Pan to drag [√]
