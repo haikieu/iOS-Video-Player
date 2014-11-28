@@ -44,6 +44,7 @@
 @property(nonatomic,assign) BOOL repeat;
 @property(nonatomic,assign,readonly) BOOL autoPlay;
 @property(nonatomic,assign,readonly) BOOL fullScreen;
+@property(nonatomic)float currentSpeed;
 
 @property(nonatomic,assign) CGRect baseFrame;
 

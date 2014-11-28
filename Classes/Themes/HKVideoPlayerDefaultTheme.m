@@ -18,6 +18,8 @@
 @property UISlider *progressBar;
 @property UIButton *btnPlay;
 @property UIButton *btnClose;
+@property UIButton *btnRewind;
+@property UIButton *btnForward;
 
 @end
 
@@ -69,12 +71,27 @@ UIView *bottomBar;
     _bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:_bottomBar];
     
+    
+    
+    _btnRewind = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnRewind.frame = CGRectMake(0, 0, 50, 50);
+    [_btnRewind setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_rewind"] forState:UIControlStateNormal];
+    [_btnRewind addTarget:self.playerVC action:@selector(handleRewind:) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomBar addSubview:_btnRewind];
+    
     _btnPlay = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnPlay.frame = CGRectMake(0, 0, 40, 50);
+    _btnPlay.frame = CGRectMake(_btnRewind.frame.origin.x+_btnRewind.frame.size.width, 0, 50, 50);
     [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
     [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBar addSubview:_btnPlay];
-    _progressBar = [[UISlider alloc] initWithFrame:CGRectMake(50, 0, self.bounds.size.width-50, 50)];
+    
+    _btnForward = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btnForward.frame = CGRectMake(_btnPlay.frame.origin.x+_btnPlay.frame.size.width, 0, 50, 50);
+    [_btnForward setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_next"] forState:UIControlStateNormal];
+    [_btnForward addTarget:self.playerVC action:@selector(handleFastforward:) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomBar addSubview:_btnForward];
+    
+    _progressBar = [[UISlider alloc] initWithFrame:CGRectMake(_btnForward.frame.origin.x+_btnForward.frame.size.width, 0, self.bounds.size.width-150, 50)];
     [_progressBar addTarget:self.playerVC action:@selector(playbackBeginScrub) forControlEvents:UIControlEventTouchDown];
     [_progressBar addTarget:self action:@selector(onProgressChange:) forControlEvents:UIControlEventValueChanged];
     [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchUpInside];
@@ -137,10 +154,12 @@ float _durationTime = 0;
 -(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime
 {
     _progressBar.enabled = true;
+    
     if(durationTime>=0)
     {
         _durationTime = durationTime;
-        [_progressBar setMaximumValueImage:[[self class] imageFromText:[[self class] timeStringFromSeconds:durationTime]]];
+        if(DEVICE_IS_IPAD())
+            [_progressBar setMaximumValueImage:[[self class] imageFromText:[[self class] timeStringFromSeconds:durationTime]]];
     }
     else
     {

@@ -157,13 +157,13 @@
 {
     [_themeView performSelectorOnMainThread:@selector(playerWillRewind:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
     
-    [_coreView handleRewind:speed];
+    [_coreView handleRewind:--_currentSpeed];
 }
 -(void)handleFastforward:(float)speed
 {
     [_themeView performSelectorOnMainThread:@selector(playerWillFastforward:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
     
-    [_coreView handleFastforward:speed];
+    [_coreView handleFastforward:++_currentSpeed];
 }
 
 -(void)handleCloseView
@@ -249,21 +249,25 @@
 
 -(void)playerDidPlay
 {   _isPlay = YES;
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidPlay) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidStop
 {   _isPlay = NO;
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidStop) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidPause
 {   _isPlay = NO;
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidPause) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidLoad
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidLoad) withObject:nil waitUntilDone:NO];
     if(_autoPlay)
     {
@@ -273,39 +277,46 @@
 
 -(void)playerDidFailure
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidFailure) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidReady
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidReady) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidExitFullscreen
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     _fullScreen = NO;
     [_themeView performSelectorOnMainThread:@selector(playerDidExitFullscreen) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidEnterFullscreen
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     _fullScreen = YES;
     [_themeView performSelectorOnMainThread:@selector(playerDidEnterFullscreen) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidCloseView
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidCloseView) withObject:nil waitUntilDone:NO];
     [_delegate videoPlayer:self didCloseView:self.view];
 }
 
 -(void)playerDidUpdateTime:(float)second
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidUpdateTime:) withObject:[NSNumber numberWithFloat:second] waitUntilDone:YES];
 }
 
 -(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_themeView playerDidUpdateCurrentTime:currentTime remainTime:remainTime durationTime:durationTime];
     });
@@ -313,15 +324,18 @@
 
 -(void)playerDidFastforward:(float)speed
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidFastforward:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
 }
 -(void)playerDidRewind:(float)speed
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidRewind:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
 }
 
 -(void)playerDidResizeWithFrame:(CGRect)frame
 {
+    _currentSpeed = _coreView.avPlayer.rate;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_themeView playerDidResizeWithFrame:frame];
     });
