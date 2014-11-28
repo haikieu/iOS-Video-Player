@@ -46,26 +46,35 @@ UIView *bottomBar;
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
 {
     [super renderThemeOnPlayerVC:playerVC];
-    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 60)];
+    
+    float _topOffset = 20;
+    float _topBarHeight = 40;
+    if(DEVICE_IS_IPAD()&&[self themeViewShouldSupportIpad])
+    {
+        _topOffset = 00;
+        _topBarHeight = 50;
+    }
+    
+    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, _topBarHeight + _topOffset)];
     _topBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:_topBar];
     
     _btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnClose.frame = CGRectMake(self.bounds.size.width - 40, 20, 40, 40);
+    _btnClose.frame = CGRectMake(self.bounds.size.width - _topBarHeight, _topOffset, _topBarHeight, _topBarHeight);
     [_btnClose setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_cross"] forState:UIControlStateNormal];
     [_btnClose addTarget:self.playerVC action:@selector(handleCloseView) forControlEvents:UIControlEventTouchUpInside];
     [_topBar addSubview:_btnClose];
     
-    _bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 40, self.bounds.size.width, 40)];
+    _bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height - 50, self.bounds.size.width, 50)];
     _bottomBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:_bottomBar];
     
     _btnPlay = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnPlay.frame = CGRectMake(0, 0, 40, 40);
+    _btnPlay.frame = CGRectMake(0, 0, 40, 50);
     [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
     [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBar addSubview:_btnPlay];
-    _progressBar = [[UISlider alloc] initWithFrame:CGRectMake(40, 0, self.bounds.size.width-40, 40)];
+    _progressBar = [[UISlider alloc] initWithFrame:CGRectMake(50, 0, self.bounds.size.width-50, 50)];
     [_progressBar addTarget:self.playerVC action:@selector(playbackBeginScrub) forControlEvents:UIControlEventTouchDown];
     [_progressBar addTarget:self action:@selector(onProgressChange:) forControlEvents:UIControlEventValueChanged];
     [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchUpInside];
@@ -182,7 +191,8 @@ float _durationTime = 0;
 
 -(UIEdgeInsets)playerGetConfigInsets
 {
-    return UIEdgeInsetsMake(50, 0, 50, 0);
+//    return UIEdgeInsetsMake(50, 0, 50, 0);
+    return UIEdgeInsetsZero;
 }
 
 -(BOOL)themeViewNeedClipsToBounds

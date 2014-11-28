@@ -85,8 +85,8 @@
         }
     }else
     {
-        self.center=_playerViewController.view.center;
-        self.bounds=_playerViewController.view.bounds;
+//        self.center=_playerViewController.view.center;
+//        self.bounds=_playerViewController.view.bounds;
     }
 }
 
