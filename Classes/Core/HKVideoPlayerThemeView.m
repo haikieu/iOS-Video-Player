@@ -355,6 +355,16 @@
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }
 
+-(void)playerDidBeginChangePlayback
+{
+    [self showLoadingAnimation];
+}
+
+-(void)playerDidEndChangePlayback
+{
+    [self hideLoadingAnimation];
+}
+
 -(void)playerDidFastforward:(float)speed
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();

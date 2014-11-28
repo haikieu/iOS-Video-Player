@@ -87,7 +87,6 @@
 		84588AA71A2702F400E73C20 /* HKVideoPlayerWinterTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerWinterTheme.m; path = ../../Classes/Themes/HKVideoPlayerWinterTheme.m; sourceTree = "<group>"; };
 		84588ABD1A27336900E73C20 /* HKVideoPlayerCoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKVideoPlayerCoreView.h; sourceTree = "<group>"; };
 		84588ABE1A27336900E73C20 /* HKVideoPlayerCoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKVideoPlayerCoreView.m; sourceTree = "<group>"; };
-		84588ABF1A27336900E73C20 /* HKVideoPlayerCoreViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKVideoPlayerCoreViewDelegate.h; sourceTree = "<group>"; };
 		84588AC01A27336900E73C20 /* HKVideoPlayerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKVideoPlayerEvent.h; sourceTree = "<group>"; };
 		84588AC11A27336900E73C20 /* HKVideoPlayerException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKVideoPlayerException.h; sourceTree = "<group>"; };
 		84588AC21A27336900E73C20 /* HKVideoPlayerException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKVideoPlayerException.m; sourceTree = "<group>"; };
@@ -248,7 +247,6 @@
 			children = (
 				84588ABD1A27336900E73C20 /* HKVideoPlayerCoreView.h */,
 				84588ABE1A27336900E73C20 /* HKVideoPlayerCoreView.m */,
-				84588ABF1A27336900E73C20 /* HKVideoPlayerCoreViewDelegate.h */,
 				84588AC01A27336900E73C20 /* HKVideoPlayerEvent.h */,
 				84588AC11A27336900E73C20 /* HKVideoPlayerException.h */,
 				84588AC21A27336900E73C20 /* HKVideoPlayerException.m */,

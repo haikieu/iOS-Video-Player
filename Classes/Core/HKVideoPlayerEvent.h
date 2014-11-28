@@ -81,5 +81,7 @@
 -(void) playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime;
 -(void) playerDidCloseView;
 -(void) playerDidResizeWithFrame:(CGRect)frame;
+-(void) playerDidBeginChangePlayback;
+-(void) playerDidEndChangePlayback;
 
 @end

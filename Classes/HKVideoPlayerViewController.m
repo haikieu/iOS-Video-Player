@@ -210,6 +210,16 @@
     [_coreView playbackEndScrub];
 }
 
+-(void)playerDidBeginChangePlayback
+{
+    [_themeView performSelectorOnMainThread:@selector(playerDidBeginChangePlayback) withObject:nil waitUntilDone:NO];
+}
+
+-(void)playerDidEndChangePlayback
+{
+    [_themeView performSelectorOnMainThread:@selector(playerDidEndChangePlayback) withObject:nil waitUntilDone:NO];
+}
+
 #pragma mark - HKVideoPlayerEvent - Config
 
 -(UIEdgeInsets)playerGetConfigInsets

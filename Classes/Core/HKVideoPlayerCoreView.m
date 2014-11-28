@@ -470,9 +470,11 @@ BOOL didSeek=YES;
         return;
 //    didSeek = NO;
      NSLog(@"HK >>> %s scrubTime:%f",__PRETTY_FUNCTION__,scrubTime);
+    [_playerViewController playerDidBeginChangePlayback];
     CMTime time = CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC);
     [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
 //        didSeek=YES;
+        [_playerViewController playerDidEndChangePlayback];
     }];
 }
 
