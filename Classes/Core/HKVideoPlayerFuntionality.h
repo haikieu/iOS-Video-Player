@@ -23,4 +23,10 @@
 -(void)handleExitFullscreen;
 -(void)handleResizeWithFrame:(CGRect)frame;
 
+
+-(void)playbackBeginScrub;
+-(void)playbackEndScrub;
+-(void)playbackScrub:(float)scrubTime;
+-(void)playbackSynScrub;
+
 @end

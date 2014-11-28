@@ -152,7 +152,8 @@
 
 - (void)setPlayer:(AVPlayer*)player
 {
-	[(AVPlayerLayer*)[self layer] setPlayer:player];
+    _avPlayer = player;
+	[(AVPlayerLayer*)[self layer] setPlayer:_avPlayer];
 }
 
 /* Specifies how the video is displayed within a player layer’s bounds.
@@ -415,17 +416,16 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handleResumeTime:(float)second
 {
-    
-    
-    [self beginScrubbing];
-    [self scrub:second];
-    [self endScrubbing];
+    [self playbackEndScrub];
+    [self playbackScrub:second];
+    [self playbackBeginScrub];
 }
 
 - (void)addPlayerTimeObserver {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     if (!_playerTimeObserver) {
         __unsafe_unretained HKVideoPlayerCoreView *weakSelf = self;
-        id observer = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.5, NSEC_PER_SEC)
+        id observer = [self.avPlayer addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(.5, NSEC_PER_SEC)
                                                                 queue:dispatch_get_main_queue()
                                                            usingBlock:^(CMTime time) {
                                                                
@@ -439,35 +439,45 @@ static NSString * kItemAsset = @"asset";
 }
 
 - (void)removePlayerTimeObserver {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     if (_playerTimeObserver) {
-        [self.player removeTimeObserver:self.playerTimeObserver];
+        [self.avPlayer removeTimeObserver:self.playerTimeObserver];
         [self setPlayerTimeObserver:nil];
     }
 }
 
-- (void)beginScrubbing {
+- (void)playbackBeginScrub {
+    if(_scrubbing)
+        return;
+     NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [self removePlayerTimeObserver];
     [self setScrubbing:YES];
-    [self setRestoreAfterScrubbingRate:self.player.rate];
-    [self.player setRate:0.];
+    [self setRestoreAfterScrubbingRate:self.avPlayer.rate];
+    [self.avPlayer pause];
 }
-
-- (void)scrub:(float)scrubTime {
-    
+BOOL didSeek=YES;
+- (void)playbackScrub:(float)scrubTime {
+    if(!didSeek)
+        return;
+    didSeek = NO;
+     NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     CMTime time = CMTimeMakeWithSeconds(scrubTime, NSEC_PER_SEC);
     [_avPlayer seekToTime:time completionHandler:^(BOOL finished) {
-        //TODO
+        didSeek=YES;
     }];
 }
 
-- (void)endScrubbing {
-    [self.player setRate:self.restoreAfterScrubbingRate];
+- (void)playbackEndScrub {
+    if(!_scrubbing)
+        return;
+     NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
+    [self.avPlayer setRate:self.restoreAfterScrubbingRate];
     [self setScrubbing:NO];
     [self addPlayerTimeObserver];
 }
 
 - (void)syncScrobber {
-    
+     NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     NSInteger current = ceilf(CMTimeGetSeconds(self.avPlayer.currentTime));
     NSInteger duration = ceilf(CMTimeGetSeconds(self.avPlayer.currentItem.duration));
     NSInteger remain = duration-current;

@@ -194,6 +194,22 @@
     [_coreView handleResizeWithFrame:frame];
 }
 
+-(void)playbackScrub:(float)scrubTime
+{
+    [_coreView playbackBeginScrub];
+    [_coreView playbackScrub:scrubTime];
+}
+
+-(void)playbackBeginScrub
+{
+    [_coreView playbackBeginScrub];
+}
+
+-(void)playbackEndScrub
+{
+    [_coreView playbackEndScrub];
+}
+
 #pragma mark - HKVideoPlayerEvent - Config
 
 -(UIEdgeInsets)playerGetConfigInsets

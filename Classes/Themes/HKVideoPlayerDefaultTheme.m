@@ -46,12 +46,12 @@ UIView *bottomBar;
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
 {
     [super renderThemeOnPlayerVC:playerVC];
-    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 40)];
+    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 60)];
     _topBar.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6];
     [self addSubview:_topBar];
     
     _btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
-    _btnClose.frame = CGRectMake(self.bounds.size.width - 40, 0, 40, 40);
+    _btnClose.frame = CGRectMake(self.bounds.size.width - 40, 20, 40, 40);
     [_btnClose setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_cross"] forState:UIControlStateNormal];
     [_btnClose addTarget:self.playerVC action:@selector(handleCloseView) forControlEvents:UIControlEventTouchUpInside];
     [_topBar addSubview:_btnClose];
@@ -66,7 +66,10 @@ UIView *bottomBar;
     [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBar addSubview:_btnPlay];
     _progressBar = [[UISlider alloc] initWithFrame:CGRectMake(40, 0, self.bounds.size.width-40, 40)];
+    [_progressBar addTarget:self.playerVC action:@selector(playbackBeginScrub) forControlEvents:UIControlEventTouchDown];
     [_progressBar addTarget:self action:@selector(onProgressChange:) forControlEvents:UIControlEventValueChanged];
+    [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchUpInside];
+    [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchUpOutside];
     _progressBar.enabled = false;
     [_bottomBar addSubview:_progressBar];
     
@@ -117,7 +120,7 @@ float _durationTime = 0;
 -(void)onProgressChange:(id)sender
 {
     float seekTIme = _progressBar.value * _durationTime;
-    [self.playerVC handleResumeTime:seekTIme];
+    [self.playerVC playbackScrub:seekTIme];
 }
 
 -(void)playerDidUpdateCurrentTime:(float)currentTime remainTime:(float)remainTime durationTime:(float)durationTime
