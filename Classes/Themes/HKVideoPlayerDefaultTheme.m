@@ -70,7 +70,9 @@ UIView *bottomBar;
     [_progressBar addTarget:self action:@selector(onProgressChange:) forControlEvents:UIControlEventValueChanged];
     [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchUpInside];
     [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchUpOutside];
-    _progressBar.enabled = false;
+    [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchCancel];
+    [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventTouchDragExit];
+    [_progressBar addTarget:self.playerVC action:@selector(playbackEndScrub) forControlEvents:UIControlEventEditingDidEnd];    _progressBar.enabled = false;
     [_bottomBar addSubview:_progressBar];
     
     
@@ -128,20 +130,25 @@ float _durationTime = 0;
     _progressBar.enabled = true;
     if(durationTime>=0)
     {
+        _durationTime = durationTime;
         [_progressBar setMaximumValueImage:[[self class] imageFromText:[[self class] timeStringFromSeconds:durationTime]]];
     }
     else
     {
         _progressBar.enabled = false;
+        return;
     }
     if(currentTime>=0)
     {
+        _currentTime = currentTime;
         [_progressBar setMinimumValueImage:[[self class] imageFromText:[[self class] timeStringFromSeconds:currentTime]]];
     }
     else
     {
         _progressBar.enabled = false;
+        return;
     }
+    _remainTime = remainTime;
     [_progressBar setValue:(currentTime/durationTime) animated:YES];
 }
 

@@ -347,6 +347,7 @@ static NSString * kItemAsset = @"asset";
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    
     id oldObj = [change valueForKeyPath:NSKeyValueChangeOldKey];
     id newObj = [change valueForKeyPath:NSKeyValueChangeNewKey];
     
@@ -374,6 +375,7 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handlePlay
 {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [self addPlayerTimeObserver];
     [_avPlayer play];
     [_playerViewController playerDidPlay];
@@ -381,6 +383,7 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handlePause
 {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [self removePlayerTimeObserver];
     [_avPlayer pause];
     [_playerViewController playerDidPause];
@@ -388,6 +391,7 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handleRewind:(float)speed
 {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [_avPlayer setRate:speed];
     
     [_playerViewController playerDidRewind:speed];
@@ -395,13 +399,14 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handleFastforward:(float)speed
 {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [_avPlayer setRate:speed];
     
     [_playerViewController playerDidFastforward:speed];
 }
 -(void)handleStop
 {
-    
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [_avPlayer pause];
     [_avPlayer seekToTime:kCMTimeZero];
     [self removePlayerTimeObserver];
@@ -410,12 +415,14 @@ static NSString * kItemAsset = @"asset";
 
 -(void)handleCloseView
 {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [_avPlayer pause];
     [_playerViewController playerDidCloseView];
 }
 
 -(void)handleResumeTime:(float)second
 {
+    NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [self playbackEndScrub];
     [self playbackScrub:second];
     [self playbackBeginScrub];
