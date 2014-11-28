@@ -3,7 +3,39 @@ HKVideoPlayer
 
 iOS Ultimate video player with customizable theme view, compatible to ipad as well as iphone with very cool UI themes
 
+Features
 
+1) Strong Player ViewController available
+  + Easy to use and integrate with delegate [√]
+  + Support ipad and iphone as well [√]
+  + Support orientation roration [√]
+  + Clearly core event and delegate flow. [√]
+  
+2) Customize theme view easily
+  + Able to create new theme easily without modifing core player & view controller. [√]
+  + Able to specify theme requirements to override overall view for final united view. [√]
+  + Rich themes available (default theme, green theme, classical theme,etc..) [On-going]
+  +
+3) Gesture supporting
+  + Double tap to zoom player layer [√]
+  + Pan to drag [√]
+  + Tap to show up theme [√]
+  + Pinch to resize [TODO]
+
+4) Core playing functionalities
+  + Play, pause, stop, rewind, forward [√]
+  + Seek playback, progressbar updating [√]
+  + Clearly core event and delegate flow. [√]
+  + Support HLS protocol [√]
+  + Support rtmp, rtsp protocol [TODO]
+  + Volume, mute, speaker balance [TODO]
+  + Dodby sound [TODO]
+
+5) Extra functions
+  + Record movie [TODO]
+  + Record audio [TODO]
+  + Take a screenshot of movie [TODO]
+  
 
 ![HKVideoPlayer](https://raw.githubusercontent.com/haikieu/iOS-Video-Player/master/Images/Theme_default.png "Video player with default theme")
 
