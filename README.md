@@ -45,7 +45,7 @@ iOS Ultimate video player with customizable theme view, compatible to ipad as we
 
 ![HKVideoPlayer](https://raw.githubusercontent.com/haikieu/iOS-Video-Player/master/Images/Theme_default.png "Video player with default theme")
 
-![HKVideoPlayer](https://rhttps://raw.githubusercontent.com/haikieu/iOS-Video-Player/master/Images/Feature_Integrate_To_Control_Center.PNG "Integrate video player to iOS control center")
+![HKVideoPlayer](https://raw.githubusercontent.com/haikieu/iOS-Video-Player/master/Images/Feature_Integrate_To_Control_Center.PNG "Integrate video player to iOS control center")
 
 
 -------------------------------------------------
