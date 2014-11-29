@@ -30,8 +30,14 @@ iOS Ultimate video player with customizable theme view, compatible to ipad as we
   + Support rtmp, rtsp protocol [TODO]
   + Volume, mute, speaker balance [TODO]
   + Dodby sound [TODO]
+  
+#####5)Integrate player to Control Center
+  + Display & sync player title & info [√]
+  + Play, pause, rewind, forward [√]
+  + Display & sync playback progress [√]
+  + Seek playback [TODO]
 
-#####5) Extra functions
+#####6) Extra functions
   + Record movie [TODO]
   + Record audio [TODO]
   + Take a screenshot of movie [TODO]
