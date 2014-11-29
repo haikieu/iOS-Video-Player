@@ -33,8 +33,11 @@
 
 -(instancetype)initWithPlayerVC:(HKVideoPlayerViewController*)playerVC;
 
+-(double)getDurationTime;
 -(NSString*)getDurationTimeString;
+-(double)getCurrentTime;
 -(NSString*)getCurrentTimeString;
+-(double)getRemainTime;
 -(NSString*)getRemainTimeString;
 
 @end

@@ -40,18 +40,21 @@
 @interface HKVideoPlayerViewController : UIViewController <HKVideoPlayerViewController>
 
 @property(nonatomic,strong,readonly) NSURL *videoUrl;
-@property(nonatomic,readonly)BOOL isPlay;
-@property(nonatomic,assign) BOOL repeat;
-@property(nonatomic,assign,readonly) BOOL autoPlay;
-@property(nonatomic,assign,readonly) BOOL fullScreen;
+@property(nonatomic,readonly)BOOL isPlaying;
+@property(nonatomic,assign) BOOL enableRepeat;
+@property(nonatomic,assign,readonly) BOOL enableAutoPlay;
+@property(nonatomic,assign,readonly) BOOL enableFullScreen;
 @property(nonatomic)float currentSpeed;
-
 @property(nonatomic,assign) CGRect baseFrame;
+@property(nonatomic,assign,readonly)BOOL enableSyncMedia;
 
 -(instancetype)initWithFrame:(CGRect)frame theme:(HKVideoPlayerThemeView*) themeView;
+
 -(void)setPlayerTitle:(NSString*)string subTitle:(NSString*)subTitle;
+
 -(void)autoHideThemeView:(BOOL)enable afterTime:(float) second;
 
+-(void)syncMediaToControlCenter:(BOOL)enable;
 
 -(void)enableZooming:(BOOL)enable;
 

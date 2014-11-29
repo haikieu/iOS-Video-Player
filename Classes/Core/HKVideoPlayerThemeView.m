@@ -91,6 +91,22 @@
     return [self new];
 }
 
+-(NSString *)playerTitle
+{
+    if(_playerTitle)
+        return _playerTitle;
+    else
+        return @"HKVideoPlayer";
+}
+
+-(NSString *)playerSubTitle
+{
+    if(_playerSubTitle)
+        return _playerSubTitle;
+    else
+        return @"There's no subtitle now";
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

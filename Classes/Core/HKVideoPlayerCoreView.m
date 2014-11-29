@@ -99,6 +99,12 @@
 
 #pragma mark - Scrubb
 
+-(double)getDurationTime
+{
+    double durationSeconds = ceil(CMTimeGetSeconds(self.player.currentItem.duration));
+    return durationSeconds;
+}
+
 -(NSString *)getDurationTimeString
 {
     NSInteger durationSeconds = ceilf(CMTimeGetSeconds(self.player.currentItem.duration));
@@ -108,6 +114,11 @@
     
     NSString * durationTime = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
     return durationTime;
+}
+
+-(double) getRemainTime
+{
+    return [self getDurationTime] - [self getCurrentTime];
 }
 
 -(NSString *)getRemainTimeString
@@ -122,6 +133,11 @@
     
     NSString *remainTime = [NSString stringWithFormat:@"-%02ld:%02ld:%02ld", (long)durationHours, (long)durationMinutes, (long)durationSeconds];
     return remainTime;
+}
+
+-(double)getCurrentTime
+{
+    return ceil(CMTimeGetSeconds(self.avPlayer.currentTime));
 }
 
 -(NSString *)getCurrentTimeString

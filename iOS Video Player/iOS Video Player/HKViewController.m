@@ -36,13 +36,14 @@
     if(DEVICE_IS_IPHONE())
     {
         [self presentViewController:_playerVC animated:YES completion:^{
-            
+            [_playerVC syncMediaToControlCenter:YES];
         }];
         
     }
     else
     {
         [self.view addSubview:_playerVC.view];
+        [_playerVC syncMediaToControlCenter:YES];
     }
     
     [_playerVC loadUrl:[NSURL URLWithString:URL_ADVANCED_STREAMING] autoPlay:YES];

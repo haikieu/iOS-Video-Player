@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 haikieu2907@gmail.com. All rights reserved.
 //
 
+#import <MediaPlayer/MediaPlayer.h>
 #import "HKVideoPlayerViewController.h"
 #import "HKVideoPlayerThemeView.h"
 #import "HKVideoPlayerCoreView.h"
@@ -86,10 +87,6 @@
 {
     [super viewDidAppear:animated];
     
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    if(![self isFirstResponder])
-        [self becomeFirstResponder];
-    
     [_timer fire];
     
     [_themeView renderThemeOnPlayerVC:self];
@@ -138,7 +135,7 @@
 -(void)loadUrl:(NSURL *)url autoPlay:(BOOL)autoPlay
 {
     [_themeView performSelectorOnMainThread:@selector(playerWillLoad) withObject:nil waitUntilDone:YES];
-    _autoPlay = autoPlay;
+    _enableAutoPlay = autoPlay;
     [_coreView beginViewSessionWithUrl:url];
 }
 
@@ -264,30 +261,50 @@
 }
 
 -(void)playerDidPlay
-{   _isPlay = YES;
+{   _isPlaying = YES;
     _currentSpeed = _coreView.avPlayer.rate;
+    [self syncMediaToControlCenter];
     [_themeView performSelectorOnMainThread:@selector(playerDidPlay) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidStop
-{   _isPlay = NO;
+{   _isPlaying = NO;
     _currentSpeed = _coreView.avPlayer.rate;
+    [self syncMediaToControlCenter];
     [_themeView performSelectorOnMainThread:@selector(playerDidStop) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidPause
-{   _isPlay = NO;
+{   _isPlaying = NO;
     _currentSpeed = _coreView.avPlayer.rate;
+    [self syncMediaToControlCenter];
     [_themeView performSelectorOnMainThread:@selector(playerDidPause) withObject:nil waitUntilDone:NO];
+}
+
+-(void)playerDidFastforward:(float)speed
+{
+    _currentSpeed = _coreView.avPlayer.rate;
+    [self syncMediaToControlCenter];
+    [_themeView performSelectorOnMainThread:@selector(playerDidFastforward:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
+}
+-(void)playerDidRewind:(float)speed
+{
+    _currentSpeed = _coreView.avPlayer.rate;
+    [self syncMediaToControlCenter];
+    [_themeView performSelectorOnMainThread:@selector(playerDidRewind:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
 }
 
 -(void)playerDidLoad
 {
     _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidLoad) withObject:nil waitUntilDone:NO];
-    if(_autoPlay)
+    if(_enableAutoPlay)
     {
         [self handlePlay];
+    }
+    if(_enableSyncMedia)
+    {
+        [self syncMediaToControlCenter];
     }
 }
 
@@ -306,14 +323,14 @@
 -(void)playerDidExitFullscreen
 {
     _currentSpeed = _coreView.avPlayer.rate;
-    _fullScreen = NO;
+    _enableFullScreen = NO;
     [_themeView performSelectorOnMainThread:@selector(playerDidExitFullscreen) withObject:nil waitUntilDone:NO];
 }
 
 -(void)playerDidEnterFullscreen
 {
     _currentSpeed = _coreView.avPlayer.rate;
-    _fullScreen = YES;
+    _enableFullScreen = YES;
     [_themeView performSelectorOnMainThread:@selector(playerDidEnterFullscreen) withObject:nil waitUntilDone:NO];
 }
 
@@ -336,17 +353,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_themeView playerDidUpdateCurrentTime:currentTime remainTime:remainTime durationTime:durationTime];
     });
-}
-
--(void)playerDidFastforward:(float)speed
-{
-    _currentSpeed = _coreView.avPlayer.rate;
-    [_themeView performSelectorOnMainThread:@selector(playerDidFastforward:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
-}
--(void)playerDidRewind:(float)speed
-{
-    _currentSpeed = _coreView.avPlayer.rate;
-    [_themeView performSelectorOnMainThread:@selector(playerDidRewind:) withObject:[NSNumber numberWithFloat:speed] waitUntilDone:YES];
 }
 
 -(void)playerDidResizeWithFrame:(CGRect)frame
@@ -510,6 +516,58 @@ BOOL firstTime=YES;
 
 #pragma mark - Handle remote control
 
+-(void)syncMediaToControlCenter:(BOOL)enable
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _enableSyncMedia=enable;
+        if(_enableSyncMedia)
+        {
+            [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+            if(![self isFirstResponder])
+                [self becomeFirstResponder];
+        }
+        else
+        {
+            [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+        }
+        [self syncMediaToControlCenter];
+    });
+}
+
+-(void)syncMediaToControlCenter
+{
+    if(_enableSyncMedia)
+    {
+            NSArray *keys = [NSArray arrayWithObjects:
+                             MPMediaItemPropertyMediaType,
+                             MPMediaItemPropertyTitle,
+                             MPMediaItemPropertyArtist,
+                             MPMediaItemPropertyPlaybackDuration,
+                             MPNowPlayingInfoPropertyPlaybackRate,
+                             MPNowPlayingInfoPropertyElapsedPlaybackTime,
+                             nil];
+            // NSInteger durationSeconds = ceilf(CMTimeGetSeconds(_coreView.avPlayer.currentItem.duration));
+            NSArray *values = [NSArray arrayWithObjects:
+                               [NSNumber numberWithInt:MPMediaTypeMovie],
+                               _themeView.playerTitle,
+                               _themeView.playerSubTitle,
+                               [NSNumber numberWithDouble:[_coreView getDurationTime]],
+                               [NSNumber numberWithDouble:_coreView.avPlayer.rate],
+                               [NSNumber numberWithDouble:[_coreView getCurrentTime]],
+                               nil];
+            
+            NSDictionary *mediaInfo = [NSDictionary dictionaryWithObjects:values forKeys:keys];
+            [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:mediaInfo];
+
+    }
+    else
+    {
+        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:[NSDictionary new]];
+    }
+
+}
+
 - (void)remoteControlReceivedWithEvent:(UIEvent *)receivedEvent {
     
     if (receivedEvent.type == UIEventTypeRemoteControl) {
@@ -526,23 +584,36 @@ BOOL firstTime=YES;
                 [self handleStop];
                 break;
             case UIEventSubtypeRemoteControlTogglePlayPause:
-                if(_isPlay)
+                if(_isPlaying)
                    [self handlePause];
                 else
                     [self handlePlay];
                 break;
                 
             case UIEventSubtypeRemoteControlPreviousTrack:
-                
+                    [self handleRewind:0];
                 break;
                 
             case UIEventSubtypeRemoteControlNextTrack:
+                    [self handleFastforward:0];
+                break;
+            case UIEventSubtypeRemoteControlBeginSeekingForward:
+            case UIEventSubtypeRemoteControlBeginSeekingBackward:
+                
+                break;
+            case UIEventSubtypeRemoteControlEndSeekingForward:
+            case UIEventSubtypeRemoteControlEndSeekingBackward:
                 
                 break;
                 
             default:
                 break;
         }
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self syncMediaToControlCenter];
+        });
+        
     }
 }
 
