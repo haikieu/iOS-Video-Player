@@ -80,6 +80,7 @@
     
     [self enableZooming:YES];
     
+    [self handleUIApplicationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
 
@@ -521,18 +522,24 @@ BOOL firstTime=YES;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _enableSyncMedia=enable;
-        if(_enableSyncMedia)
-        {
-            [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-            if(![self isFirstResponder])
-                [self becomeFirstResponder];
-        }
-        else
-        {
-            [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-        }
+        [self syncFunctionalityToControlCenter];
         [self syncMediaToControlCenter];
     });
+}
+
+-(void)syncFunctionalityToControlCenter
+{
+    if(_enableSyncMedia)
+    {
+        [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+        if(![self isFirstResponder])
+            [self becomeFirstResponder];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    }
+
 }
 
 -(void)syncMediaToControlCenter
@@ -654,6 +661,67 @@ BOOL firstTime=YES;
             [_themeView playerWillChangeOrientation:interfaceOrientation];
         });
     }
+}
+
+#pragma mark - UIApplication notification handlers
+
+-(void)handleUIApplicationNotifications
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(UIApplicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:[UIApplication sharedApplication]];
+    [center addObserver:self selector:@selector(UIApplicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:[UIApplication sharedApplication]];
+    [center addObserver:self selector:@selector(UIApplicationDidBecomeActiveNotification:) name:UIApplicationDidBecomeActiveNotification object:[UIApplication sharedApplication]];
+    [center addObserver:self selector:@selector(UIApplicationWillResignActiveNotification:) name:UIApplicationWillResignActiveNotification object:[UIApplication sharedApplication]];
+}
+
+-(void)UIApplicationDidEnterBackgroundNotification:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationWillEnterForegroundNotification:(NSNotification*)notification
+{
+    [self syncFunctionalityToControlCenter];
+}
+
+-(void)UIApplicationDidBecomeActiveNotification:(NSNotification*)notification
+{
+    [self syncFunctionalityToControlCenter];
+}
+
+-(void)UIApplicationWillResignActiveNotification:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationLaunchOptionsURLKey:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationLaunchOptionsRemoteNotificationKey:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationLaunchOptionsLocalNotificationKey:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationLaunchOptionsBluetoothCentralsKey:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationLaunchOptionsBluetoothPeripheralsKey:(NSNotification*)notification
+{
+    
+}
+
+-(void)UIApplicationUserDidTakeScreenshotNotification:(NSNotification*)notification
+{
+    
 }
 
 @end
