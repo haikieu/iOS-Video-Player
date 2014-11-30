@@ -49,7 +49,7 @@ iOS Ultimate video player with customizable theme view, compatible to ipad as we
 
 
 -------------------------------------------------
-Copyright ç Nov 2014 by haikieu2907@gmail.com
+Copyright November,2014 by haikieu2907@gmail.com
 Apache License Version 2.0, January 2004
 http://www.apache.org/licenses/
 
