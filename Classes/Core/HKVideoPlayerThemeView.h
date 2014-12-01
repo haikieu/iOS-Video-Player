@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HKVideoPlayerEvent.h"
+#import "UIView+MHNibLoading.h"
 
 @class HKVideoPlayerViewController;
 @class HKVideoPlayerThemeView;

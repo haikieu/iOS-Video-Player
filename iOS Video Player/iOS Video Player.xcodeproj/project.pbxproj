@@ -28,6 +28,8 @@
 		42EBF2FB1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 42EBF2FA1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m */; };
 		42EBF2FD1A20630C006AF19C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2FC1A20630C006AF19C /* AVFoundation.framework */; };
 		42EBF2FF1A2063B3006AF19C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2FE1A2063B3006AF19C /* QuartzCore.framework */; };
+		8431ACD71A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8431ACD61A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib */; };
+		8431ACDB1A2C32EA00992FED /* UIView+MHNibLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 8431ACDA1A2C32EA00992FED /* UIView+MHNibLoading.m */; };
 		84588AA21A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */; };
 		84588AA51A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AA41A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m */; };
 		84588AA81A2702F400E73C20 /* HKVideoPlayerWinterTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 84588AA71A2702F400E73C20 /* HKVideoPlayerWinterTheme.m */; };
@@ -79,6 +81,9 @@
 		42EBF2FA1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerDefaultTheme.m; path = ../../Classes/Themes/HKVideoPlayerDefaultTheme.m; sourceTree = "<group>"; };
 		42EBF2FC1A20630C006AF19C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		42EBF2FE1A2063B3006AF19C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8431ACD61A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HKVideoPlayerClassicalTheme.xib; path = ../../Classes/Themes/HKVideoPlayerClassicalTheme.xib; sourceTree = "<group>"; };
+		8431ACD91A2C32EA00992FED /* UIView+MHNibLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MHNibLoading.h"; sourceTree = "<group>"; };
+		8431ACDA1A2C32EA00992FED /* UIView+MHNibLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MHNibLoading.m"; sourceTree = "<group>"; };
 		84588AA01A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerClassicalTheme.h; path = ../../Classes/Themes/HKVideoPlayerClassicalTheme.h; sourceTree = "<group>"; };
 		84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerClassicalTheme.m; path = ../../Classes/Themes/HKVideoPlayerClassicalTheme.m; sourceTree = "<group>"; };
 		84588AA31A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerWoodenTheme.h; path = ../../Classes/Themes/HKVideoPlayerWoodenTheme.h; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 		42EBF2EA1A205FDC006AF19C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				8431ACD81A2C32EA00992FED /* 3rd-Parties */,
 				84588AD01A27337600E73C20 /* HKVideoPlayerViewController.h */,
 				84588AD11A27337600E73C20 /* HKVideoPlayerViewController.m */,
 				84588AD21A27337600E73C20 /* HKVideoPlayerViewControllerDelegate.h */,
@@ -231,6 +237,7 @@
 				42EBF2F91A2061B6006AF19C /* HKVideoPlayerDefaultTheme.h */,
 				42EBF2FA1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m */,
 				84588AA01A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.h */,
+				8431ACD61A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib */,
 				84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */,
 				84588AA31A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.h */,
 				84588AA41A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m */,
@@ -240,6 +247,16 @@
 				42B69F791A27AE830093F2EB /* HKVideoPlayerGreenTheme.m */,
 			);
 			name = Themes;
+			sourceTree = "<group>";
+		};
+		8431ACD81A2C32EA00992FED /* 3rd-Parties */ = {
+			isa = PBXGroup;
+			children = (
+				8431ACD91A2C32EA00992FED /* UIView+MHNibLoading.h */,
+				8431ACDA1A2C32EA00992FED /* UIView+MHNibLoading.m */,
+			);
+			name = "3rd-Parties";
+			path = "../../Classes/3rd-Parties";
 			sourceTree = "<group>";
 		};
 		84588ABC1A27336900E73C20 /* Core */ = {
@@ -344,6 +361,7 @@
 				42EBF2C91A205E93006AF19C /* Main_iPad.storyboard in Resources */,
 				42EBF2CE1A205E93006AF19C /* Images.xcassets in Resources */,
 				42EBF2C61A205E93006AF19C /* Main_iPhone.storyboard in Resources */,
+				8431ACD71A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib in Resources */,
 				84588AD51A2735F800E73C20 /* HKVideoPlayer.bundle in Resources */,
 				42EBF2BD1A205E93006AF19C /* InfoPlist.strings in Resources */,
 			);
@@ -377,6 +395,7 @@
 				84588ACF1A27336900E73C20 /* UIViewController+Draggable.m in Sources */,
 				84588ACB1A27336900E73C20 /* HKVideoPlayerCoreView.m in Sources */,
 				42EBF2FB1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m in Sources */,
+				8431ACDB1A2C32EA00992FED /* UIView+MHNibLoading.m in Sources */,
 				42EBF2C31A205E93006AF19C /* HKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
