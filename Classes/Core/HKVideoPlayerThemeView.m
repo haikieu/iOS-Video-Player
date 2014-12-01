@@ -17,6 +17,39 @@
 
 @end
 
+@implementation HKVideoPlayerThemeView (NibLoading)
+
++(BOOL)isNibBasedTheme
+{
+    return NO;
+}
+
++(NSString *)nibName
+{
+    if(![[self class] isNibBasedTheme])
+        return nil;
+    
+    return NSStringFromClass([self class]);
+}
+
++(NSBundle*)nibBundle
+{
+    if(![[self class] isNibBasedTheme])
+        return nil;
+    
+    return [NSBundle mainBundle];
+}
+
++(UIView*)nibView
+{
+    if(![[self class] isNibBasedTheme])
+        return nil;
+    
+    return [UIView loadInstanceFromNibWithName:[[self class] nibName] owner:self bundle:[[self class] nibBundle]];
+}
+
+@end
+
 @implementation HKVideoPlayerThemeView(Assets)
 
 +(NSString *)specifyDefaultBundle
@@ -86,8 +119,13 @@
     return self;
 }
 
-+(HKVideoPlayerThemeView *)theme
++(instancetype)theme
 {
+    if([[self class] isNibBasedTheme])
+    {
+        return [[self class] loadInstanceFromNibWithName:[[self class]nibName] owner:self bundle:[[self class]nibBundle]];
+    }
+    
     return [self new];
 }
 

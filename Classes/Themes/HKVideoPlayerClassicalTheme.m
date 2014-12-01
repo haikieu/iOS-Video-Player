@@ -10,4 +10,23 @@
 
 @implementation HKVideoPlayerClassicalTheme
 
++(BOOL)isNibBasedTheme
+{
+    return YES;
+}
+
+-(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
+{
+    [super renderThemeOnPlayerVC:playerVC];
+    UIView * nibView = [[self class] nibView];
+    [self awakeFromNib];
+//    [self addSubview:nibView];
+}
+
+-(void)renderLoadingOnPlayerVC:(HKVideoPlayerViewController *)playerVC
+{
+    [super renderLoadingOnPlayerVC:playerVC];
+}
+
+
 @end

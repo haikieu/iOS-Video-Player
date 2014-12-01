@@ -9,7 +9,7 @@
 #import "HKViewController.h"
 #import "HKVideoPlayerViewController.h"
 #import "HKVideoPlayerDefaultTheme.h"
-
+#import "HKVideoPlayerClassicalTheme.h"
 @interface HKViewController ()
 
 @property HKVideoPlayerViewController *playerVC;
@@ -28,7 +28,7 @@
 {
     [super viewDidAppear:animated];
     
-    _playerVC = [[HKVideoPlayerViewController alloc] initWithFrame:CGRectMake(20, 20, 600, 400) theme:[HKVideoPlayerDefaultTheme theme]];
+    _playerVC = [[HKVideoPlayerViewController alloc] initWithFrame:CGRectMake(20, 20, 600, 400) theme:[HKVideoPlayerClassicalTheme theme]];
     [_playerVC enableDragging];
     [_playerVC autoHideThemeView:YES afterTime:3];
     _playerVC.delegate = self;

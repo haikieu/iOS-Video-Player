@@ -24,7 +24,7 @@
 -(void)showLoadingAnimation;
 -(void)hideLoadingAnimation;
 
-+(HKVideoPlayerThemeView*) theme;
++(instancetype) theme;
 
 @end
 
@@ -45,5 +45,14 @@
 +(NSString *)timeStringFromSeconds:(float)secondsValue;
 
 +(UIImage *)imageFromText:(NSString *)text;
+
+@end
+
+@interface HKVideoPlayerThemeView(NibLoading)
+
++(BOOL)isNibBasedTheme;
++(NSString*)nibName;
++(NSBundle*)nibBundle;
++(UIView*)nibView;
 
 @end
