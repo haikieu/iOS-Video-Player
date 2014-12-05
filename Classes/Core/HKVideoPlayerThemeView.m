@@ -274,9 +274,19 @@
     return CGRectContainsPoint(self.frame, postion);
 }
 
--(BOOL)themeViewNeedClipsToBounds
+-(BOOL)themeViewRequireClipsToBounds
 {
     return self.clipsToBounds;
+}
+
++(UIColor *)themeViewRequireCoreViewBackgroundColor
+{
+    return [UIColor blackColor];
+}
+
++(UIColor *)themeViewRequireViewControllerBackgroundColor
+{
+    return [UIColor blackColor];
 }
 
 +(BOOL)themeViewShouldSupportIpadnIphone

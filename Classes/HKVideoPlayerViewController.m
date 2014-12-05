@@ -61,13 +61,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.frame = _baseFrame;
-    self.view.backgroundColor = [UIColor blackColor];
+    if(DEVICE_IS_IPAD())
+    {
+        self.view.frame = _baseFrame;
+    }
+    self.view.backgroundColor = [[_themeView class] themeViewRequireViewControllerBackgroundColor];
     
     _coreView = [[HKVideoPlayerCoreView alloc] initWithPlayerVC:self];
+    _coreView.backgroundColor = [[_themeView class] themeViewRequireCoreViewBackgroundColor];
     [self.view addSubview:_coreView];
     
-    self.view.clipsToBounds = [_themeView themeViewNeedClipsToBounds];
+    self.view.clipsToBounds = [_themeView themeViewRequireClipsToBounds];
     [self.view addSubview:_themeView];
     [self.view bringSubviewToFront:_themeView];
     

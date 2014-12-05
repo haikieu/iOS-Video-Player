@@ -214,7 +214,7 @@ float _durationTime = 0;
     return UIEdgeInsetsZero;
 }
 
--(BOOL)themeViewNeedClipsToBounds
+-(BOOL)themeViewRequireClipsToBounds
 {
     return YES;
 }
@@ -222,6 +222,22 @@ float _durationTime = 0;
 -(void)setEventHandler
 {
     
+}
+
++(BOOL)themeViewShouldAutorotate
+{
+    return NO;
+}
+
++(BOOL)themeViewShouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    
+}
+
++(NSUInteger)themeViewSupportedInterfaceOrientations
+{
+    return UIInterfaceOrientationPortrait;
 }
 
 @end

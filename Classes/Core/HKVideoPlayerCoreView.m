@@ -92,7 +92,7 @@
 
 -(void)initCore
 {
-    self.backgroundColor = DEFAULT_COLOR_BACKGROUND;
+//    self.backgroundColor = DEFAULT_COLOR_BACKGROUND;
     
     
 }

@@ -17,7 +17,9 @@
 -(BOOL) themeViewAllowDraggableAtPosition:(CGPoint)postion;
 -(BOOL) themeViewAllowResizeWithFrame:(CGRect)frame;
 
--(BOOL) themeViewNeedClipsToBounds;
+-(BOOL) themeViewRequireClipsToBounds;
++(UIColor*) themeViewRequireViewControllerBackgroundColor;
++(UIColor*) themeViewRequireCoreViewBackgroundColor;
 +(BOOL) themeViewShouldSupportIpadnIphone;
 +(BOOL) themeViewShouldSupportIpad;
 +(BOOL) themeViewShouldSupportIphone;
