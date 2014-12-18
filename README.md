@@ -3,6 +3,8 @@ HKVideoPlayer
 
 iOS Ultimate video player with customizable theme view, compatible to ipad as well as iphone with very cool UI themes
 
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SLWW2XYDATUYS" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Make donation for Hai Kieu's github"/></a>
+
 ####Features Summary
 
 #####1) Strong Player ViewController available
@@ -53,3 +55,4 @@ Copyright November,2014 by haikieu2907@gmail.com
 Apache License Version 2.0, January 2004
 http://www.apache.org/licenses/
 
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SLWW2XYDATUYS" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Make donation for Hai Kieu's github"/></a>
