@@ -221,7 +221,6 @@
                     </variation>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.6025244756" green="0.8068765228" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="aWd-cP-YCa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="28g-y1-hwI"/>
                 <constraint firstAttribute="bottom" secondItem="aWd-cP-YCa" secondAttribute="bottom" id="9Yu-HS-w9n"/>
@@ -232,7 +231,6 @@
                 <constraint firstItem="3Vq-xs-obH" firstAttribute="leading" secondItem="aWd-cP-YCa" secondAttribute="leading" id="X68-iP-Ubm"/>
                 <constraint firstAttribute="bottom" secondItem="aWd-cP-YCa" secondAttribute="bottom" id="huE-qp-G1K"/>
                 <constraint firstAttribute="trailing" secondItem="aWd-cP-YCa" secondAttribute="trailing" id="jWg-Nu-ihr"/>
-                <constraint firstAttribute="bottom" secondItem="3Vq-xs-obH" secondAttribute="bottom" constant="550" id="nGc-cp-rJg"/>
                 <constraint firstItem="3Vq-xs-obH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="q8Y-2L-9tK"/>
                 <constraint firstItem="3Vq-xs-obH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rcM-Px-ueZ"/>
                 <constraint firstItem="3Vq-xs-obH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tDJ-xw-Ctm"/>
@@ -248,7 +246,6 @@
             </variation>
             <variation key="heightClass=compact">
                 <mask key="constraints">
-                    <exclude reference="nGc-cp-rJg"/>
                     <include reference="q8Y-2L-9tK"/>
                     <exclude reference="tDJ-xw-Ctm"/>
                 </mask>
