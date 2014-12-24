@@ -24,9 +24,21 @@
                             <state key="normal" title="Done">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="onTapDoneButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="LVV-pX-CCk"/>
+                            </connections>
                         </button>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="n7g-Qq-KVI">
                             <rect key="frame" x="60" y="10" width="483" height="31"/>
+                            <connections>
+                                <action selector="onTouchCancel:" destination="iN0-l3-epB" eventType="touchCancel" id="HCu-Ti-aDL"/>
+                                <action selector="onTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="9fA-Jl-6vU"/>
+                                <action selector="onTouchDragExit:" destination="iN0-l3-epB" eventType="touchDragExit" id="OWs-dj-BQa"/>
+                                <action selector="onTouchEditingDidEnd:" destination="iN0-l3-epB" eventType="editingDidEnd" id="lTK-Pm-pMQ"/>
+                                <action selector="onTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="KhF-Wt-Lo4"/>
+                                <action selector="onTouchUpOutside:" destination="iN0-l3-epB" eventType="touchUpOutside" id="R7w-Ew-lii"/>
+                                <action selector="onValueChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="Twq-ii-3zI"/>
+                            </connections>
                         </slider>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ya-6v-6Te">
                             <rect key="frame" x="546" y="10" width="46" height="30"/>
@@ -98,12 +110,18 @@
                                     <exclude reference="VH8-jH-hnv"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <action selector="onTapNextButton:" destination="iN0-l3-epB" eventType="touchUpOutside" id="pfv-jQ-LfY"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gI9-GY-6eN">
                             <rect key="frame" x="217" y="10" width="50" height="30"/>
                             <state key="normal" title="&lt;">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="onTapPreviousButton:" destination="iN0-l3-epB" eventType="touchUpOutside" id="UGc-rZ-n5j"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2h-mt-zrE">
                             <rect key="frame" x="275" y="10" width="50" height="30"/>
@@ -130,6 +148,9 @@
                                     <include reference="yqT-40-X6v"/>
                                 </mask>
                             </variation>
+                            <connections>
+                                <action selector="onTapPlayButton:" destination="iN0-l3-epB" eventType="touchUpOutside" id="5bI-Fi-qB7"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -245,6 +266,17 @@
                     <exclude reference="tgZ-iP-uhd"/>
                 </mask>
             </variation>
+            <connections>
+                <outlet property="btnDone" destination="P7l-JH-chL" id="IL2-4f-chj"/>
+                <outlet property="btnFullScreen" destination="4ya-6v-6Te" id="Kdy-d1-Xz1"/>
+                <outlet property="btnNext" destination="D3H-Bx-Avf" id="I7g-zU-J8n"/>
+                <outlet property="btnPlay" destination="P2h-mt-zrE" id="8yF-3c-jR5"/>
+                <outlet property="btnPrevious" destination="gI9-GY-6eN" id="Z7f-in-fnD"/>
+                <outlet property="slProgressBar" destination="n7g-Qq-KVI" id="DPL-Id-cEA"/>
+                <outlet property="slVolumeBar" destination="nnb-xM-uT1" id="RFD-0Z-qIB"/>
+                <outlet property="vwBottomBar" destination="aWd-cP-YCa" id="Lkf-Y1-Prs"/>
+                <outlet property="vwTopBar" destination="3Vq-xs-obH" id="b6g-oR-tEk"/>
+            </connections>
             <point key="canvasLocation" x="100" y="185"/>
         </view>
     </objects>

@@ -29,4 +29,35 @@
 }
 
 
+- (IBAction)onTapDoneButton:(UIButton *)sender {
+}
+
+- (IBAction)onTapPlayButton:(id)sender {
+}
+- (IBAction)onTapPreviousButton:(id)sender {
+}
+
+- (IBAction)onTapNextButton:(id)sender {
+}
+
+- (IBAction)onTouchDown:(id)sender {
+}
+
+- (IBAction)onTouchDragExit:(id)sender {
+}
+
+- (IBAction)onTouchUpOutside:(id)sender {
+}
+
+- (IBAction)onTouchUpInside:(id)sender {
+}
+
+- (IBAction)onTouchEditingDidEnd:(id)sender {
+}
+
+- (IBAction)onTouchCancem:(id)sender {
+}
+
+- (IBAction)onValueChanged:(id)sender {
+}
 @end
