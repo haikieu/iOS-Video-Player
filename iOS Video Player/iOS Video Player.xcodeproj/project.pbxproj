@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4212A9D01A210CF000B970EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4212A9CF1A210CF000B970EE /* CoreVideo.framework */; };
 		4212A9D21A210D3400B970EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4212A9D11A210D3400B970EE /* MediaPlayer.framework */; };
+		427F4FDF1A4DD0BE004A2C66 /* HKUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F4FDE1A4DD0BE004A2C66 /* HKUtility.m */; };
 		42B69F7A1A27AE830093F2EB /* HKVideoPlayerGreenTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B69F791A27AE830093F2EB /* HKVideoPlayerGreenTheme.m */; };
 		42EBF2B31A205E93006AF19C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B21A205E93006AF19C /* Foundation.framework */; };
 		42EBF2B51A205E93006AF19C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B41A205E93006AF19C /* CoreGraphics.framework */; };
@@ -55,6 +56,8 @@
 /* Begin PBXFileReference section */
 		4212A9CF1A210CF000B970EE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		4212A9D11A210D3400B970EE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		427F4FDD1A4DD0BE004A2C66 /* HKUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKUtility.h; sourceTree = "<group>"; };
+		427F4FDE1A4DD0BE004A2C66 /* HKUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKUtility.m; sourceTree = "<group>"; };
 		42B69F781A27AE830093F2EB /* HKVideoPlayerGreenTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerGreenTheme.h; path = ../../Classes/Themes/HKVideoPlayerGreenTheme.h; sourceTree = "<group>"; };
 		42B69F791A27AE830093F2EB /* HKVideoPlayerGreenTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerGreenTheme.m; path = ../../Classes/Themes/HKVideoPlayerGreenTheme.m; sourceTree = "<group>"; };
 		42EBF2AF1A205E93006AF19C /* iOS Video Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Video Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,6 +279,8 @@
 				84588ACA1A27336900E73C20 /* UIViewController+Draggable.m */,
 				846B229C1A28446D003F2CED /* HKLog.h */,
 				846B229D1A28446D003F2CED /* HKLog.m */,
+				427F4FDD1A4DD0BE004A2C66 /* HKUtility.h */,
+				427F4FDE1A4DD0BE004A2C66 /* HKUtility.m */,
 			);
 			name = Core;
 			path = ../../Classes/Core;
@@ -395,6 +400,7 @@
 				84588ACF1A27336900E73C20 /* UIViewController+Draggable.m in Sources */,
 				84588ACB1A27336900E73C20 /* HKVideoPlayerCoreView.m in Sources */,
 				42EBF2FB1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m in Sources */,
+				427F4FDF1A4DD0BE004A2C66 /* HKUtility.m in Sources */,
 				8431ACDB1A2C32EA00992FED /* UIView+MHNibLoading.m in Sources */,
 				42EBF2C31A205E93006AF19C /* HKAppDelegate.m in Sources */,
 			);
