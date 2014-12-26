@@ -231,7 +231,7 @@ float _durationTime = 0;
 
 +(BOOL)themeViewShouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == [[self class] themeViewSupportedInterfaceOrientations]);
     
 }
 
