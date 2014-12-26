@@ -255,11 +255,13 @@
 +(BOOL)themeViewShouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // You do not need this method if you are not supporting earlier iOS Versions
-    if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
-        return YES;
-    if(interfaceOrientation==UIInterfaceOrientationMaskPortrait)
-        return YES;
-    return NO;
+//    if(UIInterfaceOrientationIsLandscape(interfaceOrientation))
+//        return YES;
+//    if(interfaceOrientation|UIInterfaceOrientationPortraitUpsideDown)
+//        return YES;
+//    return NO;
+    BOOL value = [self themeViewSupportedInterfaceOrientations] | interfaceOrientation;
+    return value;
 }
 
 #pragma mark - HKVideoPlayerThemeViewRequirementDelegate
@@ -272,6 +274,11 @@
 -(BOOL)themeViewAllowDraggableAtPosition:(CGPoint)postion
 {
     return CGRectContainsPoint(self.frame, postion);
+}
+
++(BOOL)themeViewRequireStatusBar
+{
+    return UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad;
 }
 
 -(BOOL)themeViewRequireClipsToBounds

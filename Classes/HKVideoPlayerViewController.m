@@ -11,6 +11,7 @@
 #import "HKVideoPlayerThemeView.h"
 #import "HKVideoPlayerCoreView.h"
 #import "HKVideoPlayerException.h"
+#import "HKUtility.h"
 
 @interface HKVideoPlayerViewController ()
 
@@ -108,22 +109,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET(nil);
-}
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // You do not need this method if you are not supporting earlier iOS Versions
-    return [[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation];
-}
-
--(NSUInteger)supportedInterfaceOrientations
-{
-    return [[_themeView class] themeViewSupportedInterfaceOrientations];
-}
-
--(BOOL)shouldAutorotate
-{
-    return [[_themeView class] themeViewShouldAutorotate];
 }
 
 /*
@@ -658,14 +643,79 @@ BOOL firstTime=YES;
             //TODO - do any extra stuffs
             break;
     }
-    
+
+    [self playerDidChangeOrientation:interfaceOrientation];
+}
+
+-(void)playerDidChangeOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
     if([[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [_themeView playerWillChangeOrientation:interfaceOrientation];
+            if([_themeView respondsToSelector:@selector(playerWillChangeOrientation:)])
+                [_themeView playerWillChangeOrientation:interfaceOrientation];
+        });
+        
+        CGRect targetFrame=_coreView.frame;
+        
+        if(UIDeviceOrientationIsPortrait(interfaceOrientation))
+        {
+            BOOL supportedOrientation = true;
+            
+            if(interfaceOrientation==UIDeviceOrientationPortraitUpsideDown)
+            {
+                supportedOrientation = false;
+//                keepDoing = ([[_themeView class] themeViewSupportedInterfaceOrientations]&UIInterfaceOrientationPortraitUpsideDown);
+            }
+            
+            if(supportedOrientation)
+            {
+                targetFrame=self.view.frame;
+                
+                if(self.view.frame.size.height<self.view.frame.size.width)
+                {
+                    targetFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.height, self.view.frame.size.width);
+                }
+            }
+
+        }
+        
+        if(UIDeviceOrientationIsLandscape(interfaceOrientation))
+        {
+            targetFrame = self.view.frame;
+
+           if(self.view.frame.size.height>self.view.frame.size.width)
+           {
+               targetFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.height, self.view.frame.size.width);
+           }
+        }
+        
+        NSLog(@"frame>>> %@",NSStringFromCGRect(targetFrame));
+        [_coreView setFrame:targetFrame];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if([_themeView respondsToSelector:@selector(playerDidChangeOrientation:)])
+                [_themeView playerDidChangeOrientation:interfaceOrientation];
         });
     }
 }
+
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // You do not need this method if you are not supporting earlier iOS Versions
+    return [[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation];
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return [[_themeView class] themeViewSupportedInterfaceOrientations];
+}
+
+-(BOOL)shouldAutorotate
+{
+    return [[_themeView class] themeViewShouldAutorotate];
+}
+
 
 #pragma mark - UIApplication notification handlers
 
