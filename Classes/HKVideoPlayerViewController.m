@@ -15,6 +15,7 @@
 
 @interface HKVideoPlayerViewController ()
 
+@property(nonatomic,assign)BOOL restoreStatusBarState;
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic) NSTimeInterval autoHideInterval;
 @property(nonatomic,assign)BOOL autoHide;
@@ -89,11 +90,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UIDeviceOrientationDidChangeNotification:) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
 }
 
+-(BOOL)prefersStatusBarHidden
+{
+    return ![[_themeView class] themeViewRequireStatusBar];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     [_timer fire];
+    
+    _restoreStatusBarState = [UIApplication sharedApplication].statusBarHidden;
+    [[UIApplication sharedApplication] setStatusBarHidden:![[_themeView class] themeViewRequireStatusBar]];
     
     [_themeView renderThemeOnPlayerVC:self];
     [self playerDidRenderView];
@@ -328,6 +337,7 @@
 {
     _currentSpeed = _coreView.avPlayer.rate;
     [_themeView performSelectorOnMainThread:@selector(playerDidCloseView) withObject:nil waitUntilDone:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:_restoreStatusBarState];
     [_delegate videoPlayer:self didCloseView:self.view];
 }
 

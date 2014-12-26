@@ -18,6 +18,7 @@
 -(BOOL) themeViewAllowResizeWithFrame:(CGRect)frame;
 
 -(BOOL) themeViewRequireClipsToBounds;
++(BOOL) themeViewRequireStatusBar;
 +(UIColor*) themeViewRequireViewControllerBackgroundColor;
 +(UIColor*) themeViewRequireCoreViewBackgroundColor;
 +(BOOL) themeViewShouldSupportIpadnIphone;
@@ -93,5 +94,6 @@
 -(void) playerDidResizeWithFrame:(CGRect)frame;
 -(void) playerDidBeginChangePlayback;
 -(void) playerDidEndChangePlayback;
+-(void) playerDidChangeOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
