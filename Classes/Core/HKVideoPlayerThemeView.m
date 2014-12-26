@@ -123,7 +123,7 @@
 {
     if([[self class] isNibBasedTheme])
     {
-        return [[self class] loadInstanceFromNibWithName:[[self class]nibName] owner:self bundle:[[self class]nibBundle]];
+        return [[self class] loadInstanceFromNibWithName:[[self class] nibName] owner:self bundle:[[self class] nibBundle]];
     }
     
     return [self new];
@@ -158,6 +158,11 @@
 {
     _playerVC = playerVC;
     self.frame = playerVC.view.bounds;
+    
+    if([[self class] isNibBasedTheme])
+    {
+        [self awakeFromNib];
+    }
 }
 
 -(void)renderLoadingOnPlayerVC:(HKVideoPlayerViewController *)playerVC
