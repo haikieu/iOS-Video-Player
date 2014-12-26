@@ -10,6 +10,7 @@
 		4212A9D01A210CF000B970EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4212A9CF1A210CF000B970EE /* CoreVideo.framework */; };
 		4212A9D21A210D3400B970EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4212A9D11A210D3400B970EE /* MediaPlayer.framework */; };
 		427F4FDF1A4DD0BE004A2C66 /* HKUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 427F4FDE1A4DD0BE004A2C66 /* HKUtility.m */; };
+		427F4FE11A4DDB5D004A2C66 /* HKVideoPlayerClassicalTheme_NonSizeClass.xib in Resources */ = {isa = PBXBuildFile; fileRef = 427F4FE01A4DDB5D004A2C66 /* HKVideoPlayerClassicalTheme_NonSizeClass.xib */; };
 		42B69F7A1A27AE830093F2EB /* HKVideoPlayerGreenTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B69F791A27AE830093F2EB /* HKVideoPlayerGreenTheme.m */; };
 		42EBF2B31A205E93006AF19C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B21A205E93006AF19C /* Foundation.framework */; };
 		42EBF2B51A205E93006AF19C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42EBF2B41A205E93006AF19C /* CoreGraphics.framework */; };
@@ -58,6 +59,7 @@
 		4212A9D11A210D3400B970EE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		427F4FDD1A4DD0BE004A2C66 /* HKUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKUtility.h; sourceTree = "<group>"; };
 		427F4FDE1A4DD0BE004A2C66 /* HKUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKUtility.m; sourceTree = "<group>"; };
+		427F4FE01A4DDB5D004A2C66 /* HKVideoPlayerClassicalTheme_NonSizeClass.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HKVideoPlayerClassicalTheme_NonSizeClass.xib; path = ../../Classes/Themes/HKVideoPlayerClassicalTheme_NonSizeClass.xib; sourceTree = "<group>"; };
 		42B69F781A27AE830093F2EB /* HKVideoPlayerGreenTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HKVideoPlayerGreenTheme.h; path = ../../Classes/Themes/HKVideoPlayerGreenTheme.h; sourceTree = "<group>"; };
 		42B69F791A27AE830093F2EB /* HKVideoPlayerGreenTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HKVideoPlayerGreenTheme.m; path = ../../Classes/Themes/HKVideoPlayerGreenTheme.m; sourceTree = "<group>"; };
 		42EBF2AF1A205E93006AF19C /* iOS Video Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Video Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,8 +242,9 @@
 				42EBF2F91A2061B6006AF19C /* HKVideoPlayerDefaultTheme.h */,
 				42EBF2FA1A2061B6006AF19C /* HKVideoPlayerDefaultTheme.m */,
 				84588AA01A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.h */,
-				8431ACD61A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib */,
 				84588AA11A2702CD00E73C20 /* HKVideoPlayerClassicalTheme.m */,
+				8431ACD61A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib */,
+				427F4FE01A4DDB5D004A2C66 /* HKVideoPlayerClassicalTheme_NonSizeClass.xib */,
 				84588AA31A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.h */,
 				84588AA41A2702DD00E73C20 /* HKVideoPlayerWoodenTheme.m */,
 				84588AA61A2702F400E73C20 /* HKVideoPlayerWinterTheme.h */,
@@ -366,6 +369,7 @@
 				42EBF2C91A205E93006AF19C /* Main_iPad.storyboard in Resources */,
 				42EBF2CE1A205E93006AF19C /* Images.xcassets in Resources */,
 				42EBF2C61A205E93006AF19C /* Main_iPhone.storyboard in Resources */,
+				427F4FE11A4DDB5D004A2C66 /* HKVideoPlayerClassicalTheme_NonSizeClass.xib in Resources */,
 				8431ACD71A2C2E2A00992FED /* HKVideoPlayerClassicalTheme.xib in Resources */,
 				84588AD51A2735F800E73C20 /* HKVideoPlayer.bundle in Resources */,
 				42EBF2BD1A205E93006AF19C /* InfoPlist.strings in Resources */,

@@ -7,12 +7,24 @@
 //
 
 #import "HKVideoPlayerClassicalTheme.h"
+#import "HKUtility.h"
+
 
 @implementation HKVideoPlayerClassicalTheme
 
 +(BOOL)isNibBasedTheme
 {
     return YES;
+}
+
++(NSString *)nibName
+{
+    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7"))
+    {
+        return @"HKVideoPlayerClassicalTheme_NonSizeClass";
+    }
+
+    return [[super class] nibName];
 }
 
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController *)playerVC
