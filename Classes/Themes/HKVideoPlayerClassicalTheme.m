@@ -151,6 +151,15 @@
         float seekTIme = _slProgressBar.value * _durationTime;
         [self.playerVC playbackScrub:seekTIme];
     }
+    else if(sender == _slVolumeBar)
+    {
+        [self.playerVC volumeScrub:_slVolumeBar.value];
+    }
+}
+
+-(void)playerDidChangeVolume:(float)volume
+{
+    _slVolumeBar.value = volume;
 }
 
 -(void)playerWillChangeOrientation:(UIInterfaceOrientation)interfaceOrientation

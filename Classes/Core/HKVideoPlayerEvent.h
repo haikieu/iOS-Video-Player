@@ -53,6 +53,7 @@
 */
 @protocol HKVideoPlayerPreEventDelegate <HKVideoPlayerCoreEventDelegate>
 
+-(void) playerWillChangeVolume:(float)volume;
 -(void) playerWillLoad;
 -(void) playerWillPlay;
 -(void) playerWillStop;
@@ -75,6 +76,7 @@
 */
 @protocol HKVideoPlayerPostEventDelegate <HKVideoPlayerCoreEventDelegate>
 
+-(void) playerDidChangeVolume:(float)volume;
 -(void) playerDidRenderLoadingAnimation;
 -(void) playerDidRenderView;
 -(void) playerDidLoad;

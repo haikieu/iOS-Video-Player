@@ -24,6 +24,8 @@
 -(void)hideThemeView:(BOOL)animated;
 -(void)showLoadingAnimation;
 -(void)hideLoadingAnimation;
+-(void)changeToDisableState;
+-(void)changeToNormalState;
 
 +(instancetype) theme;
 

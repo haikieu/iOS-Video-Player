@@ -280,7 +280,7 @@ NSTimer *avStatusTimer;
                 _avPlayer = [[AVPlayer alloc] initWithPlayerItem:[AVPlayerItem playerItemWithAsset:_avAsset]];
                 [self setupObservingPlayer];
                 [self setPlayer:_avPlayer];
-                
+                [_playerViewController setCurrentSpeed:self.avPlayer.rate];
                 [_playerViewController playerDidLoad];
                 [self syncScrobber];
                 

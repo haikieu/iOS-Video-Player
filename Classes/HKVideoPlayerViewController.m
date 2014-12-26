@@ -214,6 +214,13 @@
     [_coreView handleResizeWithFrame:frame];
 }
 
+-(void)volumeScrub:(float)volume
+{
+    [_themeView playerWillChangeVolume:volume];
+    [_coreView.avPlayer setVolume:volume];
+    [_themeView playerDidChangeVolume:_coreView.avPlayer.volume];
+}
+
 -(void)playbackScrub:(float)scrubTime
 {
     [_coreView playbackBeginScrub];
@@ -256,7 +263,10 @@
 
 -(void)playerDidRenderView
 {
-    [_themeView performSelectorOnMainThread:@selector(playerDidRenderView) withObject:nil waitUntilDone:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_themeView playerDidRenderView];
+//        [_themeView playerDidChangeVolume:0];
+    });
 }
 
 -(void)playerDidPlay
@@ -295,12 +305,16 @@
 
 -(void)playerDidLoad
 {
-    _currentSpeed = _coreView.avPlayer.rate;
-    [_themeView performSelectorOnMainThread:@selector(playerDidLoad) withObject:nil waitUntilDone:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_themeView playerDidLoad];
+        [_themeView playerDidChangeVolume:_coreView.avPlayer.volume];
+    });
+    
     if(_enableAutoPlay)
     {
         [self handlePlay];
     }
+    
     if(_enableSyncMedia)
     {
         [self syncMediaToControlCenter];

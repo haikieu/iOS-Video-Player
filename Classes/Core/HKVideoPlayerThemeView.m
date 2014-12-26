@@ -324,6 +324,11 @@
 
 #pragma mark - HKVideoPlayerPreEventDelegate
 
+-(void)playerWillChangeVolume:(float)volume
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
+
 -(void)playerWillChangeOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
@@ -449,6 +454,10 @@
 }
 
 -(void)playerDidCloseView
+{
+    HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
+}
+-(void)playerDidChangeVolume:(float)volume
 {
     HKPLAYER_THROWS_EXCEPTION_NOT_IMPLEMENTED_YET();
 }

@@ -29,4 +29,6 @@
 -(void)playbackScrub:(float)scrubTime;
 -(void)playbackSynScrub;
 
+-(void)volumeScrub:(float)volume;
+
 @end
