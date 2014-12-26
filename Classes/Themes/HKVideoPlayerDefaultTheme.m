@@ -11,6 +11,12 @@
 #import "HKVideoPlayerCoreView.h"
 
 @interface HKVideoPlayerDefaultTheme ()
+{
+    float _remainTime;
+    float _currentTime;
+    float _durationTime;
+}
+
 
 @property UILabel *title;
 @property UIView *topBar;
@@ -30,6 +36,20 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        _remainTime = 0;
+        _currentTime = 0;
+        _durationTime = 0;
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _remainTime = 0;
+        _currentTime = 0;
+        _durationTime = 0;
     }
     return self;
 }
@@ -63,7 +83,7 @@ UIView *bottomBar;
     
     _btnClose = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnClose.frame = CGRectMake(self.bounds.size.width - _topBarHeight, _topOffset, _topBarHeight, _topBarHeight);
-    [_btnClose setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_cross"] forState:UIControlStateNormal];
+    [_btnClose setImage:[[self class] getAssetImageWithName:@"Image_Button_cross"] forState:UIControlStateNormal];
     [_btnClose addTarget:self.playerVC action:@selector(handleCloseView) forControlEvents:UIControlEventTouchUpInside];
     [_topBar addSubview:_btnClose];
     
@@ -75,19 +95,19 @@ UIView *bottomBar;
     
     _btnRewind = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnRewind.frame = CGRectMake(0, 0, 50, 50);
-    [_btnRewind setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_rewind"] forState:UIControlStateNormal];
+    [_btnRewind setImage:[[self class] getAssetImageWithName:@"Image_Button_rewind"] forState:UIControlStateNormal];
     [_btnRewind addTarget:self.playerVC action:@selector(handleRewind:) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBar addSubview:_btnRewind];
     
     _btnPlay = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnPlay.frame = CGRectMake(_btnRewind.frame.origin.x+_btnRewind.frame.size.width, 0, 50, 50);
-    [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
+    [_btnPlay setImage:[[self class] getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
     [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBar addSubview:_btnPlay];
     
     _btnForward = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnForward.frame = CGRectMake(_btnPlay.frame.origin.x+_btnPlay.frame.size.width, 0, 50, 50);
-    [_btnForward setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_next"] forState:UIControlStateNormal];
+    [_btnForward setImage:[[self class] getAssetImageWithName:@"Image_Button_next"] forState:UIControlStateNormal];
     [_btnForward addTarget:self.playerVC action:@selector(handleFastforward:) forControlEvents:UIControlEventTouchUpInside];
     [_bottomBar addSubview:_btnForward];
     
@@ -142,9 +162,7 @@ UIView *bottomBar;
         self.hidden = YES;
     }];
 }
-float _remainTime = 0;
-float _currentTime = 0;
-float _durationTime = 0;
+
 -(void)onProgressChange:(id)sender
 {
     float seekTIme = _progressBar.value * _durationTime;
@@ -193,13 +211,13 @@ float _durationTime = 0;
 
 -(void)playerDidPlay
 {
-    [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_pause"] forState:UIControlStateNormal];
+    [_btnPlay setImage:[[self class] getAssetImageWithName:@"Image_Button_pause"] forState:UIControlStateNormal];
     [_btnPlay addTarget:self.playerVC action:@selector(handlePause) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)playerDidPause
 {
-    [_btnPlay setImage:[HKVideoPlayerDefaultTheme getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
+    [_btnPlay setImage:[[self class] getAssetImageWithName:@"Image_Button_play"] forState:UIControlStateNormal];
     [_btnPlay addTarget:self.playerVC action:@selector(handlePlay) forControlEvents:UIControlEventTouchUpInside];
 }
 

@@ -161,6 +161,7 @@
     
     if([[self class] isNibBasedTheme])
     {
+        [self renderThemeAssetOnPlayerVC:playerVC];
         [self awakeFromNib];
     }
 }

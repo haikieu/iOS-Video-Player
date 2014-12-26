@@ -15,4 +15,10 @@
     return SYSTEM_VERSION;
 }
 
++(UIDeviceOrientation)currentOrientation
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    return orientation;
+}
+
 @end

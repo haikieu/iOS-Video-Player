@@ -18,6 +18,7 @@
 
 -(void)renderThemeOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
 -(void)renderLoadingOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
+-(void)renderThemeAssetOnPlayerVC:(HKVideoPlayerViewController*)playerVC;
 -(void)setEventHandler __deprecated_msg("This is deprecated now");
 -(void)showThemeView:(BOOL)animated;
 -(void)hideThemeView:(BOOL)animated;

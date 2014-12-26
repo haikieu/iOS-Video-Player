@@ -19,6 +19,6 @@
 @interface HKUtility : NSObject
 
 +(NSString*) iOSVersion;
-
++(UIDeviceOrientation) currentOrientation;
 
 @end
