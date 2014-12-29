@@ -696,14 +696,14 @@ BOOL firstTime=YES;
 
 -(void)playerDidChangeOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if([[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation])
+    if([[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation] && [self isModal])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             if([_themeView respondsToSelector:@selector(playerWillChangeOrientation:)])
                 [_themeView playerWillChangeOrientation:interfaceOrientation];
         });
         
-        CGRect targetFrame=_coreView.frame;
+        CGRect targetCoreFrame=_coreView.bounds;
         
         if(UIDeviceOrientationIsPortrait(interfaceOrientation))
         {
@@ -717,11 +717,11 @@ BOOL firstTime=YES;
             
             if(supportedOrientation)
             {
-                targetFrame=self.view.frame;
+                targetCoreFrame=self.view.bounds;
                 
                 if(self.view.frame.size.height<self.view.frame.size.width)
                 {
-                    targetFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.height, self.view.frame.size.width);
+                    targetCoreFrame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.frame.size.height, self.view.frame.size.width);
                 }
             }
 
@@ -737,8 +737,17 @@ BOOL firstTime=YES;
            }
         }
         
-        NSLog(@"frame>>> %@",NSStringFromCGRect(targetFrame));
-        [_coreView setFrame:targetFrame];
+        NSLog(@"frame>>> %@",NSStringFromCGRect(targetCoreFrame));
+        [_coreView setFrame:targetCoreFrame];
+        
+        if(_willAddSubview)
+        {
+            CGRect targetThemeFrame=targetCoreFrame;
+            [_themeView setFrame:targetThemeFrame];
+            
+            CGRect targetViewFrame=targetCoreFrame;
+            [self.view setFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, targetViewFrame.size.width, targetViewFrame.size.height)];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if([_themeView respondsToSelector:@selector(playerDidChangeOrientation:)])
@@ -766,7 +775,10 @@ BOOL firstTime=YES;
 
 -(BOOL)shouldAutorotate
 {
-    return [[_themeView class] themeViewShouldAutorotate];
+    if(_willAddSubview)
+        return NO;
+    
+    return [[_themeView class] themeViewShouldAutorotate] && [self isModal];
 }
 
 - (BOOL)isModal {

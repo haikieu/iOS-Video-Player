@@ -10,7 +10,7 @@
 #import "HKVideoPlayerNotifications.h"
 #import "HKVideoPlayerException.h"
 #import "HKVideoPlayerViewController.h"
-
+#import "HKUtility.h"
 @interface HKVideoPlayerThemeView ()
 
 @property(nonatomic)UIActivityIndicatorView * indicator;
@@ -250,6 +250,8 @@
 
 +(BOOL)themeViewShouldAutorotate
 {
+    if(DEVICE_IS_IPAD())
+        return NO;
     return YES;
 }
 
