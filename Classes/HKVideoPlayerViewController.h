@@ -21,9 +21,6 @@
 #define URL_UTUBE_SMALL @"http://r2---sn-42u-nbok.googlevideo.com/videoplayback?fexp=900242,907259,927622,930821,932404,934926,943909,945092,945125,947209,947215,948124,948703,952302,952605,952901,953103,953912,955404,957103,957105,957201&initcwndbps=1243750&key=yt5&upn=1350QzrWR54&sparams=id,initcwndbps,ip,ipbits,itag,mm,ms,mv,source,upn,expire&expire=1416734251&itag=17&ipbits=0&ip=58.186.118.145&mm=31&source=youtube&ms=au&id=o-ACmK1fEhWlxfTPt9MUEqrwx3Qy7nmGrakQD4sc-EpRIR&mv=m&mt=1416712557&sver=3&signature=6E651303B67AB41A28BC99134A51F232AF125890.48C0EA4F59D2F43E7EE64E7E3A6B7E1A48C8F137&signature=(null)"
 
 
-#define DEVICE_IS_IPHONE() (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
-#define DEVICE_IS_IPAD() (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
-
 @class HKVideoPlayerThemeView;
 @class HKVideoPlayerCoreView;
 
@@ -58,4 +55,8 @@
 
 -(void)enableZooming:(BOOL)enable;
 
+- (BOOL)isModal;
+
+-(instancetype) goingToAddSubview;
+-(instancetype) goingToBePresented;
 @end

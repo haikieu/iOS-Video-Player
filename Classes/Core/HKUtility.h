@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define DEVICE_IS_IPHONE() (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone)
+#define DEVICE_IS_IPAD() (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+
 #define SYSTEM_VERSION [[UIDevice currentDevice] systemVersion]
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
