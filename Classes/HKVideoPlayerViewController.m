@@ -15,12 +15,16 @@
 
 @interface HKVideoPlayerViewController ()
 
+@property(nonatomic,assign)UIDeviceOrientation baseOrientation;
 @property(nonatomic,assign)BOOL restoreStatusBarState;
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic) NSTimeInterval autoHideInterval;
 @property(nonatomic,assign)BOOL autoHide;
 @property(nonatomic)UITapGestureRecognizer * singleTapGestureRecognizer;
 @property(nonatomic)UITapGestureRecognizer * doubleTapGestureRecognizer;
+
+@property(nonatomic,assign)BOOL willAddSubview;
+@property(nonatomic,assign)BOOL willBePresented;
 
 @end
 
@@ -35,6 +39,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _baseOrientation = [HKUtility currentOrientation];
     }
     return self;
 }
@@ -44,7 +49,7 @@
     self = [super init];
     if (self) {
         _baseFrame = frame;
-        
+        _baseOrientation = [HKUtility currentOrientation];
     }
     return self;
 }
@@ -55,7 +60,22 @@
     if(self)
     {
         self.themeView = themeView;
+        _baseOrientation = [HKUtility currentOrientation];
     }
+    return self;
+}
+
+-(instancetype)goingToAddSubview
+{
+    _willAddSubview = YES;
+    _willBePresented = !_willAddSubview;
+    return self;
+}
+
+-(instancetype)goingToBePresented
+{
+    _willBePresented = YES;
+    _willAddSubview = !_willBePresented;
     return self;
 }
 
@@ -709,11 +729,11 @@ BOOL firstTime=YES;
         
         if(UIDeviceOrientationIsLandscape(interfaceOrientation))
         {
-            targetFrame = self.view.frame;
+            targetCoreFrame = self.view.bounds;
 
            if(self.view.frame.size.height>self.view.frame.size.width)
            {
-               targetFrame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.height, self.view.frame.size.width);
+               targetCoreFrame = CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.frame.size.height, self.view.frame.size.width);
            }
         }
         
@@ -730,11 +750,17 @@ BOOL firstTime=YES;
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // You do not need this method if you are not supporting earlier iOS Versions
-    return [[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation];
+    if(_willAddSubview)
+        return NO;
+    
+    return ([[_themeView class] themeViewShouldAutorotateToInterfaceOrientation:interfaceOrientation] && [self isModal]);
 }
 
 -(NSUInteger)supportedInterfaceOrientations
 {
+    if(_willAddSubview)
+        return [HKUtility currentOrientation];
+    
     return [[_themeView class] themeViewSupportedInterfaceOrientations];
 }
 
@@ -743,6 +769,18 @@ BOOL firstTime=YES;
     return [[_themeView class] themeViewShouldAutorotate];
 }
 
+- (BOOL)isModal {
+    if([self presentingViewController])
+        return YES;
+    if([[self presentingViewController] presentedViewController] == self)
+        return YES;
+    if([[[self navigationController] presentingViewController] presentedViewController] == [self navigationController])
+        return YES;
+    if([[[self tabBarController] presentingViewController] isKindOfClass:[UITabBarController class]])
+        return YES;
+    
+    return NO;
+}
 
 #pragma mark - UIApplication notification handlers
 
