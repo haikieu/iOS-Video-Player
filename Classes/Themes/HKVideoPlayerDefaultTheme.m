@@ -9,6 +9,8 @@
 #import "HKVideoPlayerDefaultTheme.h"
 #import "HKVideoPlayerViewController.h"
 #import "HKVideoPlayerCoreView.h"
+#import "HKUtility.h"
+
 
 @interface HKVideoPlayerDefaultTheme ()
 {
@@ -233,6 +235,11 @@ UIView *bottomBar;
 }
 
 -(BOOL)themeViewRequireClipsToBounds
+{
+    return YES;
+}
+
++(BOOL)themeViewRequireStatusBar
 {
     return YES;
 }
