@@ -448,6 +448,26 @@ static NSString * kItemAsset = @"asset";
 {
     NSLog(@"HK >>> %s",__PRETTY_FUNCTION__);
     [_avPlayer pause];
+    [self removePlayerTimeObserver];
+    // Remove all observers.
+    
+    
+    NSArray *oserverPaths = @[kPlayerRate,kPlayerError,kPlayerMuted,kPlayerStatus,kPlayerVolume,kPlayerCurrentTIme,kPlayerCurrentTime];
+    
+    for (NSString *path in oserverPaths) {
+        [_avPlayer removeObserver:self
+                  forKeyPath:path];
+        
+    }
+    
+//    NSArray *observerPaths = @[kItemAsset,kItemError,kItemStatus,kItemTracks,kItemDuration];
+//    
+//    for (NSString *path in observerPaths) {
+//        [_avPlayer removeObserver:self
+//                       forKeyPath:path];
+//    }
+
+    
     [_playerViewController playerDidCloseView];
 }
 
