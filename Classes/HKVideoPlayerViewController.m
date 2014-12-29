@@ -468,15 +468,18 @@ BOOL firstTime=YES;
 
 -(void)enableZooming:(BOOL)enable
 {
-    _doubleTapGestureRecognizer.enabled = enable;
+    @synchronized(self)
+    {
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
-        _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
-        [self.view addGestureRecognizer:_doubleTapGestureRecognizer];
-    });
-    
+        if(!_doubleTapGestureRecognizer)
+        {
+            _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+            _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+            [self.view addGestureRecognizer:_doubleTapGestureRecognizer];
+        }
+        
+        _doubleTapGestureRecognizer.enabled = enable;
+    }
     if(enable)
     {
         [_singleTapGestureRecognizer requireGestureRecognizerToFail:_doubleTapGestureRecognizer];
