@@ -1,4 +1,4 @@
-HKVideoPlayer
+HKVideoPlayer (Obsoleted, this is no longer maintained)
 ================
 
 iOS Ultimate video player with customizable theme view, compatible to ipad as well as iphone with very cool UI themes
